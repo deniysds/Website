@@ -14,4 +14,10 @@ Route::name('website.')->group(function () {
     Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');
     Route::get('/author-guidelines', [WebsiteController::class, 'guidelines'])->name('guidelines');
     Route::get('/announcements', [WebsiteController::class, 'announcements'])->name('announcements');
+
+    // Admin CMS Settings Routes
+    Route::middleware(['auth'])->prefix('admin/website')->group(function () {
+        Route::get('/settings', [WebsiteController::class, 'adminSettings'])->name('settings');
+        Route::post('/settings', [WebsiteController::class, 'updateAdminSettings'])->name('settings.update');
+    });
 });

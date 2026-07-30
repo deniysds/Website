@@ -4,16 +4,26 @@ namespace Modules\Website\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 use Modules\Issues\Models\Issue;
 use Modules\Journals\Models\Journal;
+use Modules\Website\Models\WebsiteNews;
+use Modules\Website\Models\WebsiteProgram;
+use Modules\Website\Models\WebsiteSetting;
 
 class WebsiteController extends Controller
 {
     /**
-     * Displays the main public landing page.
+     * Displays the main public landing page according to exact design parameters.
      */
     public function home(): View
     {
+        $settings = WebsiteSetting::pluck('value', 'key')->all();
+
+        $programs = WebsiteProgram::where('is_active', true)
+            ->orderBy('order_no', 'asc')
+            ->get();
+
         $journals = Journal::where('is_active', true)
             ->withCount(['editorialBoards'])
             ->latest()
@@ -26,13 +36,34 @@ class WebsiteController extends Controller
             ->take(4)
             ->get();
 
-        $stats = [
-            'total_journals' => Journal::where('is_active', true)->count(),
-            'total_issues'   => Issue::where('is_published', true)->count(),
-            'total_articles' => 125, // Mocked total published articles
-        ];
+        $news = WebsiteNews::where('is_published', true)
+            ->latest('published_at')
+            ->take(3)
+            ->get();
 
-        return view('website::public.home', compact('journals', 'latestIssues', 'stats'));
+        return view('website::public.home', compact('settings', 'programs', 'journals', 'latestIssues', 'news'));
+    }
+
+    /**
+     * Admin view for managing Landing Page Settings
+     */
+    public function adminSettings(): View
+    {
+        $settings = WebsiteSetting::pluck('value', 'key')->all();
+        return view('website::admin.settings', compact('settings'));
+    }
+
+    /**
+     * Store/Update Landing Page Settings
+     */
+    public function updateAdminSettings(Request $request)
+    {
+        $data = $request->except('_token');
+        foreach ($data as $key => $value) {
+            WebsiteSetting::setByKey($key, $value, 'landing');
+        }
+
+        return redirect()->back()->with('success', 'Pengaturan Landing Page Publik berhasil diperbarui.');
     }
 
     /**

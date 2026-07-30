@@ -7,5 +7,23 @@
     "providers": [
         "Modules\\Website\\Providers\\WebsiteServiceProvider"
     ],
-    "files": []
+    "files": [],
+    "menu": {
+        "main": [],
+        "master": [],
+        "system": [
+            {
+                "title": "Website Settings",
+                "path": "website.settings",
+                "icon": "ki-filled ki-setting-2 text-lg",
+                "classes": "",
+                "attributes": [],
+                "permission": "",
+                "roles": [
+                    "administrator",
+                    "admin"
+                ]
+            }
+        ]
+    }
 }
