@@ -1,39 +1,39 @@
 @extends('website::layouts.public')
 
 @section('public_content')
-    <!-- 1. Hero Section Banner Presisi (Merah & Gedung Satriabudi Background) -->
-    <section class="relative bg-slate-950 text-white overflow-hidden py-16 sm:py-24 lg:py-32">
-        <!-- Overlay Background Pattern & Gradient Gedung -->
-        <div class="absolute inset-0 z-0 bg-cover bg-center opacity-25 mix-blend-luminosity filter brightness-75" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop');"></div>
-        <div class="absolute inset-0 z-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent"></div>
+    <!-- 1. Hero Section Banner Presisi Gambar 2 (Kartu Melengkung Terpusat dengan Banner Merah Overlay) -->
+    <section class="relative bg-slate-900 text-white rounded-3xl overflow-hidden py-16 sm:py-24 shadow-xl border border-slate-800">
+        <!-- Overlay Background Pattern & Gradient Gedung Satriabudi -->
+        <div class="absolute inset-0 z-0 bg-cover bg-center opacity-30 mix-blend-luminosity filter brightness-75" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop');"></div>
+        <div class="absolute inset-0 z-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent"></div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6">
-            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white max-w-4xl mx-auto leading-tight">
+        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center space-y-6">
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
                 {{ $settings['hero_title'] ?? 'Yayasan Satriabudi Dharma Setia' }}
             </h1>
-            <p class="text-base sm:text-xl text-slate-200 max-w-2xl mx-auto font-light leading-relaxed">
+            <p class="text-base sm:text-xl text-slate-200 font-light max-w-2xl mx-auto leading-relaxed">
                 {{ $settings['hero_subtitle'] ?? 'Membangun Akses Kesehatan dan Pendidikan untuk Indonesia.' }}
             </p>
             <div class="pt-2">
                 <a href="{{ $settings['hero_button_url'] ?? '#profil' }}" class="inline-flex items-center justify-center px-7 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-xl shadow-red-600/40 transition duration-200">
-                    {{ $settings['hero_button_text'] ?? 'Baca Selengkapnya' }} &rarr;
+                    {{ $settings['hero_button_text'] ?? 'Donasi' }} &nearr;
                 </a>
             </div>
 
-            <!-- Floating Red Stat Counter Overlay (Banner Merah 150+, 125 T, 79+) -->
-            <div class="pt-12 max-w-5xl mx-auto">
-                <div class="bg-gradient-to-r from-red-700 via-red-600 to-red-700 rounded-3xl p-6 sm:p-8 shadow-2xl border border-red-500/40 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center divide-y sm:divide-y-0 sm:divide-x divide-red-500/50">
+            <!-- Floating Red Stat Counter Overlay Presisi Desain Gambar 2 -->
+            <div class="pt-10 max-w-3xl mx-auto">
+                <div class="bg-gradient-to-r from-red-700 via-red-600 to-red-700 rounded-2xl p-6 sm:p-8 shadow-2xl border border-red-500/40 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center divide-y sm:divide-y-0 sm:divide-x divide-red-500/40">
                     <div class="pt-4 sm:pt-0">
-                        <div class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">{{ $settings['stat_1_number'] ?? '150+' }}</div>
-                        <div class="text-xs sm:text-sm font-medium text-red-100 mt-1 uppercase tracking-wider">{{ $settings['stat_1_label'] ?? 'Kerjasama Global' }}</div>
+                        <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_1_number'] ?? '150+' }}</div>
+                        <div class="text-xs font-semibold text-red-100 mt-1 uppercase tracking-wider">{{ $settings['stat_1_label'] ?? 'Kerjasama Sukses' }}</div>
                     </div>
                     <div class="pt-4 sm:pt-0 sm:pl-6">
-                        <div class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">{{ $settings['stat_2_number'] ?? '125 T' }}</div>
-                        <div class="text-xs sm:text-sm font-medium text-red-100 mt-1 uppercase tracking-wider">{{ $settings['stat_2_label'] ?? 'Riset & Hibah Terbuka' }}</div>
+                        <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_2_number'] ?? '125 T' }}</div>
+                        <div class="text-xs font-semibold text-red-100 mt-1 uppercase tracking-wider">{{ $settings['stat_2_label'] ?? 'Dana Terkumpul' }}</div>
                     </div>
                     <div class="pt-4 sm:pt-0 sm:pl-6">
-                        <div class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">{{ $settings['stat_3_number'] ?? '79+' }}</div>
-                        <div class="text-xs sm:text-sm font-medium text-red-100 mt-1 uppercase tracking-wider">{{ $settings['stat_3_label'] ?? 'Publikasi Ilmiah' }}</div>
+                        <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_3_number'] ?? '79+' }}</div>
+                        <div class="text-xs font-semibold text-red-100 mt-1 uppercase tracking-wider">{{ $settings['stat_3_label'] ?? 'Mitra Jejaring' }}</div>
                     </div>
                 </div>
             </div>
