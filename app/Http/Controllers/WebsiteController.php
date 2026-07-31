@@ -67,16 +67,25 @@ class WebsiteController extends Controller
     }
 
     /**
-     * Displays the public list of active journals.
+     * Displays the public list of active journals with search filter.
      */
-    public function journals(): View
+    public function journals(Request $request): View
     {
-        $journals = Journal::where('is_active', true)
-            ->withCount(['editorialBoards'])
-            ->latest()
-            ->paginate(9);
+        $query = Journal::where('is_active', true)->withCount(['editorialBoards']);
 
-        return view('website::public.journals', compact('journals'));
+        if ($search = $request->get('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                  ->orWhere('short_name', 'like', '%' . $search . '%')
+                  ->orWhere('description', 'like', '%' . $search . '%')
+                  ->orWhere('issn_p', 'like', '%' . $search . '%')
+                  ->orWhere('issn_e', 'like', '%' . $search . '%');
+            });
+        }
+
+        $journals = $query->latest()->paginate(9)->withQueryString();
+
+        return view('website::public.journals', compact('journals', 'search'));
     }
 
     /**
@@ -121,16 +130,29 @@ class WebsiteController extends Controller
     }
 
     /**
-     * Displays the public archive of issues.
+     * Displays the public archive of issues with search & journal filter.
      */
-    public function issueArchive(): View
+    public function issueArchive(Request $request): View
     {
-        $issues = Issue::where('is_published', true)
-            ->with('journal')
-            ->latest('published_at')
-            ->paginate(10);
+        $query = Issue::where('is_published', true)->with('journal');
 
-        return view('website::public.issue-archive', compact('issues'));
+        if ($search = $request->get('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('volume', 'like', '%' . $search . '%')
+                  ->orWhere('number', 'like', '%' . $search . '%')
+                  ->orWhere('publication_year', 'like', '%' . $search . '%');
+            });
+        }
+
+        if ($journalId = $request->get('journal_id')) {
+            $query->where('journal_id', $journalId);
+        }
+
+        $issues = $query->latest('published_at')->paginate(10)->withQueryString();
+        $journals = Journal::where('is_active', true)->get();
+
+        return view('website::public.issue-archive', compact('issues', 'journals', 'search', 'journalId'));
     }
 
     /**
@@ -143,6 +165,22 @@ class WebsiteController extends Controller
             ->findOrFail($id);
 
         return view('website::public.issue-detail', ['journal' => $issue->journal, 'issue' => $issue]);
+    }
+
+    /**
+     * Public CMS Page: Publication Ethics
+     */
+    public function publicationEthics(): View
+    {
+        return view('website::public.cms.ethics');
+    }
+
+    /**
+     * Public CMS Page: Indexing Info
+     */
+    public function indexingInfo(): View
+    {
+        return view('website::public.cms.indexing');
     }
 
     /**

@@ -2,7 +2,7 @@
 
 @section('public_content')
     <!-- Header Page Banner -->
-    <section class="bg-slate-900 text-white py-12 border-b border-slate-800">
+    <section class="bg-slate-950 text-white py-12 border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <span class="text-xs font-bold text-red-500 uppercase tracking-widest">Katalog Ilmiah</span>
             <h1 class="text-3xl font-extrabold text-white mt-1">Daftar Jurnal Publikasi IGNITE</h1>
@@ -10,12 +10,38 @@
         </div>
     </section>
 
-    <!-- Main Listing Content -->
+    <!-- Main Listing Content & Filter Bar -->
     <section class="py-12 bg-slate-50 min-h-[60vh]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            
+            <!-- Search Filter Bar -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+                <form action="{{ route('website.journals.index') }}" method="GET" class="flex flex-col sm:flex-row gap-3">
+                    <div class="grow relative">
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ $search ?? '' }}"
+                            placeholder="Cari nama jurnal, e-ISSN, p-ISSN, atau kata kunci..."
+                            class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                        />
+                        <i class="ki-filled ki-magnifier absolute left-3.5 top-3 text-slate-400"></i>
+                    </div>
+                    <button type="submit" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-semibold text-sm rounded-xl transition flex items-center justify-center gap-1.5">
+                        <i class="ki-filled ki-magnifier text-white"></i> Cari Jurnal
+                    </button>
+                    @if(!empty($search))
+                        <a href="{{ route('website.journals.index') }}" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm rounded-xl transition flex items-center justify-center">
+                            Reset
+                        </a>
+                    @endif
+                </form>
+            </div>
+
+            <!-- Journals Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @forelse($journals as $journal)
-                    <div class="bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-lg transition duration-200 flex flex-col justify-between overflow-hidden">
+                    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-xl transition duration-300 flex flex-col justify-between overflow-hidden">
                         <div class="p-6 space-y-4">
                             <div class="flex items-center justify-between">
                                 <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-red-50 text-red-600 border border-red-100">
@@ -40,7 +66,7 @@
                     </div>
                 @empty
                     <div class="col-span-3 bg-white p-12 text-center rounded-2xl border border-slate-200">
-                        <p class="text-slate-500">Belum ada jurnal publikasi yang terdaftar saat ini.</p>
+                        <p class="text-slate-500 text-sm">Tidak ada jurnal yang sesuai dengan pencarian Anda.</p>
                     </div>
                 @endforelse
             </div>

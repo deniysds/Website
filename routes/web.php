@@ -13,6 +13,8 @@ Route::name('website.')->group(function () {
     Route::get('/about-us', [WebsiteController::class, 'about'])->name('about');
     Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');
     Route::get('/author-guidelines', [WebsiteController::class, 'guidelines'])->name('guidelines');
+    Route::get('/publication-ethics', [WebsiteController::class, 'publicationEthics'])->name('ethics');
+    Route::get('/indexing-info', [WebsiteController::class, 'indexingInfo'])->name('indexing');
     Route::get('/announcements', [WebsiteController::class, 'announcements'])->name('announcements');
 
     // Admin CMS Settings Routes
