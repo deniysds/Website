@@ -28,41 +28,39 @@
                     </div>
                 @endif
 
-                <!-- Article Table of Contents Placeholder -->
+                <!-- Article Table of Contents -->
                 <div class="space-y-6">
                     <h3 class="text-xl font-bold text-slate-900 border-b border-slate-200 pb-4 flex items-center gap-2">
                         <i class="ki-filled ki-document text-red-600"></i> Daftar Naskah / Artikel Terbit
                     </h3>
 
                     <div class="divide-y divide-slate-100">
-                        <!-- Sample Mock Published Articles for Public Layout Demonstration -->
-                        <div class="py-6 space-y-2">
-                            <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-600 border border-slate-200">Original Research</span>
-                            <h4 class="text-lg font-bold text-slate-900 hover:text-red-600 transition cursor-pointer">
-                                Analisis Sekuensing Genomik Populasi Indonesia untuk Identifikasi Varian Penyakit Langka
-                            </h4>
-                            <p class="text-xs text-slate-500 font-medium">Penulis: Ahmad Subroto, Maria Santos, Hendra Wijaya</p>
-                            <div class="flex items-center justify-between pt-2 text-xs">
-                                <span class="text-slate-400 font-mono">Halaman: 1 - 14 | DOI: 10.1234/ignite.v{{ $issue->volume }}i{{ $issue->number }}.101</span>
-                                <a href="#" class="px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-semibold transition border border-red-100 flex items-center gap-1">
-                                    <i class="ki-filled ki-file-down"></i> Download PDF
-                                </a>
+                        @forelse($publishedSubmissions as $submission)
+                            <div class="py-6 space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase bg-red-50 text-red-700 border border-red-100">Diterima / Terbit</span>
+                                </div>
+                                <h4 class="text-lg font-bold text-slate-900 hover:text-red-600 transition">
+                                    {{ $submission->title }}
+                                </h4>
+                                <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">{{ $submission->abstract }}</p>
+                                <p class="text-xs text-slate-500 font-medium pt-1">
+                                    Penulis: {{ $submission->authors->pluck('name')->implode(', ') ?: ($submission->author?->name ?? 'Penulis') }}
+                                </p>
+                                <div class="flex items-center justify-between pt-2 text-xs">
+                                    <span class="text-slate-400 font-mono">DOI: 10.1234/ignite.v{{ $issue->volume }}i{{ $issue->number }}.{{ $submission->id }}</span>
+                                    @if($mainFile = $submission->files->where('file_role', 'naskah_utama')->first())
+                                        <a href="{{ Storage::url($mainFile->path) }}" target="_blank" class="px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-semibold transition border border-red-100 flex items-center gap-1">
+                                            <i class="ki-filled ki-file-down"></i> Unduh Berkas Naskah (.{{ pathinfo($mainFile->original_name, PATHINFO_EXTENSION) }})
+                                        </a>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="py-6 space-y-2">
-                            <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-600 border border-slate-200">Review Article</span>
-                            <h4 class="text-lg font-bold text-slate-900 hover:text-red-600 transition cursor-pointer">
-                                Penerapan Pembelajaran Mesin dalam Sistem Pendukung Keputusan Medis Rumah Sakit
-                            </h4>
-                            <p class="text-xs text-slate-500 font-medium">Penulis: Budi Santoso, Rina Fitriani</p>
-                            <div class="flex items-center justify-between pt-2 text-xs">
-                                <span class="text-slate-400 font-mono">Halaman: 15 - 28 | DOI: 10.1234/ignite.v{{ $issue->volume }}i{{ $issue->number }}.102</span>
-                                <a href="#" class="px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-semibold transition border border-red-100 flex items-center gap-1">
-                                    <i class="ki-filled ki-file-down"></i> Download PDF
-                                </a>
+                        @empty
+                            <div class="py-12 text-center text-slate-500 text-sm">
+                                Belum ada naskah ilmiah yang terbit dalam edisi terbitan ini.
                             </div>
-                        </div>
+                        @endforelse
                     </div>
                 </div>
 

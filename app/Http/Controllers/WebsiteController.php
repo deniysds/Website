@@ -126,7 +126,13 @@ class WebsiteController extends Controller
             ->latest('published_at')
             ->firstOrFail();
 
-        return view('website::public.issue-detail', compact('journal', 'issue'));
+        $publishedSubmissions = \Modules\Submissions\Models\Submission::with(['authors', 'files'])
+            ->where('journal_id', $journal->id)
+            ->whereIn('status', ['accepted', 'published'])
+            ->latest()
+            ->get();
+
+        return view('website::public.issue-detail', compact('journal', 'issue', 'publishedSubmissions'));
     }
 
     /**
@@ -156,15 +162,20 @@ class WebsiteController extends Controller
     }
 
     /**
-     * Displays single issue detail page.
+     * Displays the detail page of a specific issue.
      */
     public function issueDetail(int $id): View
     {
-        $issue = Issue::where('is_published', true)
-            ->with('journal')
-            ->findOrFail($id);
+        $issue = Issue::where('is_published', true)->with('journal')->findOrFail($id);
+        $journal = $issue->journal;
 
-        return view('website::public.issue-detail', ['journal' => $issue->journal, 'issue' => $issue]);
+        $publishedSubmissions = \Modules\Submissions\Models\Submission::with(['authors', 'files'])
+            ->where('journal_id', $journal->id)
+            ->whereIn('status', ['accepted', 'published'])
+            ->latest()
+            ->get();
+
+        return view('website::public.issue-detail', compact('journal', 'issue', 'publishedSubmissions'));
     }
 
     /**
