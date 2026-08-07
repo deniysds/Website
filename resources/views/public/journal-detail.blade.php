@@ -17,15 +17,9 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
-                    @auth
-                        <a href="{{ route('dashboard') }}" class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold text-sm shadow-md transition">
-                            Kirim Naskah Baru
-                        </a>
-                    @else
-                        <a href="{{ route('login') }}" class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold text-sm shadow-md transition">
-                            Login Penulis
-                        </a>
-                    @endauth
+                    <a href="{{ route('submissions.create.step1') }}" class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-md transition flex items-center gap-1.5">
+                        <i class="ki-filled ki-cloud-change text-white"></i> Kirim Naskah Baru &nearr;
+                    </a>
                 </div>
             </div>
         </div>
