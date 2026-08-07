@@ -27,11 +27,11 @@
 
                 <div class="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div>
-                        <h4 class="font-bold text-slate-900">Template Dokumen Naskah</h4>
-                        <p class="text-xs text-slate-500">Unduh template resmi format penulisan MS Word (.docx)</p>
+                        <h4 class="font-bold text-slate-900">Siap Mengirimkan Naskah Ilmiah Anda?</h4>
+                        <p class="text-xs text-slate-500">Mulai langkah pertama pengajuan naskah ilmiah melalui sistem wizard online IGNITE.</p>
                     </div>
-                    <a href="#" class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold text-xs shadow-md transition flex items-center gap-2">
-                        <i class="ki-filled ki-file-down"></i> Unduh Template Naskah (.docx)
+                    <a href="{{ route('submissions.create.step1') }}" class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold text-xs shadow-md transition flex items-center gap-2">
+                        <i class="ki-filled ki-cloud-change"></i> Submit Article Sekarang &nearr;
                     </a>
                 </div>
             </div>

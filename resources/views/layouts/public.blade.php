@@ -44,12 +44,18 @@
                         class="text-sm font-semibold {{ request()->routeIs('website.issues*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">Publikasi</a>
                     <a href="{{ route('website.guidelines') }}"
                         class="text-sm font-semibold {{ request()->routeIs('website.guidelines') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">Panduan</a>
+                    <a href="{{ route('website.announcements') }}"
+                        class="text-sm font-semibold {{ request()->routeIs('website.announcements') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">Pengumuman</a>
                 </nav>
 
-                <!-- Action Button Kontak / Submit -->
+                <!-- Action Button Kontak & Submit Article -->
                 <div class="flex items-center space-x-3">
+                    <a href="{{ route('submissions.create.step1') }}"
+                        class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5">
+                        <i class="ki-filled ki-cloud-change text-red-500"></i> Submit Article
+                    </a>
                     <a href="{{ route('website.contact') }}"
-                        class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5">
+                        class="px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-md transition flex items-center gap-1">
                         Kontak &nearr;
                     </a>
                 </div>
