@@ -58,7 +58,7 @@
                             </div>
                             <div class="p-4 rounded-xl bg-gray-50 border border-gray-200 space-y-2">
                                 <label class="font-semibold text-xs text-gray-600">Statistik 2</label>
-                                <input type="text" name="stat_1_number" name="stat_2_number" value="{{ $settings['stat_2_number'] ?? '' }}" class="kt-input w-full" placeholder="125 T" />
+                                <input type="text" name="stat_2_number" value="{{ $settings['stat_2_number'] ?? '' }}" class="kt-input w-full" placeholder="125 T" />
                                 <input type="text" name="stat_2_label" value="{{ $settings['stat_2_label'] ?? '' }}" class="kt-input w-full" placeholder="Riset & Hibah Terbuka" />
                             </div>
                             <div class="p-4 rounded-xl bg-gray-50 border border-gray-200 space-y-2">
@@ -73,6 +73,16 @@
                     <div class="space-y-4">
                         <h4 class="text-base font-bold text-gray-900 border-b border-gray-100 pb-2">3. Section Profil & Komitmen</h4>
                         <div class="space-y-3">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="kt-label font-medium text-gray-700">Tag / Kategori Profil</label>
+                                    <input type="text" name="profile_tag" value="{{ $settings['profile_tag'] ?? 'Profil' }}" class="kt-input w-full" placeholder="Profil" />
+                                </div>
+                                <div>
+                                    <label class="kt-label font-medium text-gray-700">Label Tombol Profil</label>
+                                    <input type="text" name="profile_button_text" value="{{ $settings['profile_button_text'] ?? 'Selengkapnya tentang kami' }}" class="kt-input w-full" placeholder="Selengkapnya tentang kami" />
+                                </div>
+                            </div>
                             <div>
                                 <label class="kt-label font-medium text-gray-700">Judul Profil</label>
                                 <input type="text" name="profile_title" value="{{ $settings['profile_title'] ?? '' }}" class="kt-input w-full" />
@@ -81,6 +91,25 @@
                                 <label class="kt-label font-medium text-gray-700">Deskripsi Profil</label>
                                 <textarea name="profile_desc" rows="2" class="kt-input w-full p-3">{{ $settings['profile_desc'] ?? '' }}</textarea>
                             </div>
+
+                            <!-- 3 Pillars (Pendidikan, Kesehatan, Lingkungan) -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                                <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
+                                    <label class="text-xs font-bold text-gray-700">Pillar 1: Pendidikan</label>
+                                    <input type="text" name="profile_box_1_title" value="{{ $settings['profile_box_1_title'] ?? 'Pendidikan' }}" class="kt-input w-full text-xs" />
+                                    <textarea name="profile_box_1_desc" rows="2" class="kt-input w-full p-2 text-xs">{{ $settings['profile_box_1_desc'] ?? '' }}</textarea>
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
+                                    <label class="text-xs font-bold text-gray-700">Pillar 2: Kesehatan</label>
+                                    <input type="text" name="profile_box_2_title" value="{{ $settings['profile_box_2_title'] ?? 'Kesehatan' }}" class="kt-input w-full text-xs" />
+                                    <textarea name="profile_box_2_desc" rows="2" class="kt-input w-full p-2 text-xs">{{ $settings['profile_box_2_desc'] ?? '' }}</textarea>
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
+                                    <label class="text-xs font-bold text-gray-700">Pillar 3: Lingkungan</label>
+                                    <input type="text" name="profile_box_3_title" value="{{ $settings['profile_box_3_title'] ?? 'Lingkungan' }}" class="kt-input w-full text-xs" />
+                                    <textarea name="profile_box_3_desc" rows="2" class="kt-input w-full p-2 text-xs">{{ $settings['profile_box_3_desc'] ?? '' }}</textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -88,6 +117,10 @@
                     <div class="space-y-4">
                         <h4 class="text-base font-bold text-gray-900 border-b border-gray-100 pb-2">4. Section Metode (Pendekatan Terarah)</h4>
                         <div class="space-y-3">
+                            <div>
+                                <label class="kt-label font-medium text-gray-700">Tag / Kategori Metode</label>
+                                <input type="text" name="method_tag" value="{{ $settings['method_tag'] ?? 'Metode' }}" class="kt-input w-full" placeholder="Metode" />
+                            </div>
                             <div>
                                 <label class="kt-label font-medium text-gray-700">Judul Metode</label>
                                 <input type="text" name="method_title" value="{{ $settings['method_title'] ?? '' }}" class="kt-input w-full" />

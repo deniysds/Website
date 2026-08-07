@@ -5,6 +5,7 @@ namespace Modules\Website\Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\Issues\Models\Issue;
 use Modules\Journals\Models\Journal;
+use Modules\Usermanagement\Models\User;
 use Tests\TestCase;
 
 class WebsiteControllerTest extends TestCase
@@ -15,6 +16,7 @@ class WebsiteControllerTest extends TestCase
     {
         parent::setUp();
 
+        $this->artisan('module:migrate', ['module' => 'Usermanagement']);
         $this->artisan('module:migrate', ['module' => 'Journals']);
         $this->artisan('module:migrate', ['module' => 'Issues']);
         $this->artisan('module:migrate', ['module' => 'Website']);
@@ -60,6 +62,25 @@ class WebsiteControllerTest extends TestCase
         $this->get(route('website.about'))->assertStatus(200);
         $this->get(route('website.contact'))->assertStatus(200);
         $this->get(route('website.guidelines'))->assertStatus(200);
-        $this->get(route('website.announcements'))->assertStatus(200);
+        $this->get(route('website.ethics'))->assertStatus(200);
+        $this->get(route('website.indexing'))->assertStatus(200);
+    }
+
+    public function test_authenticated_user_can_access_and_update_admin_settings(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('website.settings'));
+        $response->assertStatus(200);
+        $response->assertViewIs('website::admin.settings');
+
+        $postResponse = $this->actingAs($user)->post(route('website.settings.update'), [
+            'hero_title' => 'Yayasan Satriabudi Terbaru',
+            'hero_subtitle' => 'Subtitle Terbaru',
+            'profile_tag' => 'Profil Terbaru',
+        ]);
+
+        $postResponse->assertRedirect(route('website.settings'));
+        $this->get(route('website.home'))->assertSee('Yayasan Satriabudi Terbaru');
     }
 }
