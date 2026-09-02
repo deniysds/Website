@@ -213,6 +213,140 @@
         </div>
     </section>
 
+    <!-- 6. Section Mitra Kami (Presisi Screenshot: Mitra Utama & Logo Berjalan Universitas/Pendukung) -->
+    <section class="bg-black text-white rounded-3xl p-8 sm:p-14 border border-slate-800/80 shadow-2xl space-y-12 overflow-hidden relative">
+        <style>
+            @keyframes marquee-scroll {
+                0% { transform: translateX(0%); }
+                100% { transform: translateX(-50%); }
+            }
+            @keyframes marquee-scroll-reverse {
+                0% { transform: translateX(-50%); }
+                100% { transform: translateX(0%); }
+            }
+            .marquee-track {
+                display: flex;
+                width: max-content;
+                animation: marquee-scroll 40s linear infinite;
+            }
+            .marquee-track-reverse {
+                display: flex;
+                width: max-content;
+                animation: marquee-scroll-reverse 45s linear infinite;
+            }
+            .marquee-container:hover .marquee-track,
+            .marquee-container:hover .marquee-track-reverse {
+                animation-play-state: paused;
+            }
+        </style>
+
+        <!-- Header Section Mitra Kami -->
+        <div class="text-center space-y-3 max-w-3xl mx-auto">
+            <span class="text-xs font-bold text-red-500 uppercase tracking-widest">{{ $settings['partners_tag'] ?? 'Mitra Kami' }}</span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
+                {{ $settings['partners_title'] ?? 'Kami Percaya Setiap Mitra Adalah Bagian Berharga dalam Perjalanan Jangka Panjang' }}
+            </h2>
+        </div>
+
+        <!-- 1. Mitra Utama (Platinum Partners: PaninBank, Ultima Genomics, PacBio, MGI, Oxford Nanopore) -->
+        <div class="pt-2">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center justify-center">
+                @forelse($mainPartners as $partner)
+                    <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-600 hover:bg-slate-900 transition flex items-center justify-center h-24 group relative" title="{{ $partner->name }}">
+                        <span class="sr-only">{{ $partner->name }}</span>
+                        @if($partner->logo_path)
+                            <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-h-12 max-w-full object-contain filter brightness-90 group-hover:brightness-100 transition" />
+                        @else
+                            <!-- Brand Text-based Logo for Demo / Main Partners matching screenshot -->
+                            @if(str_contains(strtolower($partner->name), 'panin'))
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-sm bg-blue-600 flex items-center justify-center text-white font-bold text-xs shadow-xs">P</div>
+                                    <span class="font-black text-lg tracking-tight text-white"><span class="text-red-500">Panin</span>Bank</span>
+                                </div>
+                            @elseif(str_contains(strtolower($partner->name), 'ultima'))
+                                <div class="text-center">
+                                    <div class="font-black text-base text-white tracking-widest uppercase">ULTIMA</div>
+                                    <div class="text-[9px] font-bold text-slate-400 tracking-widest uppercase">GENOMICS</div>
+                                </div>
+                            @elseif(str_contains(strtolower($partner->name), 'pacbio'))
+                                <div class="font-black text-xl tracking-tight text-pink-500">Pac<span class="text-white">Bio</span></div>
+                            @elseif(str_contains(strtolower($partner->name), 'mgi'))
+                                <div class="flex items-center gap-1">
+                                    <div class="text-cyan-400 font-mono font-black text-2xl tracking-tighter">MGI</div>
+                                    <div class="text-[9px] text-cyan-200 font-bold uppercase tracking-wider">Tech</div>
+                                </div>
+                            @elseif(str_contains(strtolower($partner->name), 'nanopore'))
+                                <div class="flex items-center gap-1.5">
+                                    <div class="w-5 h-5 rounded-full border-2 border-cyan-400 flex items-center justify-center"><div class="w-2 h-2 rounded-full bg-cyan-400"></div></div>
+                                    <div class="text-left leading-none">
+                                        <div class="text-[9px] text-slate-400 uppercase font-mono">Oxford</div>
+                                        <div class="text-xs font-black text-white uppercase tracking-wider">NANOPORE</div>
+                                    </div>
+                                </div>
+                            @else
+                                <span class="font-bold text-white text-sm tracking-tight text-center">{{ $partner->name }}</span>
+                            @endif
+                        @endif
+                    </div>
+                @empty
+                    <div class="col-span-5 text-center text-slate-500 text-xs">Belum ada data mitra utama.</div>
+                @endforelse
+            </div>
+        </div>
+
+        <!-- 2. Mitra Pendukung (Running Marquee Carousel - Logo Berjalan Halus) -->
+        <div class="space-y-4 pt-4 border-t border-slate-900/80">
+            <div class="text-center">
+                <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-widest">Mitra Perguruan Tinggi & Institusi Riset Akademik</span>
+            </div>
+
+            <!-- Carousel Row 1 (Kiri ke Kanan) -->
+            <div class="marquee-container overflow-hidden relative w-full py-2 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+                <div class="marquee-track flex gap-4 items-center">
+                    @php
+                        // Gandakan list untuk infinite loop yang mulus
+                        $marqueeList = $supportingPartners->concat($supportingPartners);
+                    @endphp
+                    @foreach($marqueeList as $partner)
+                        <div class="flex items-center gap-3 px-4 py-2.5 rounded-full bg-slate-900/90 border border-slate-800 hover:border-red-500/50 hover:bg-slate-800 transition shrink-0 group">
+                            @if($partner->logo_path)
+                                <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="w-7 h-7 object-contain rounded-full bg-white/10 p-0.5" />
+                            @else
+                                <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-red-600 via-slate-800 to-blue-600 text-white font-black flex items-center justify-center text-[10px] shrink-0 shadow-xs border border-white/20">
+                                    {{ substr($partner->name, 0, 2) }}
+                                </div>
+                            @endif
+                            <span class="text-xs font-semibold text-slate-300 group-hover:text-white transition whitespace-nowrap">{{ $partner->name }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- Carousel Row 2 (Kanan ke Kiri) -->
+            @if($supportingPartners->count() > 6)
+                <div class="marquee-container overflow-hidden relative w-full py-2 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+                    <div class="marquee-track-reverse flex gap-4 items-center">
+                        @php
+                            $reverseList = $supportingPartners->reverse()->concat($supportingPartners->reverse());
+                        @endphp
+                        @foreach($reverseList as $partner)
+                            <div class="flex items-center gap-3 px-4 py-2.5 rounded-full bg-slate-900/90 border border-slate-800 hover:border-red-500/50 hover:bg-slate-800 transition shrink-0 group">
+                                @if($partner->logo_path)
+                                    <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="w-7 h-7 object-contain rounded-full bg-white/10 p-0.5" />
+                                @else
+                                    <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-600 via-slate-800 to-amber-500 text-white font-black flex items-center justify-center text-[10px] shrink-0 shadow-xs border border-white/20">
+                                        {{ substr($partner->name, 0, 2) }}
+                                    </div>
+                                @endif
+                                <span class="text-xs font-semibold text-slate-300 group-hover:text-white transition whitespace-nowrap">{{ $partner->name }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+        </div>
+    </section>
+
     <!-- 6. Section Proyek Terbaru / Simposium -->
     <section class="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-xl">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">

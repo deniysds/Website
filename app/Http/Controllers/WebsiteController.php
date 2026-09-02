@@ -41,7 +41,17 @@ class WebsiteController extends Controller
             ->take(3)
             ->get();
 
-        return view('website::public.home', compact('settings', 'programs', 'journals', 'latestIssues', 'news'));
+        $mainPartners = \Modules\Website\Models\WebsitePartner::active()
+            ->main()
+            ->orderBy('order_no', 'asc')
+            ->get();
+
+        $supportingPartners = \Modules\Website\Models\WebsitePartner::active()
+            ->supporting()
+            ->orderBy('order_no', 'asc')
+            ->get();
+
+        return view('website::public.home', compact('settings', 'programs', 'journals', 'latestIssues', 'news', 'mainPartners', 'supportingPartners'));
     }
 
     /**

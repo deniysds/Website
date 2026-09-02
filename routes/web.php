@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Website\Http\Controllers\AdminPartnerController;
 use Modules\Website\Http\Controllers\WebsiteController;
 
 Route::name('website.')->group(function () {
@@ -17,9 +18,18 @@ Route::name('website.')->group(function () {
     Route::get('/indexing-info', [WebsiteController::class, 'indexingInfo'])->name('indexing');
     Route::get('/announcements', [WebsiteController::class, 'announcements'])->name('announcements');
 
-    // Admin CMS Settings Routes
+    // Admin CMS Settings & Partners Routes
     Route::middleware(['auth'])->prefix('admin/website')->group(function () {
         Route::get('/settings', [WebsiteController::class, 'adminSettings'])->name('settings');
         Route::post('/settings', [WebsiteController::class, 'updateAdminSettings'])->name('settings.update');
+
+        // Partners Management (Mitra Kami)
+        Route::prefix('partners')->name('partners.')->group(function () {
+            Route::get('/', [AdminPartnerController::class, 'index'])->name('index');
+            Route::post('/', [AdminPartnerController::class, 'store'])->name('store');
+            Route::put('/{id}', [AdminPartnerController::class, 'update'])->name('update');
+            Route::delete('/{id}', [AdminPartnerController::class, 'destroy'])->name('destroy');
+            Route::patch('/{id}/toggle', [AdminPartnerController::class, 'toggleStatus'])->name('toggle');
+        });
     });
 });

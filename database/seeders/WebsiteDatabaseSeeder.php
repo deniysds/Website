@@ -4,6 +4,7 @@ namespace Modules\Website\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Modules\Website\Models\WebsiteNews;
+use Modules\Website\Models\WebsitePartner;
 use Modules\Website\Models\WebsiteProgram;
 use Modules\Website\Models\WebsiteSetting;
 
@@ -23,15 +24,15 @@ class WebsiteDatabaseSeeder extends Seeder
             'hero_button_text' => 'Baca Selengkapnya',
             'hero_button_url' => '#profil',
 
-            // Stats Counters
+            // Red Overlay Stat Counters
             'stat_1_number' => '150+',
-            'stat_1_label' => 'Kerjasama Global',
+            'stat_1_label' => 'Kerjasama Sukses',
             'stat_2_number' => '125 T',
-            'stat_2_label' => 'Riset & Hibah Terbuka',
+            'stat_2_label' => 'Dana Terkumpul',
             'stat_3_number' => '79+',
-            'stat_3_label' => 'Publikasi Ilmiah',
+            'stat_3_label' => 'Mitra Jejaring',
 
-            // Profil Section
+            // Profile Section
             'profile_tag' => 'Profil',
             'profile_title' => 'Menciptakan generasi muda unggul melalui pendidikan bermutu, kesehatan prima, dan lingkungan hidup yang terpelihara.',
             'profile_desc' => 'Melalui aliansi strategis dengan institusi nasional dan internasional, kami menghadirkan program berbasis bukti riset ilmiah yang transparan dan akuntabel.',
@@ -43,7 +44,7 @@ class WebsiteDatabaseSeeder extends Seeder
             'profile_box_3_title' => 'Lingkungan',
             'profile_box_3_desc' => 'Pelestarian keanekaragaman hayati dan penerapan riset sains ramah lingkungan.',
 
-            // Method Section (Pendekatan Terarah)
+            // Method Section
             'method_tag' => 'Metode',
             'method_title' => 'Pendekatan terarah untuk mencapai hasil yang optimal',
             'method_desc' => 'Kami menerjemahkan komitmen menjadi dampak berkesinambungan melalui aliansi strategis bersama mitra riset terpercaya di seluruh Indonesia.',
@@ -51,28 +52,24 @@ class WebsiteDatabaseSeeder extends Seeder
             'method_step_1_desc' => 'Pemetaan isu strategis sains & kesehatan berbasis fakta ilmiah untuk pemangku kepentingan nasional.',
             'method_step_2_title' => 'Merancang dan Menjalankan Program',
             'method_step_2_desc' => 'Eksekusi program publikasi & fasilitas riset secara transparan dengan standar akuntabilitas tinggi.',
-            'method_step_3_title' => 'Menevaluasi dan Mengembangkan',
-            'method_step_3_desc' => 'Pemeriksaan berkala untuk memastkan efektivitas dampak program ilmiah yang kontinyu bagi masyarakat.',
+            'method_step_3_title' => 'Mengevaluasi Capaian',
+            'method_step_3_desc' => 'Monitoring dampak ilmiah berkelanjutan terhadap kemajuan sains dan derajat kesehatan masyarakat.',
 
-            // Featured Project / Simposium Section
-            'project_tag' => 'Proyek Terbaru',
-            'project_title' => 'GenAI and Genomics Symposium - Indonesia',
-            'project_time' => '10.00 - 16.00 WIB',
-            'project_date' => 'Kamis, 15 Mei 2026',
-            'project_location' => 'Jakarta, Indonesia',
-            'project_organizer' => 'Penyelenggara: Yayasan Satriabudi Dharma Setia',
+            // Partners Section
+            'partners_tag' => 'Mitra Kami',
+            'partners_title' => 'Kami Percaya Setiap Mitra Adalah Bagian Berharga dalam Perjalanan Jangka Panjang',
         ];
 
         foreach ($settings as $key => $val) {
             WebsiteSetting::setByKey($key, $val, 'landing');
         }
 
-        // Default Programs matching design mock cards
+        // Default Programs
         $programs = [
             [
                 'title' => 'IGNITE',
-                'badge_text' => 'Program Utama',
-                'description' => 'Platform pengelolaan jurnal ilmiah & workflow editorial berbasis peer-review independen.',
+                'badge_text' => 'Publikasi Ilmiah',
+                'description' => 'Platform pengelolaan dan penerbitan jurnal ilmiah terbuka berstandar internasional.',
                 'icon' => 'ki-filled ki-rocket',
                 'link_url' => '/catalog-journals',
                 'order_no' => 1,
@@ -80,23 +77,23 @@ class WebsiteDatabaseSeeder extends Seeder
             [
                 'title' => 'Pendidikan',
                 'badge_text' => 'Beasiswa',
-                'description' => 'Pengembangan kapasitas akademik & sains untuk mahasiswa dan peneliti muda Indonesia.',
+                'description' => 'Program beasiswa pendidikan sains dan kesehatan untuk talenta muda berprestasi.',
                 'icon' => 'ki-filled ki-teacher',
                 'link_url' => '/about-us',
                 'order_no' => 2,
             ],
             [
                 'title' => 'EJA Kuliah',
-                'badge_text' => 'Dukungan',
-                'description' => 'Bantuan studi tinggi untuk mendukung calon pemimpin riset masa depan.',
-                'icon' => 'ki-filled ki-user-tick',
+                'badge_text' => 'Pelatihan',
+                'description' => 'Peningkatan kapasitas akademik mahasiswa dan dosen melalui kuliah pakar terkemuka.',
+                'icon' => 'ki-filled ki-book-open',
                 'link_url' => '/about-us',
                 'order_no' => 3,
             ],
             [
                 'title' => 'Kelola',
                 'badge_text' => 'Manajemen',
-                'description' => 'Pendampingan tata kelola riset laboratorium dan tata kelola jurnal terakreditasi.',
+                'description' => 'Pemberdayaan tata kelola laboratorium dan riset klinis terstandarisasi.',
                 'icon' => 'ki-filled ki-setting-2',
                 'link_url' => '/about-us',
                 'order_no' => 4,
@@ -142,6 +139,97 @@ class WebsiteDatabaseSeeder extends Seeder
 
         foreach ($newsItems as $news) {
             WebsiteNews::updateOrCreate(['title' => $news['title']], $news);
+        }
+
+        // Default Main Partners (Platinum Partners)
+        $mainPartners = [
+            [
+                'name' => 'PaninBank',
+                'type' => 'main',
+                'website_url' => 'https://www.panin.co.id',
+                'order_no' => 1,
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Ultima Genomics',
+                'type' => 'main',
+                'website_url' => 'https://www.ultimagenomics.com',
+                'order_no' => 2,
+                'is_active' => true,
+            ],
+            [
+                'name' => 'PacBio',
+                'type' => 'main',
+                'website_url' => 'https://www.pacb.com',
+                'order_no' => 3,
+                'is_active' => true,
+            ],
+            [
+                'name' => 'MGI Tech',
+                'type' => 'main',
+                'website_url' => 'https://en.mgi-tech.com',
+                'order_no' => 4,
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Oxford Nanopore Technologies',
+                'type' => 'main',
+                'website_url' => 'https://nanoporetech.com',
+                'order_no' => 5,
+                'is_active' => true,
+            ],
+        ];
+
+        foreach ($mainPartners as $partner) {
+            WebsitePartner::updateOrCreate(['name' => $partner['name']], $partner);
+        }
+
+        // Default Supporting Partners (Universities & Academic Institutions)
+        $supportingPartners = [
+            'Universitas Indonesia',
+            'Institut Pertanian Bogor',
+            'Universitas Gadjah Mada',
+            'Universitas Airlangga',
+            'Universitas Padjadjaran',
+            'Institut Teknologi Del',
+            'Universitas Diponegoro',
+            'Universitas Brawijaya',
+            'Universitas Hasanuddin',
+            'Universitas Sumatera Utara',
+            'Universitas Udayana',
+            'Universitas Jember',
+            'Universitas Sebelas Maret',
+            'Universitas Andalas',
+            'Universitas Lampung',
+            'Universitas Sam Ratulangi',
+            'Universitas Pattimura',
+            'Universitas Cenderawasih',
+            'Universitas Negeri Padang',
+            'Universitas Negeri Makassar',
+            'Universitas Mataram',
+            'Universitas Lambung Mangkurat',
+            'Universitas Borneo Tarakan',
+            'Universitas Kristen Satya Wacana',
+            'Universitas Kristen Maranatha',
+            'Universitas Internasional Batam',
+            'Universitas Muhammadiyah Palembang',
+            'Universitas Muhammadiyah Kendari',
+            'Universitas Muhammadiyah Palangkaraya',
+            'Universitas Teknologi Sumbawa',
+            'Universitas Tanjungpura',
+            'Universitas Jambi',
+        ];
+
+        foreach ($supportingPartners as $index => $name) {
+            WebsitePartner::updateOrCreate(
+                ['name' => $name],
+                [
+                    'name' => $name,
+                    'type' => 'supporting',
+                    'order_no' => $index + 1,
+                    'is_active' => true,
+                ]
+            );
         }
     }
 }
