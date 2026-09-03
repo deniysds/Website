@@ -35,6 +35,18 @@
                     "administrator",
                     "admin"
                 ]
+            },
+            {
+                "title": "Kotak Masuk Pertanyaan",
+                "path": "website.contacts.index",
+                "icon": "ki-filled ki-sms text-lg",
+                "classes": "",
+                "attributes": [],
+                "permission": "",
+                "roles": [
+                    "administrator",
+                    "admin"
+                ]
             }
         ]
     }

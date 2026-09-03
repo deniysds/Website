@@ -235,4 +235,40 @@ class WebsiteController extends Controller
     {
         return view('website::public.cms.announcements');
     }
+
+    /**
+     * Handles submission of the public inquiry / contact form.
+     */
+    public function submitContactForm(Request $request)
+    {
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:100',
+            'last_name'  => 'nullable|string|max:100',
+            'phone'      => 'required|string|max:30',
+            'email'      => 'required|email|max:150',
+            'message'    => 'required|string|max:3000',
+        ]);
+
+        $contact = \Modules\Website\Models\WebsiteContact::create([
+            'first_name' => $validated['first_name'],
+            'last_name'  => $validated['last_name'] ?? null,
+            'phone'      => $validated['phone'],
+            'email'      => $validated['email'],
+            'message'    => $validated['message'],
+            'status'     => 'unread',
+        ]);
+
+        // Kirim salinan pesan ke email admin / pengelola portal
+        try {
+            $adminEmail = config('mail.from.address', 'admin@satriabudi.org');
+            \Illuminate\Support\Facades\Mail::to($adminEmail)
+                ->send(new \Modules\Website\Mail\ContactInquiryMail($contact));
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Gagal mengirim salinan email pesan kontak: ' . $e->getMessage(), [
+                'contact_id' => $contact->id,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Terima kasih! Pertanyaan Anda telah berhasil dikirimkan. Tim kami akan segera menghubungi Anda.');
+    }
 }

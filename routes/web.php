@@ -13,12 +13,13 @@ Route::name('website.')->group(function () {
     Route::get('/catalog-issues/{id}', [WebsiteController::class, 'issueDetail'])->name('issues.show');
     Route::get('/about-us', [WebsiteController::class, 'about'])->name('about');
     Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');
+    Route::post('/contact', [WebsiteController::class, 'submitContactForm'])->name('contact.submit');
     Route::get('/author-guidelines', [WebsiteController::class, 'guidelines'])->name('guidelines');
     Route::get('/publication-ethics', [WebsiteController::class, 'publicationEthics'])->name('ethics');
     Route::get('/indexing-info', [WebsiteController::class, 'indexingInfo'])->name('indexing');
     Route::get('/announcements', [WebsiteController::class, 'announcements'])->name('announcements');
 
-    // Admin CMS Settings & Partners Routes
+    // Admin CMS Settings, Partners & Contacts Inquiry Routes
     Route::middleware(['auth'])->prefix('admin/website')->group(function () {
         Route::get('/settings', [WebsiteController::class, 'adminSettings'])->name('settings');
         Route::post('/settings', [WebsiteController::class, 'updateAdminSettings'])->name('settings.update');
@@ -30,6 +31,14 @@ Route::name('website.')->group(function () {
             Route::put('/{id}', [AdminPartnerController::class, 'update'])->name('update');
             Route::delete('/{id}', [AdminPartnerController::class, 'destroy'])->name('destroy');
             Route::patch('/{id}/toggle', [AdminPartnerController::class, 'toggleStatus'])->name('toggle');
+        });
+
+        // Contact Messages & Inquiries Management (Kotak Masuk Pertanyaan Publik)
+        Route::prefix('contacts')->name('contacts.')->group(function () {
+            Route::get('/', [\Modules\Website\Http\Controllers\AdminContactController::class, 'index'])->name('index');
+            Route::get('/{id}', [\Modules\Website\Http\Controllers\AdminContactController::class, 'show'])->name('show');
+            Route::put('/{id}/status', [\Modules\Website\Http\Controllers\AdminContactController::class, 'updateStatus'])->name('status');
+            Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminContactController::class, 'destroy'])->name('destroy');
         });
     });
 });

@@ -412,4 +412,84 @@
             @endforelse
         </div>
     </section>
+
+    <!-- 8. Section Butuh Informasi Lebih Lanjut? Sampaikan Pertanyaan Anda kepada Kami (Presisi Screenshot) -->
+    <section class="rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-r from-red-950 via-red-800 to-red-600 text-white p-8 sm:p-14 border border-red-700/50">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <!-- Kolom Kiri: Headline & Deskripsi -->
+            <div class="lg:col-span-6 space-y-6">
+                <div class="space-y-3">
+                    <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight tracking-tight">
+                        Butuh Informasi Lebih Lanjut?<br>
+                        Sampaikan Pertanyaan Anda kepada Kami
+                    </h2>
+                </div>
+                <p class="text-sm sm:text-base text-red-100/90 leading-relaxed font-normal max-w-lg">
+                    Sampaikan pertanyaan, kebutuhan, atau informasi yang ingin Anda ketahui melalui formulir di samping. Tim kami akan menghubungi Anda untuk memberikan informasi dan solusi yang sesuai dengan kebutuhan Anda.
+                </p>
+
+                @if(session('success'))
+                    <div class="p-4 rounded-xl bg-white/20 backdrop-blur-md border border-white/40 text-white text-xs font-bold flex items-center gap-2">
+                        <i class="ki-filled ki-check-circle text-white text-lg"></i>
+                        <span>{{ session('success') }}</span>
+                    </div>
+                @endif
+            </div>
+
+            <!-- Kolom Kanan: Card Formulir Putih Modern -->
+            <div class="lg:col-span-6">
+                <div class="bg-white rounded-3xl p-6 sm:p-8 text-slate-900 shadow-2xl border border-white/80">
+                    <form action="{{ route('website.contact.submit') }}" method="POST" class="space-y-4">
+                        @csrf
+                        <div>
+                            <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
+                                FIRST NAME <span class="text-red-600">*</span>
+                            </label>
+                            <input type="text" name="first_name" required placeholder="FIRST NAME" value="{{ old('first_name') }}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-red-600 focus:ring-2 focus:ring-red-500/20 text-xs font-medium focus:outline-none transition" />
+                            @error('first_name')
+                                <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
+                                PHONE <span class="text-red-600">*</span>
+                            </label>
+                            <input type="text" name="phone" required placeholder="PHONE" value="{{ old('phone') }}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-red-600 focus:ring-2 focus:ring-red-500/20 text-xs font-medium focus:outline-none transition" />
+                            @error('phone')
+                                <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
+                                EMAIL <span class="text-red-600">*</span>
+                            </label>
+                            <input type="email" name="email" required placeholder="EMAIL" value="{{ old('email') }}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-red-600 focus:ring-2 focus:ring-red-500/20 text-xs font-medium focus:outline-none transition" />
+                            @error('email')
+                                <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
+                                MESSAGE <span class="text-red-600">*</span>
+                            </label>
+                            <textarea name="message" rows="3" required placeholder="MESSAGE" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-red-600 focus:ring-2 focus:ring-red-500/20 text-xs font-medium focus:outline-none transition">{{ old('message') }}</textarea>
+                            @error('message')
+                                <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="pt-2">
+                            <button type="submit" class="w-auto px-8 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs tracking-wide transition shadow-lg hover:shadow-xl flex items-center justify-center gap-2 cursor-pointer">
+                                <span>Kirim</span>
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection

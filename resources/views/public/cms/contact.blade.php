@@ -26,21 +26,50 @@
 
                 <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-xs space-y-4">
                     <h3 class="text-lg font-bold text-slate-900">Kirim Pesan Pertanyaan</h3>
-                    <form class="space-y-4 text-sm">
-                        <div>
-                            <label class="block font-medium text-slate-700 mb-1">Nama Lengkap</label>
-                            <input type="text" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-red-500 focus:outline-none" placeholder="Nama Anda">
+                    
+                    @if(session('success'))
+                        <div class="p-4 rounded-xl bg-green-50 border border-green-200 text-green-700 text-xs font-bold flex items-center gap-2">
+                            <i class="ki-filled ki-check-circle text-green-600 text-base"></i>
+                            <span>{{ session('success') }}</span>
                         </div>
+                    @endif
+
+                    <form action="{{ route('website.contact.submit') }}" method="POST" class="space-y-4 text-xs">
+                        @csrf
                         <div>
-                            <label class="block font-medium text-slate-700 mb-1">Email</label>
-                            <input type="email" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-red-500 focus:outline-none" placeholder="email@domain.com">
+                            <label class="block font-bold text-slate-700 mb-1">FIRST NAME <span class="text-red-600">*</span></label>
+                            <input type="text" name="first_name" required value="{{ old('first_name') }}" placeholder="FIRST NAME" class="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-red-500 focus:outline-none" />
+                            @error('first_name')
+                                <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
+
                         <div>
-                            <label class="block font-medium text-slate-700 mb-1">Pesan</label>
-                            <textarea rows="3" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-red-500 focus:outline-none" placeholder="Tuliskan pertanyaan atau kendala Anda..."></textarea>
+                            <label class="block font-bold text-slate-700 mb-1">PHONE <span class="text-red-600">*</span></label>
+                            <input type="text" name="phone" required value="{{ old('phone') }}" placeholder="PHONE" class="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-red-500 focus:outline-none" />
+                            @error('phone')
+                                <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
-                        <button type="button" class="w-full py-2.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold transition">
-                            Kirim Pesan
+
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">EMAIL <span class="text-red-600">*</span></label>
+                            <input type="email" name="email" required value="{{ old('email') }}" placeholder="EMAIL" class="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-red-500 focus:outline-none" />
+                            @error('email')
+                                <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">MESSAGE <span class="text-red-600">*</span></label>
+                            <textarea name="message" rows="3" required placeholder="MESSAGE" class="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-red-500 focus:outline-none">{{ old('message') }}</textarea>
+                            @error('message')
+                                <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <button type="submit" class="w-full py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold text-xs tracking-wide transition shadow-md flex items-center justify-center gap-1.5">
+                            <span>Kirim</span> &rarr;
                         </button>
                     </form>
                 </div>
