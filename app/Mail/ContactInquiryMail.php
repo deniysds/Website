@@ -3,13 +3,14 @@
 namespace Modules\Website\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Modules\Website\Models\WebsiteContact;
 
-class ContactInquiryMail extends Mailable
+class ContactInquiryMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 

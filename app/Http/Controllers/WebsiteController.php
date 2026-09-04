@@ -241,6 +241,11 @@ class WebsiteController extends Controller
      */
     public function submitContactForm(Request $request)
     {
+        // Anti-spam Honeypot trap: bots fill hidden field website_hp
+        if ($request->filled('website_hp')) {
+            return redirect()->back()->with('success', 'Terima kasih! Pertanyaan Anda telah berhasil dikirimkan. Tim kami akan segera menghubungi Anda.');
+        }
+
         $validated = $request->validate([
             'first_name' => 'required|string|max:100',
             'last_name'  => 'nullable|string|max:100',
@@ -249,16 +254,23 @@ class WebsiteController extends Controller
             'message'    => 'required|string|max:3000',
         ]);
 
+        // Sanitasi input teks untuk mencegah XSS injection
+        $firstName = strip_tags(trim($validated['first_name']));
+        $lastName  = !empty($validated['last_name']) ? strip_tags(trim($validated['last_name'])) : null;
+        $phone     = strip_tags(trim($validated['phone']));
+        $email     = filter_var(trim($validated['email']), FILTER_SANITIZE_EMAIL);
+        $message   = strip_tags(trim($validated['message']));
+
         $contact = \Modules\Website\Models\WebsiteContact::create([
-            'first_name' => $validated['first_name'],
-            'last_name'  => $validated['last_name'] ?? null,
-            'phone'      => $validated['phone'],
-            'email'      => $validated['email'],
-            'message'    => $validated['message'],
+            'first_name' => $firstName,
+            'last_name'  => $lastName,
+            'phone'      => $phone,
+            'email'      => $email,
+            'message'    => $message,
             'status'     => 'unread',
         ]);
 
-        // Kirim salinan pesan ke email admin / pengelola portal
+        // Kirim salinan pesan ke email admin / pengelola portal via background queue
         try {
             $adminEmail = config('mail.from.address', 'admin@satriabudi.org');
             \Illuminate\Support\Facades\Mail::to($adminEmail)

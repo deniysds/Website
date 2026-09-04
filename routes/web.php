@@ -13,7 +13,7 @@ Route::name('website.')->group(function () {
     Route::get('/catalog-issues/{id}', [WebsiteController::class, 'issueDetail'])->name('issues.show');
     Route::get('/about-us', [WebsiteController::class, 'about'])->name('about');
     Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');
-    Route::post('/contact', [WebsiteController::class, 'submitContactForm'])->name('contact.submit');
+    Route::post('/contact', [WebsiteController::class, 'submitContactForm'])->name('contact.submit')->middleware('throttle:10,1');
     Route::get('/author-guidelines', [WebsiteController::class, 'guidelines'])->name('guidelines');
     Route::get('/publication-ethics', [WebsiteController::class, 'publicationEthics'])->name('ethics');
     Route::get('/indexing-info', [WebsiteController::class, 'indexingInfo'])->name('indexing');
@@ -36,6 +36,7 @@ Route::name('website.')->group(function () {
         // Contact Messages & Inquiries Management (Kotak Masuk Pertanyaan Publik)
         Route::prefix('contacts')->name('contacts.')->group(function () {
             Route::get('/', [\Modules\Website\Http\Controllers\AdminContactController::class, 'index'])->name('index');
+            Route::get('/export/csv', [\Modules\Website\Http\Controllers\AdminContactController::class, 'exportCsv'])->name('export');
             Route::get('/{id}', [\Modules\Website\Http\Controllers\AdminContactController::class, 'show'])->name('show');
             Route::put('/{id}/status', [\Modules\Website\Http\Controllers\AdminContactController::class, 'updateStatus'])->name('status');
             Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminContactController::class, 'destroy'])->name('destroy');

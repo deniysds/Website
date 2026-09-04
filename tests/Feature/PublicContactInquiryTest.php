@@ -49,7 +49,7 @@ class PublicContactInquiryTest extends TestCase
             'status'     => 'unread',
         ]);
 
-        Mail::assertSent(ContactInquiryMail::class, function ($mail) {
+        Mail::assertQueued(ContactInquiryMail::class, function ($mail) {
             return $mail->contact->email === 'budi@example.com';
         });
     }
@@ -85,5 +85,49 @@ class PublicContactInquiryTest extends TestCase
         $updateResponse->assertRedirect(route('website.contacts.show', $contact->id));
         $this->assertEquals('replied', $contact->fresh()->status);
         $this->assertEquals('Sudah dibalas melalui email resmi redaksi.', $contact->fresh()->admin_notes);
+    }
+
+    public function test_honeypot_blocks_spambots(): void
+    {
+        Mail::fake();
+
+        $payload = [
+            'first_name' => 'Spam Bot',
+            'phone'      => '000000000',
+            'email'      => 'bot@spam.com',
+            'message'    => 'Buy cheap drugs now!',
+            'website_hp' => 'I am a bot', // Bot fills honeypot
+        ];
+
+        $response = $this->post(route('website.contact.submit'), $payload);
+
+        $response->assertRedirect();
+        $response->assertSessionHas('success');
+
+        // Harus dicegat, tidak boleh disimpan ke database
+        $this->assertDatabaseMissing('website_contacts', [
+            'email' => 'bot@spam.com',
+        ]);
+
+        Mail::assertNothingSent();
+    }
+
+    public function test_admin_can_export_inquiries_to_csv(): void
+    {
+        WebsiteContact::create([
+            'first_name' => 'Ahmad',
+            'phone'      => '0811111111',
+            'email'      => 'ahmad@example.com',
+            'message'    => 'Pertanyaan ekspor CSV.',
+            'status'     => 'unread',
+        ]);
+
+        $response = $this->actingAs($this->admin)->get(route('website.contacts.export'));
+
+        $response->assertStatus(200);
+        $this->assertEquals('text/csv; charset=UTF-8', $response->headers->get('content-type'));
+        $this->assertStringContainsString('attachment; filename="inquiries_export_', $response->headers->get('content-disposition'));
+        $this->assertStringContainsString('Ahmad', $response->streamedContent());
+        $this->assertStringContainsString('ahmad@example.com', $response->streamedContent());
     }
 }

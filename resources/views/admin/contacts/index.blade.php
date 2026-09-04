@@ -17,6 +17,9 @@
                 <p class="text-xs text-gray-500 mt-1">Daftar pesan, pertanyaan, dan kebutuhan informasi yang dikirimkan pengunjung melalui formulir portal IGNITE.</p>
             </div>
             <div class="flex items-center gap-3">
+                <a href="{{ route('website.contacts.export', request()->query()) }}" class="kt-btn kt-btn-primary text-white text-xs font-semibold px-4 py-2.5">
+                    <i class="ki-filled ki-file-down text-white mr-1"></i> Ekspor CSV
+                </a>
                 <a href="{{ route('website.settings') }}" class="kt-btn kt-btn-outline text-xs">
                     <i class="ki-filled ki-setting-2 mr-1"></i> Pengaturan CMS
                 </a>

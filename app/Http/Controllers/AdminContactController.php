@@ -97,4 +97,76 @@ class AdminContactController extends Controller
         return redirect()->route('website.contacts.index')
             ->with('success', "Pesan pertanyaan dari '{$name}' berhasil dihapus.");
     }
+
+    /**
+     * Export contact inquiries to CSV format (Excel compatible).
+     */
+    public function exportCsv(Request $request)
+    {
+        $query = WebsiteContact::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('first_name', 'like', "%{$search}%")
+                  ->orWhere('last_name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%")
+                  ->orWhere('message', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $contacts = $query->latest()->get();
+
+        $fileName = 'inquiries_export_' . now()->format('Ymd_His') . '.csv';
+
+        $headers = [
+            'Content-Type'        => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => "attachment; filename=\"{$fileName}\"",
+            'Pragma'              => 'no-cache',
+            'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires'             => '0',
+        ];
+
+        $callback = function () use ($contacts) {
+            $file = fopen('php://output', 'w');
+            // Tulis UTF-8 BOM untuk kompatibilitas Microsoft Excel
+            fputs($file, "\xEF\xBB\xBF");
+
+            // CSV Column Headers
+            fputcsv($file, [
+                'ID',
+                'Nama Lengkap',
+                'Nomor Telepon',
+                'Email',
+                'Status',
+                'Tanggal Masuk',
+                'Tanggal Ditindaklanjuti',
+                'Catatan Admin',
+                'Isi Pesan',
+            ]);
+
+            foreach ($contacts as $c) {
+                fputcsv($file, [
+                    $c->id,
+                    $c->full_name,
+                    $c->phone,
+                    $c->email,
+                    strtoupper($c->status),
+                    $c->created_at ? $c->created_at->format('Y-m-d H:i:s') : '-',
+                    $c->replied_at ? $c->replied_at->format('Y-m-d H:i:s') : '-',
+                    $c->admin_notes ?? '-',
+                    $c->message,
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }
