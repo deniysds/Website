@@ -11,7 +11,9 @@
     <section class="py-12 bg-slate-50 min-h-[60vh]">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-xs space-y-6 text-slate-700 leading-relaxed text-sm">
-                <p>Seluruh jurnal di bawah naungan <strong>Yayasan Satriabudi Dharma Setia (IGNITE)</strong> berkomitmen penuh untuk menjunjung tinggi standar etika publikasi ilmiah berdasarkan pedoman Committee on Publication Ethics (COPE).</p>
+                <div class="text-slate-700 leading-relaxed whitespace-pre-line bg-red-50/50 p-5 rounded-xl border border-red-100">
+                    {{ $settings['ethics_content'] ?? 'Seluruh jurnal di bawah naungan Yayasan Satriabudi Dharma Setia (IGNITE) berkomitmen penuh untuk menjunjung tinggi standar etika publikasi ilmiah berdasarkan pedoman Committee on Publication Ethics (COPE).' }}
+                </div>
 
                 <h3 class="text-lg font-bold text-slate-900 pt-4 border-t border-slate-100">1. Tanggung Jawab Penulis (Authors' Responsibilities)</h3>
                 <ul class="list-disc pl-5 space-y-2">

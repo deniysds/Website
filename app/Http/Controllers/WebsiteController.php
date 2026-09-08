@@ -70,10 +70,12 @@ class WebsiteController extends Controller
     {
         $data = $request->except('_token');
         foreach ($data as $key => $value) {
-            WebsiteSetting::setByKey($key, $value, 'landing');
+            WebsiteSetting::setByKey($key, $value, 'cms');
         }
 
-        return redirect()->back()->with('success', 'Pengaturan Landing Page Publik berhasil diperbarui.');
+        \Illuminate\Support\Facades\Cache::forget('website_settings_all');
+
+        return redirect()->route('website.settings')->with('success', 'Pengaturan Website & CMS berhasil diperbarui.');
     }
 
     /**

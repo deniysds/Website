@@ -11,7 +11,9 @@
     <section class="py-12 bg-slate-50 min-h-[60vh]">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-xs space-y-6 text-slate-700 leading-relaxed text-sm">
-                <p>Seluruh artikel yang dipublikasikan pada portal IGNITE dikelola dengan metadata terstruktur dan siap terhubung ke database pengindeksan nasional maupun internasional.</p>
+                <div class="text-slate-700 leading-relaxed whitespace-pre-line bg-slate-50 p-5 rounded-xl border border-slate-200">
+                    {{ $settings['indexing_content'] ?? 'Seluruh artikel yang dipublikasikan pada portal IGNITE dikelola dengan metadata terstruktur dan siap terhubung ke database pengindeksan nasional maupun internasional.' }}
+                </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
                     <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 space-y-2">

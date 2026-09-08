@@ -13,15 +13,39 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-xs space-y-4">
                     <h3 class="text-lg font-bold text-slate-900">{{ __('Alamat Kantor Redaksi') }}</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Yayasan Satriabudi Dharma Setia<br>
-                        Gedung Publikasi IGNITE Lt. 4<br>
-                        Jakarta, Indonesia
-                    </p>
-                    <div class="pt-4 border-t border-slate-100 space-y-2 text-sm text-slate-700">
-                        <p class="flex items-center gap-2"><i class="ki-filled ki-sms text-red-600"></i> Email: info@satriabudi.org</p>
-                        <p class="flex items-center gap-2"><i class="ki-filled ki-phone text-red-600"></i> Telepon: +62 21 1234 5678</p>
+                    <div class="text-slate-600 text-sm leading-relaxed space-y-1">
+                        <p class="font-bold text-slate-800">Yayasan Satriabudi Dharma Setia</p>
+                        <p class="text-xs text-slate-600 leading-relaxed">{{ $settings['contact_address'] ?? 'Ruko C-17, Pasar Modern Intermoda – BSD, Jl. Raya Cisauk Lapan, Sampora, Cisauk, Tangerang, Banten 15345' }}</p>
                     </div>
+                    <div class="pt-4 border-t border-slate-100 space-y-2.5 text-xs text-slate-700">
+                        <p class="flex items-center gap-2">
+                            <i class="ki-filled ki-sms text-red-600 text-sm"></i>
+                            <span>Email: <a href="mailto:{{ $settings['contact_email'] ?? 'admin@dharma.or.id' }}" class="font-semibold text-slate-900 hover:text-red-600">{{ $settings['contact_email'] ?? 'admin@dharma.or.id' }}</a></span>
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <i class="ki-filled ki-phone text-red-600 text-sm"></i>
+                            <span>Telepon: <a href="tel:{{ preg_replace('/[^0-9]/', '', $settings['contact_phone'] ?? '02150208805') }}" class="font-semibold text-slate-900 hover:text-red-600">{{ $settings['contact_phone'] ?? '(021) 5020-8805' }}</a></span>
+                        </p>
+                        @if(!empty($settings['contact_whatsapp']))
+                            <p class="flex items-center gap-2">
+                                <i class="ki-filled ki-whatsapp text-emerald-600 text-sm"></i>
+                                <span>WhatsApp: <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings['contact_whatsapp']) }}" target="_blank" class="font-semibold text-emerald-600 hover:underline">{{ $settings['contact_whatsapp'] }}</a></span>
+                            </p>
+                        @endif
+                        <p class="flex items-center gap-2 text-slate-500 text-[11px] pt-1">
+                            <i class="ki-filled ki-time text-slate-400"></i>
+                            <span>{{ $settings['contact_hours'] ?? 'Senin – Jumat: 08.30 – 17.00 WIB' }}</span>
+                        </p>
+                    </div>
+
+                    @if(!empty($settings['contact_whatsapp']))
+                        <div class="pt-4 border-t border-slate-100">
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings['contact_whatsapp']) }}?text=Halo%20Admin%20IGNITE%20Yayasan%20Satriabudi%20Dharma%20Setia" target="_blank" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition flex items-center justify-center gap-2">
+                                <i class="ki-filled ki-whatsapp text-base"></i>
+                                <span>Chat WhatsApp Layanan Cepat</span>
+                            </a>
+                        </div>
+                    @endif
                 </div>
 
                 <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-xs space-y-4">

@@ -118,12 +118,29 @@
                         <div>
                             <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4">{{ __('Kontak & Informasi') }}</h4>
                             <ul class="space-y-2 text-xs text-slate-400">
-                                <li class="flex items-start gap-2"><i
-                                        class="ki-filled ki-geolocation text-red-500 mt-0.5"></i> Jakarta, Indonesia</li>
-                                <li class="flex items-center gap-2"><i class="ki-filled ki-sms text-red-500"></i>
-                                    info@satriabudi.org</li>
-                                <li class="flex items-center gap-2"><i class="ki-filled ki-phone text-red-500"></i> +62 21
-                                    1234 5678</li>
+                                <li class="flex items-start gap-2">
+                                    <i class="ki-filled ki-geolocation text-red-500 mt-0.5 shrink-0"></i>
+                                    <span>{{ $settings['contact_address'] ?? 'Ruko C-17, Pasar Modern Intermoda – BSD, Tangerang' }}</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="ki-filled ki-sms text-red-500 shrink-0"></i>
+                                    <a href="mailto:{{ $settings['contact_email'] ?? 'admin@dharma.or.id' }}" class="hover:text-white transition">{{ $settings['contact_email'] ?? 'admin@dharma.or.id' }}</a>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="ki-filled ki-phone text-red-500 shrink-0"></i>
+                                    <a href="tel:{{ preg_replace('/[^0-9]/', '', $settings['contact_phone'] ?? '02150208805') }}" class="hover:text-white transition">{{ $settings['contact_phone'] ?? '(021) 5020-8805' }}</a>
+                                </li>
+                                @if(!empty($settings['contact_whatsapp']))
+                                    <li class="flex items-center gap-2">
+                                        <i class="ki-filled ki-whatsapp text-emerald-500 shrink-0"></i>
+                                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings['contact_whatsapp']) }}" target="_blank" class="text-emerald-400 hover:text-emerald-300 transition">WA: {{ $settings['contact_whatsapp'] }}</a>
+                                    </li>
+                                @endif
+                                <li class="pt-2 border-t border-slate-900">
+                                    <a href="{{ $settings['parent_website_url'] ?? 'https://www.dharma.or.id' }}" target="_blank" class="text-red-400 hover:text-red-300 transition flex items-center gap-1.5 font-semibold text-[11px]">
+                                        <i class="ki-filled ki-arrow-up-right text-xs"></i> Situs Utama Yayasan (dharma.or.id)
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>

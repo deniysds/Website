@@ -12,18 +12,14 @@
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-xs space-y-6 text-slate-700 leading-relaxed text-sm">
                 <h3 class="text-xl font-bold text-slate-900">1. Ketentuan Umum Naskah</h3>
-                <p>Naskah yang dikirimkan harus merupakan karya orisinal yang belum pernah dipublikasikan di jurnal lain dan tidak sedang dalam proses penelaahan di media ilmiah manapun.</p>
+                <div class="text-slate-600 leading-relaxed whitespace-pre-line">
+                    {{ $settings['guidelines_general'] ?? 'Naskah yang dikirimkan harus merupakan karya orisinal yang belum pernah dipublikasikan di jurnal lain dan tidak sedang dalam proses penelaahan di media ilmiah manapun.' }}
+                </div>
 
                 <h3 class="text-xl font-bold text-slate-900 pt-4 border-t border-slate-100">2. Struktur Penulisan Artikel</h3>
-                <ol class="list-decimal pl-5 space-y-2">
-                    <li><strong>Judul:</strong> Singkat, padat, dan mencerminkan isi riset (maksimal 18 kata).</li>
-                    <li><strong>Abstrak & Kata Kunci:</strong> Abstrak dwibahasa (Indonesia & Inggris) antara 150 - 250 kata, disertai 3-5 kata kunci.</li>
-                    <li><strong>Pendahuluan (Introduction):</strong> Latar belakang, kebaruan (novelty), dan tujuan penelitian.</li>
-                    <li><strong>Metode Penelitian (Methods):</strong> Rincian prosedur riset, desain sampel, serta analisis data.</li>
-                    <li><strong>Hasil & Pembahasan (Results & Discussion):</strong> Penyajian data objektif didukung tabel/grafik dan komparasi literatur.</li>
-                    <li><strong>Kesimpulan (Conclusion):</strong> Ringkasan hasil utama dan implikasi riset.</li>
-                    <li><strong>Referensi:</strong> Menggunakan gaya pengutipan standar IEEE / APA dengan manajer referensi (Mendeley/Zotero).</li>
-                </ol>
+                <div class="text-slate-600 leading-relaxed whitespace-pre-line bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    {{ $settings['guidelines_structure'] ?? "1. Judul: Singkat, padat, dan mencerminkan substansi riset (maksimal 18 kata).\n2. Abstrak & Kata Kunci: Dwibahasa (Indonesia & Inggris) antara 150-250 kata dengan 3-5 kata kunci.\n3. Pendahuluan (Introduction): Latar belakang, urgensi, kebaruan (novelty), dan hipotesis/tujuan.\n4. Metode (Methods): Prosedur riset, instrumen laboratorium, kelaikan etik, dan analisis statistik.\n5. Hasil & Pembahasan (Results & Discussion): Temuan objektif dengan visualisasi tabel/grafik beresolusi tinggi.\n6. Kesimpulan: Ringkasan temuan utama dan rekomendasi riset lanjutan.\n7. Referensi: Format IEEE/APA dengan referensi primer minimal 80% dari 5 tahun terakhir." }}
+                </div>
 
                 <div class="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div>

@@ -35,12 +35,19 @@ class WebsiteServiceProvider extends ModuleServiceProvider
     ];
 
     /**
-     * Define module schedules.
-     * 
-     * @param $schedule
+     * Boot the application events.
      */
-    // protected function configureSchedules(Schedule $schedule): void
-    // {
-    //     $schedule->command('inspire')->hourly();
-    // }
+    public function boot(): void
+    {
+        parent::boot();
+
+        \Illuminate\Support\Facades\View::composer(['website::*', 'layouts.web', 'layouts.public'], function ($view) {
+            if (\Illuminate\Support\Facades\Schema::hasTable('website_settings')) {
+                $settings = \Illuminate\Support\Facades\Cache::remember('website_settings_all', 3600, function () {
+                    return \Modules\Website\Models\WebsiteSetting::pluck('value', 'key')->all();
+                });
+                $view->with('settings', $settings);
+            }
+        });
+    }
 }
