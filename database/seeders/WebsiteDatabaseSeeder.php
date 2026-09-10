@@ -4,6 +4,7 @@ namespace Modules\Website\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Modules\Website\Models\WebsiteNews;
+use Modules\Website\Models\WebsiteOfficer;
 use Modules\Website\Models\WebsitePartner;
 use Modules\Website\Models\WebsiteProgram;
 use Modules\Website\Models\WebsiteSetting;
@@ -250,6 +251,144 @@ class WebsiteDatabaseSeeder extends Seeder
                     'order_no' => $index + 1,
                     'is_active' => true,
                 ]
+            );
+        }
+
+        // Default Organizational Officers & Leadership (dharma.or.id & IGNITE Journal)
+        $officers = [
+            // Level 1: Dewan Pembina & Dewan Pengawas
+            [
+                'name' => 'Erlina V. F. Ratu',
+                'title_prefix' => 'Ibu',
+                'title_suffix' => null,
+                'position' => 'Pendiri & Ketua Dewan Pembina',
+                'category' => 'pembina',
+                'hierarchy_level' => 1,
+                'affiliation' => 'Yayasan Satriabudi Dharma Setia',
+                'bio' => 'Pendiri Yayasan Satriabudi Dharma Setia sejak tahun 2016 yang mendedikasikan diri untuk kemajuan akses kesehatan, riset genomik, dan beasiswa pendidikan anak bangsa.',
+                'order_no' => 1,
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Dewan Pengawas YSDS',
+                'title_prefix' => null,
+                'title_suffix' => null,
+                'position' => 'Anggota Dewan Pengawas',
+                'category' => 'pengawas',
+                'hierarchy_level' => 1,
+                'affiliation' => 'Yayasan Satriabudi Dharma Setia',
+                'bio' => 'Bertanggung jawab melakukan supervisi tata kelola, audit kepatuhan lembaga, serta memastikan seluruh program yayasan berjalan transparan dan akuntabel.',
+                'order_no' => 2,
+                'is_active' => true,
+            ],
+
+            // Level 2: Pimpinan Harian / Ketua Yayasan
+            [
+                'name' => 'Vincentius Simeon Weo Budhyanto',
+                'title_prefix' => 'dr.',
+                'title_suffix' => 'Sp.PK',
+                'position' => 'Ketua Yayasan',
+                'category' => 'pengurus_harian',
+                'hierarchy_level' => 2,
+                'affiliation' => 'Yayasan Satriabudi Dharma Setia',
+                'bio' => 'Dokter spesialis patologi klinik yang memimpin operasional yayasan, pengembangan pusat riset genomik, serta aliansi strategis dengan puluhan universitas dan faskes.',
+                'order_no' => 1,
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Wakil Ketua Yayasan',
+                'title_prefix' => 'dr.',
+                'title_suffix' => 'M.Biomed',
+                'position' => 'Wakil Ketua & Direktur Eksekutif',
+                'category' => 'pengurus_harian',
+                'hierarchy_level' => 2,
+                'affiliation' => 'Yayasan Satriabudi Dharma Setia',
+                'bio' => 'Mengoordinasikan integrasi program riset ilmiah lintas institusi dan pembinaan ekosistem jurnal akses terbuka.',
+                'order_no' => 2,
+                'is_active' => true,
+            ],
+
+            // Level 3: Sekretaris, Bendahara & Manajemen Eksekutif
+            [
+                'name' => 'Sekretaris Eksekutif YSDS',
+                'title_prefix' => null,
+                'title_suffix' => 'S.H., M.Kn.',
+                'position' => 'Sekretaris Yayasan',
+                'category' => 'pengurus_harian',
+                'hierarchy_level' => 3,
+                'affiliation' => 'Yayasan Satriabudi Dharma Setia',
+                'bio' => 'Mengawal kepatuhan hukum, tata persuratan resmi, dan kemitraan legalitas kelembagaan yayasan.',
+                'order_no' => 1,
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Bendahara Yayasan',
+                'title_prefix' => null,
+                'title_suffix' => 'S.E., Ak., CA',
+                'position' => 'Bendahara Yayasan',
+                'category' => 'pengurus_harian',
+                'hierarchy_level' => 3,
+                'affiliation' => 'Yayasan Satriabudi Dharma Setia',
+                'bio' => 'Mengelola akuntabilitas keuangan, audit independen dana hibah riset, dan transparansi anggaran program yayasan.',
+                'order_no' => 2,
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Direktur Program Riset & Jurnal',
+                'title_prefix' => 'Dr.',
+                'title_suffix' => 'M.Sc.',
+                'position' => 'Direktur Operasional Riset & Jurnal',
+                'category' => 'pengurus_harian',
+                'hierarchy_level' => 3,
+                'affiliation' => 'IGNITE - Yayasan Satriabudi Dharma Setia',
+                'bio' => 'Memimpin manajemen harian portal jurnal IGNITE dan penyelenggaraan simposium ilmiah nasional.',
+                'order_no' => 3,
+                'is_active' => true,
+            ],
+
+            // Level 4: Dewan Redaksi Jurnal & Komite Ilmiah IGNITE
+            [
+                'name' => 'Editor-in-Chief IGNITE',
+                'title_prefix' => 'Prof. Dr.',
+                'title_suffix' => 'Sp.A(K), Ph.D',
+                'position' => 'Ketua Dewan Redaksi Jurnal (Editor-in-Chief)',
+                'category' => 'dewan_redaksi',
+                'hierarchy_level' => 4,
+                'affiliation' => 'Komite Ilmiah IGNITE / Universitas Mitra',
+                'bio' => 'Pakar riset kesehatan terkemuka yang bertanggung jawab terhadap standar mutu manuskrip, proses double-blind review, dan etika publikasi.',
+                'order_no' => 1,
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Managing Editor IGNITE',
+                'title_prefix' => 'Dr.',
+                'title_suffix' => 'M.Biomed',
+                'position' => 'Manajer Redaksi Pelaksana (Managing Editor)',
+                'category' => 'dewan_redaksi',
+                'hierarchy_level' => 4,
+                'affiliation' => 'Komite Ilmiah IGNITE',
+                'bio' => 'Mengawasi alur kerja telaah sejawat (peer-review), komunikasi dengan mitra bebestari, dan penerbitan berkala naskah.',
+                'order_no' => 2,
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Tim Komite Etik & Ahli Bioinformatika',
+                'title_prefix' => 'Dr.',
+                'title_suffix' => 'Ph.D',
+                'position' => 'Ketua Komite Ahli Bioinformatika & Genomik',
+                'category' => 'tim_ahli',
+                'hierarchy_level' => 4,
+                'affiliation' => 'Pusat Riset Genomik Molekuler',
+                'bio' => 'Memberikan telaah teknis dan kurasi saintifik data genomik serta pipeline bioinformatika pada manuskrip riset.',
+                'order_no' => 3,
+                'is_active' => true,
+            ],
+        ];
+
+        foreach ($officers as $officer) {
+            WebsiteOfficer::updateOrCreate(
+                ['name' => $officer['name'], 'position' => $officer['position']],
+                $officer
             );
         }
     }

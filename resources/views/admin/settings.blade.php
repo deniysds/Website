@@ -24,6 +24,12 @@
                     <p class="text-xs text-gray-500 mt-1">Kelola kontak resmi yayasan, alamat kantor, profil pimpinan, dan pedoman jurnal tanpa hardcoding.</p>
                 </div>
                 <div class="flex items-center gap-2">
+                    <a href="{{ route('website.officers.index') }}" class="kt-btn kt-btn-outline kt-btn-sm text-xs">
+                        <i class="ki-filled ki-people mr-1"></i> Dewan Pengurus
+                    </a>
+                    <a href="{{ route('website.partners.index') }}" class="kt-btn kt-btn-outline kt-btn-sm text-xs">
+                        <i class="ki-filled ki-element-11 mr-1"></i> Mitra Kami
+                    </a>
                     <a href="{{ route('website.home') }}" target="_blank" class="kt-btn kt-btn-outline kt-btn-sm text-xs">
                         <i class="ki-filled ki-eye mr-1"></i> Pratinjau Website
                     </a>

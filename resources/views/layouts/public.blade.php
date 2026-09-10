@@ -32,11 +32,13 @@
                 </a>
 
                 <!-- Navigation Links -->
-                <nav class="hidden lg:flex items-center space-x-8">
+                <nav class="hidden lg:flex items-center space-x-7">
                     <a href="{{ route('website.home') }}"
                         class="text-sm font-semibold {{ request()->routeIs('website.home') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Beranda') }}</a>
                     <a href="{{ route('website.about') }}"
                         class="text-sm font-semibold {{ request()->routeIs('website.about') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Profil') }}</a>
+                    <a href="{{ route('website.officers.public') }}"
+                        class="text-sm font-semibold {{ request()->routeIs('website.officers.public') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Pengurus') }}</a>
                     <a href="{{ route('website.journals.index') }}"
                         class="text-sm font-semibold {{ request()->routeIs('website.journals*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Program & Jurnal') }}</a>
                     <a href="{{ route('website.issues.archive') }}"
@@ -106,6 +108,10 @@
                         <div>
                             <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4">{{ __('Navigasi Publik') }}</h4>
                             <ul class="space-y-2 text-xs">
+                                <li><a href="{{ route('website.about') }}"
+                                        class="hover:text-white transition">{{ __('Profil & Tentang Kami') }}</a></li>
+                                <li><a href="{{ route('website.officers.public') }}"
+                                        class="hover:text-white transition">{{ __('Struktur Pengurus & Redaksi') }}</a></li>
                                 <li><a href="{{ route('website.journals.index') }}"
                                         class="hover:text-white transition">{{ __('Daftar Jurnal') }}</a></li>
                                 <li><a href="{{ route('website.issues.archive') }}"

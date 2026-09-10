@@ -58,11 +58,17 @@
 
                 <div class="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p class="text-xs text-slate-500">
-                        Ingin mengetahui lebih banyak program sosial, pendidikan, dan kesehatan yayasan?
+                        Ingin melihat susunan dewan pembina, pengawas, pengurus harian, dan dewan redaksi jurnal lengkap?
                     </p>
-                    <a href="{{ $settings['parent_website_url'] ?? 'https://www.dharma.or.id' }}" target="_blank" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-xs transition flex items-center gap-1.5 shrink-0">
-                        <span>Kunjungi dharma.or.id</span> &nearr;
-                    </a>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <a href="{{ route('website.officers.public') }}" class="px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-xs transition flex items-center gap-1.5">
+                            <i class="ki-filled ki-people text-white"></i>
+                            <span>Struktur Pengurus</span> &rarr;
+                        </a>
+                        <a href="{{ $settings['parent_website_url'] ?? 'https://www.dharma.or.id' }}" target="_blank" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-xs transition flex items-center gap-1.5">
+                            <span>dharma.or.id</span> &nearr;
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

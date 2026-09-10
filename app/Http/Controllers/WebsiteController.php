@@ -215,6 +215,21 @@ class WebsiteController extends Controller
     }
 
     /**
+     * Public Page: Organizational Structure & Officers (Dewan Pengurus & Redaksi)
+     */
+    public function officers(): View
+    {
+        $officers = \Modules\Website\Models\WebsiteOfficer::active()
+            ->orderBy('hierarchy_level', 'asc')
+            ->orderBy('order_no', 'asc')
+            ->get();
+
+        $officersByHierarchy = $officers->groupBy('hierarchy_level');
+
+        return view('website::public.officers', compact('officers', 'officersByHierarchy'));
+    }
+
+    /**
      * Public CMS Page: Contact
      */
     public function contact(): View

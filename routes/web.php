@@ -12,6 +12,7 @@ Route::name('website.')->group(function () {
     Route::get('/catalog-issues/archive', [WebsiteController::class, 'issueArchive'])->name('issues.archive');
     Route::get('/catalog-issues/{id}', [WebsiteController::class, 'issueDetail'])->name('issues.show');
     Route::get('/about-us', [WebsiteController::class, 'about'])->name('about');
+    Route::get('/pengurus', [WebsiteController::class, 'officers'])->name('officers.public');
     Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');
     Route::post('/contact', [WebsiteController::class, 'submitContactForm'])->name('contact.submit')->middleware('throttle:10,1');
     Route::get('/author-guidelines', [WebsiteController::class, 'guidelines'])->name('guidelines');
@@ -19,10 +20,19 @@ Route::name('website.')->group(function () {
     Route::get('/indexing-info', [WebsiteController::class, 'indexingInfo'])->name('indexing');
     Route::get('/announcements', [WebsiteController::class, 'announcements'])->name('announcements');
 
-    // Admin CMS Settings, Partners & Contacts Inquiry Routes
+    // Admin CMS Settings, Partners, Officers & Contacts Inquiry Routes
     Route::middleware(['auth'])->prefix('admin/website')->group(function () {
         Route::get('/settings', [WebsiteController::class, 'adminSettings'])->name('settings');
         Route::post('/settings', [WebsiteController::class, 'updateAdminSettings'])->name('settings.update');
+
+        // Officers Management (Dewan Pengurus & Struktur Organisasi)
+        Route::prefix('officers')->name('officers.')->group(function () {
+            Route::get('/', [\Modules\Website\Http\Controllers\AdminOfficerController::class, 'index'])->name('index');
+            Route::post('/', [\Modules\Website\Http\Controllers\AdminOfficerController::class, 'store'])->name('store');
+            Route::put('/{id}', [\Modules\Website\Http\Controllers\AdminOfficerController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminOfficerController::class, 'destroy'])->name('destroy');
+            Route::patch('/{id}/toggle', [\Modules\Website\Http\Controllers\AdminOfficerController::class, 'toggleStatus'])->name('toggle');
+        });
 
         // Partners Management (Mitra Kami)
         Route::prefix('partners')->name('partners.')->group(function () {
