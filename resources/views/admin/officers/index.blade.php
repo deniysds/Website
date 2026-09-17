@@ -17,6 +17,9 @@
                 <p class="text-xs text-gray-500 mt-1">Kelola data Dewan Pembina, Pengawas, Pimpinan Harian, Dewan Redaksi, dan Tim Ahli yayasan/jurnal.</p>
             </div>
             <div class="flex items-center gap-3">
+                <a href="{{ route('website.collaborations.index') }}" class="kt-btn kt-btn-outline text-xs">
+                    <i class="ki-filled ki-briefcase mr-1"></i> Kolaborasi & Alat
+                </a>
                 <a href="{{ route('website.officers.public') }}" target="_blank" class="kt-btn kt-btn-outline text-xs">
                     <i class="ki-filled ki-eye mr-1"></i> Pratinjau Publik
                 </a>
@@ -27,6 +30,7 @@
                     <i class="ki-filled ki-plus text-white mr-1"></i> Tambah Pengurus Baru
                 </button>
             </div>
+
         </div>
 
         @if(session('success'))

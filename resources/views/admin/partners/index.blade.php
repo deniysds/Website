@@ -17,6 +17,9 @@
                 <p class="text-xs text-gray-500 mt-1">Kelola daftar logo Mitra Utama (Platinum) dan Mitra Pendukung (Perguruan Tinggi/Institusi) yang tampil di portal publik.</p>
             </div>
             <div class="flex items-center gap-3">
+                <a href="{{ route('website.collaborations.index') }}" class="kt-btn kt-btn-outline text-xs">
+                    <i class="ki-filled ki-briefcase mr-1"></i> Kolaborasi & Alat
+                </a>
                 <a href="{{ route('website.officers.index') }}" class="kt-btn kt-btn-outline text-xs">
                     <i class="ki-filled ki-people mr-1"></i> Dewan Pengurus
                 </a>
@@ -27,6 +30,7 @@
                     <i class="ki-filled ki-plus text-white mr-1"></i> Tambah Mitra Baru
                 </button>
             </div>
+
         </div>
 
         @if(session('success'))

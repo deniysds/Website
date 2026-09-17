@@ -11,6 +11,8 @@ Route::name('website.')->group(function () {
     Route::get('/catalog-journals/{slug}/issue/current', [WebsiteController::class, 'currentIssue'])->name('journals.current-issue');
     Route::get('/catalog-issues/archive', [WebsiteController::class, 'issueArchive'])->name('issues.archive');
     Route::get('/catalog-issues/{id}', [WebsiteController::class, 'issueDetail'])->name('issues.show');
+    Route::get('/catalog-articles/{slug}', [WebsiteController::class, 'articleDetail'])->name('articles.show');
+    Route::get('/catalog-articles/{slug}/download', [WebsiteController::class, 'downloadArticle'])->name('articles.download');
     Route::get('/about-us', [WebsiteController::class, 'about'])->name('about');
     Route::get('/pengurus', [WebsiteController::class, 'officers'])->name('officers.public');
     Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');
@@ -19,6 +21,7 @@ Route::name('website.')->group(function () {
     Route::get('/publication-ethics', [WebsiteController::class, 'publicationEthics'])->name('ethics');
     Route::get('/indexing-info', [WebsiteController::class, 'indexingInfo'])->name('indexing');
     Route::get('/announcements', [WebsiteController::class, 'announcements'])->name('announcements');
+    Route::get('/kolaborasi', [WebsiteController::class, 'collaborations'])->name('collaborations.public');
 
     // Admin CMS Settings, Partners, Officers & Contacts Inquiry Routes
     Route::middleware(['auth'])->prefix('admin/website')->group(function () {
@@ -51,5 +54,21 @@ Route::name('website.')->group(function () {
             Route::put('/{id}/status', [\Modules\Website\Http\Controllers\AdminContactController::class, 'updateStatus'])->name('status');
             Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminContactController::class, 'destroy'])->name('destroy');
         });
+
+        // Collaborations & Equipments Management (Kolaborasi & Penyerahan Alat ke Instansi)
+        Route::prefix('collaborations')->name('collaborations.')->group(function () {
+            Route::get('/', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'index'])->name('index');
+            Route::post('/', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'store'])->name('store');
+            Route::get('/{id}', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'show'])->name('show');
+            Route::put('/{id}', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'destroy'])->name('destroy');
+            Route::patch('/{id}/toggle', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'toggleStatus'])->name('toggle');
+
+            // Peralatan yang telah diserahkan (Equipments / Items)
+            Route::post('/{id}/items', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'storeItem'])->name('items.store');
+            Route::put('/{id}/items/{itemId}', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'updateItem'])->name('items.update');
+            Route::delete('/{id}/items/{itemId}', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'destroyItem'])->name('items.destroy');
+        });
     });
 });
+

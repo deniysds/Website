@@ -3,6 +3,8 @@
 namespace Modules\Website\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Website\Models\WebsiteCollaboration;
+use Modules\Website\Models\WebsiteCollaborationItem;
 use Modules\Website\Models\WebsiteNews;
 use Modules\Website\Models\WebsiteOfficer;
 use Modules\Website\Models\WebsitePartner;
@@ -391,5 +393,159 @@ class WebsiteDatabaseSeeder extends Seeder
                 $officer
             );
         }
+
+        // Default Collaboration Institutions & Equipment Handover
+        $collaborations = [
+            [
+                'institution_name' => 'RSUP Dr. Sardjito Yogyakarta',
+                'category'         => 'Rumah Sakit Rujukan Nasional',
+                'location'         => 'Sleman, D.I. Yogyakarta',
+                'handover_date'    => '2024-08-15',
+                'pic_name'         => 'Direktur Utama & Kepala Lab Molekuler',
+                'description'      => 'Serah terima hibah fasilitas laboratorium diagnostik molekuler genomik untuk penguatan deteksi dini penyakit genetik, onkologi, dan infeksi tropis di wilayah D.I. Yogyakarta dan Jawa Bagian Selatan.',
+                'order_no'         => 1,
+                'is_active'        => true,
+                'items'            => [
+                    [
+                        'item_number'    => '1',
+                        'name'           => 'Real-Time PCR Detection System 96-Well',
+                        'unit'           => 'Unit',
+                        'quantity'       => 2,
+                        'specifications' => 'Multi-channel fluorophore detection dengan software kuantifikasi otomatis.',
+                        'order_no'       => 1,
+                    ],
+                    [
+                        'item_number'    => '2',
+                        'name'           => 'Biosafety Cabinet (BSC) Class II Type A2',
+                        'unit'           => 'Unit',
+                        'quantity'       => 2,
+                        'specifications' => 'HEPA filter 99.995% dengan microprocessor airflow control.',
+                        'order_no'       => 2,
+                    ],
+                    [
+                        'item_number'    => '3',
+                        'name'           => 'Refrigerated High-Speed Microcentrifuge',
+                        'unit'           => 'Unit',
+                        'quantity'       => 4,
+                        'specifications' => 'Kapasitas 24 x 1.5/2.0 mL, kecepatan maksimum 15,000 RPM.',
+                        'order_no'       => 3,
+                    ],
+                    [
+                        'item_number'    => '4',
+                        'name'           => 'Set Adjustable Micropipette (0.5 - 1000 µL)',
+                        'unit'           => 'Set',
+                        'quantity'       => 10,
+                        'specifications' => 'Autoclavable ergonomic micropipette 4 ukuran (P10, P20, P200, P1000) dengan tip box.',
+                        'order_no'       => 4,
+                    ],
+                    [
+                        'item_number'    => '5',
+                        'name'           => 'Ultra-Low Temperature Freezer -86°C (728 Liter)',
+                        'unit'           => 'Unit',
+                        'quantity'       => 1,
+                        'specifications' => 'Dual refrigeration system untuk penyimpanan jangka panjang spesimen biobank.',
+                        'order_no'       => 5,
+                    ],
+                ],
+            ],
+            [
+                'institution_name' => 'Fakultas Kedokteran Universitas Indonesia / RSCM',
+                'category'         => 'Perguruan Tinggi & Rumah Sakit Pendidikan',
+                'location'         => 'Salemba, Jakarta Pusat',
+                'handover_date'    => '2024-11-20',
+                'pic_name'         => 'Dekan FKUI & Kepala Lab Terpadu',
+                'description'      => 'Kemitraan strategis riset translasi genomik presisi guna akselerasi publikasi internasional dan pengembangan teknologi sequencing generasi baru.',
+                'order_no'         => 2,
+                'is_active'        => true,
+                'items'            => [
+                    [
+                        'item_number'    => '1',
+                        'name'           => 'Next-Generation Sequencing (NGS) Library Prep System',
+                        'unit'           => 'Paket',
+                        'quantity'       => 1,
+                        'specifications' => 'Sistem automasi preparasi pustaka DNA/RNA genomik skala tinggi.',
+                        'order_no'       => 1,
+                    ],
+                    [
+                        'item_number'    => '2',
+                        'name'           => 'Thermal Cycler Gradient PCR 96-Well',
+                        'unit'           => 'Unit',
+                        'quantity'       => 3,
+                        'specifications' => 'Independent temperature zones untuk optimasi primer PCR.',
+                        'order_no'       => 2,
+                    ],
+                    [
+                        'item_number'    => '3',
+                        'name'           => 'Fluorometer Qubit 4 Starter Kit',
+                        'unit'           => 'Unit',
+                        'quantity'       => 2,
+                        'specifications' => 'Kuantifikasi akurat konsentrasi DNA/RNA ultra-rendah.',
+                        'order_no'       => 3,
+                    ],
+                    [
+                        'item_number'    => '4',
+                        'name'           => 'Vortex Mixer & Mini Centrifuge Shaker',
+                        'unit'           => 'Unit',
+                        'quantity'       => 6,
+                        'specifications' => 'Speed variable dengan adapter microtube dan strip PCR.',
+                        'order_no'       => 4,
+                    ],
+                ],
+            ],
+            [
+                'institution_name' => 'RSUP Dr. Hasan Sadikin Bandung',
+                'category'         => 'Rumah Sakit Rujukan Jawa Barat',
+                'location'         => 'Bandung, Jawa Barat',
+                'handover_date'    => '2025-02-10',
+                'pic_name'         => 'Kepala Instalasi Laboratorium Sentral',
+                'description'      => 'Pengadaan instrumen ekstraksi dan spektrofotometri cepat untuk penanganan spesimen klinis diagnostik kesehatan masyarakat di wilayah Jawa Barat.',
+                'order_no'         => 3,
+                'is_active'        => true,
+                'items'            => [
+                    [
+                        'item_number'    => '1',
+                        'name'           => 'Automated Nucleic Acid Extraction System 32-Channel',
+                        'unit'           => 'Unit',
+                        'quantity'       => 1,
+                        'specifications' => 'Ekstraksi otomatis magnetic bead 32 sampel dalam 25 menit.',
+                        'order_no'       => 1,
+                    ],
+                    [
+                        'item_number'    => '2',
+                        'name'           => 'UV/Vis Microvolume Spectrophotometer NanoDrop One',
+                        'unit'           => 'Unit',
+                        'quantity'       => 1,
+                        'specifications' => 'Pengukuran absorbansi 190-850 nm tanpa kuvet (1 µL sampel).',
+                        'order_no'       => 2,
+                    ],
+                    [
+                        'item_number'    => '3',
+                        'name'           => 'Medical Grade Refrigerator +4°C (400 Liter)',
+                        'unit'           => 'Unit',
+                        'quantity'       => 2,
+                        'specifications' => 'Sistem pendingin stabil dengan alarm suhu dan data logger otomatis.',
+                        'order_no'       => 3,
+                    ],
+                ],
+            ],
+        ];
+
+        foreach ($collaborations as $collabData) {
+            $items = $collabData['items'] ?? [];
+            unset($collabData['items']);
+
+            $collab = WebsiteCollaboration::updateOrCreate(
+                ['institution_name' => $collabData['institution_name']],
+                $collabData
+            );
+
+            // Bersihkan item lama jika ada untuk idempotensi seeder
+            $collab->items()->delete();
+
+            foreach ($items as $itemData) {
+                $collab->items()->create($itemData);
+            }
+        }
     }
 }
+

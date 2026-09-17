@@ -41,19 +41,26 @@
                                     <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase bg-red-50 text-red-700 border border-red-100">Diterima / Terbit</span>
                                 </div>
                                 <h4 class="text-lg font-bold text-slate-900 hover:text-red-600 transition">
-                                    {{ $submission->title }}
+                                    <a href="{{ route('website.articles.show', $submission->slug) }}" class="hover:underline">
+                                        {{ $submission->title }}
+                                    </a>
                                 </h4>
                                 <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">{{ $submission->abstract }}</p>
                                 <p class="text-xs text-slate-500 font-medium pt-1">
                                     Penulis: {{ $submission->authors->pluck('name')->implode(', ') ?: ($submission->author?->name ?? 'Penulis') }}
                                 </p>
-                                <div class="flex items-center justify-between pt-2 text-xs">
-                                    <span class="text-slate-400 font-mono">DOI: 10.1234/ignite.v{{ $issue->volume }}i{{ $issue->number }}.{{ $submission->id }}</span>
-                                    @if($mainFile = $submission->files->where('file_role', 'naskah_utama')->first())
-                                        <a href="{{ Storage::url($mainFile->path) }}" target="_blank" class="px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-semibold transition border border-red-100 flex items-center gap-1">
-                                            <i class="ki-filled ki-file-down"></i> Unduh Berkas Naskah (.{{ pathinfo($mainFile->original_name, PATHINFO_EXTENSION) }})
+                                <div class="flex items-center justify-between pt-2 text-xs flex-wrap gap-2">
+                                    <span class="text-slate-400 font-mono">DOI: {{ $submission->doi ?: '10.1234/ignite.v' . $issue->volume . 'i' . $issue->number . '.' . $submission->id }}</span>
+                                    <div class="flex items-center gap-2">
+                                        <a href="{{ route('website.articles.show', $submission->slug) }}" class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium transition flex items-center gap-1">
+                                            <i class="ki-filled ki-eye"></i> Detail Artikel
                                         </a>
-                                    @endif
+                                        @if($mainFile = $submission->files->where('file_role', 'naskah_utama')->first())
+                                            <a href="{{ route('website.articles.download', $submission->slug) }}" target="_blank" class="px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 font-semibold transition border border-red-100 flex items-center gap-1">
+                                                <i class="ki-filled ki-file-down"></i> Unduh Berkas
+                                            </a>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         @empty

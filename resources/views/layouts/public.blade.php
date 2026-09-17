@@ -39,6 +39,8 @@
                         class="text-sm font-semibold {{ request()->routeIs('website.about') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Profil') }}</a>
                     <a href="{{ route('website.officers.public') }}"
                         class="text-sm font-semibold {{ request()->routeIs('website.officers.public') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Pengurus') }}</a>
+                    <a href="{{ route('website.collaborations.public') }}"
+                        class="text-sm font-semibold {{ request()->routeIs('website.collaborations*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Kolaborasi') }}</a>
                     <a href="{{ route('website.journals.index') }}"
                         class="text-sm font-semibold {{ request()->routeIs('website.journals*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Program & Jurnal') }}</a>
                     <a href="{{ route('website.issues.archive') }}"
@@ -112,6 +114,8 @@
                                         class="hover:text-white transition">{{ __('Profil & Tentang Kami') }}</a></li>
                                 <li><a href="{{ route('website.officers.public') }}"
                                         class="hover:text-white transition">{{ __('Struktur Pengurus & Redaksi') }}</a></li>
+                                <li><a href="{{ route('website.collaborations.public') }}"
+                                        class="hover:text-white transition">{{ __('Kolaborasi & Penyerahan Alat') }}</a></li>
                                 <li><a href="{{ route('website.journals.index') }}"
                                         class="hover:text-white transition">{{ __('Daftar Jurnal') }}</a></li>
                                 <li><a href="{{ route('website.issues.archive') }}"

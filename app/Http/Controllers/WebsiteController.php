@@ -138,13 +138,20 @@ class WebsiteController extends Controller
             ->latest('published_at')
             ->firstOrFail();
 
-        $publishedSubmissions = \Modules\Submissions\Models\Submission::with(['authors', 'files'])
-            ->where('journal_id', $journal->id)
-            ->whereIn('status', ['accepted', 'published'])
-            ->latest()
+        $articles = \Modules\Issues\Models\Article::with(['submission.authors', 'submission.files'])
+            ->where('issue_id', $issue->id)
+            ->latest('published_at')
             ->get();
 
-        return view('website::public.issue-detail', compact('journal', 'issue', 'publishedSubmissions'));
+        $publishedSubmissions = $articles->isNotEmpty()
+            ? $articles
+            : \Modules\Submissions\Models\Submission::with(['authors', 'files'])
+                ->where('journal_id', $journal->id)
+                ->whereIn('status', ['accepted', 'published'])
+                ->latest()
+                ->get();
+
+        return view('website::public.issue-detail', compact('journal', 'issue', 'publishedSubmissions', 'articles'));
     }
 
     /**
@@ -181,13 +188,60 @@ class WebsiteController extends Controller
         $issue = Issue::where('is_published', true)->with('journal')->findOrFail($id);
         $journal = $issue->journal;
 
-        $publishedSubmissions = \Modules\Submissions\Models\Submission::with(['authors', 'files'])
-            ->where('journal_id', $journal->id)
-            ->whereIn('status', ['accepted', 'published'])
-            ->latest()
+        $articles = \Modules\Issues\Models\Article::with(['submission.authors', 'submission.files'])
+            ->where('issue_id', $issue->id)
+            ->latest('published_at')
             ->get();
 
-        return view('website::public.issue-detail', compact('journal', 'issue', 'publishedSubmissions'));
+        $publishedSubmissions = $articles->isNotEmpty()
+            ? $articles
+            : \Modules\Submissions\Models\Submission::with(['authors', 'files'])
+                ->where('journal_id', $journal->id)
+                ->whereIn('status', ['accepted', 'published'])
+                ->latest()
+                ->get();
+
+        return view('website::public.issue-detail', compact('journal', 'issue', 'publishedSubmissions', 'articles'));
+    }
+
+    /**
+     * Displays the detail page of a published article.
+     */
+    public function articleDetail(string $slug): View
+    {
+        $article = \Modules\Issues\Models\Article::with([
+            'issue.journal',
+            'submission.authors',
+            'submission.files',
+        ])->where('slug', $slug)->firstOrFail();
+
+        $article->increment('views_count');
+
+        $issue = $article->issue;
+        $journal = $issue->journal;
+        $authors = $article->submission?->authors ?? collect();
+        $pdfFile = $article->submission?->files->where('file_role', 'naskah_utama')->first();
+
+        return view('website::public.article-detail', compact('article', 'issue', 'journal', 'authors', 'pdfFile'));
+    }
+
+    /**
+     * Downloads the published article PDF file.
+     */
+    public function downloadArticle(string $slug)
+    {
+        $article = \Modules\Issues\Models\Article::with('submission.files')->where('slug', $slug)->firstOrFail();
+        $article->increment('downloads_count');
+
+        $pdfFile = $article->submission?->files->where('file_role', 'naskah_utama')->first();
+        if ($pdfFile) {
+            $disk = $pdfFile->disk ?: 'public';
+            if (\Illuminate\Support\Facades\Storage::disk($disk)->exists($pdfFile->path)) {
+                return \Illuminate\Support\Facades\Storage::disk($disk)->download($pdfFile->path, $pdfFile->original_name);
+            }
+        }
+
+        abort(404, 'File naskah tidak ditemukan.');
     }
 
     /**
@@ -300,4 +354,50 @@ class WebsiteController extends Controller
 
         return redirect()->back()->with('success', 'Terima kasih! Pertanyaan Anda telah berhasil dikirimkan. Tim kami akan segera menghubungi Anda.');
     }
+
+    /**
+     * Public Page: Collaboration & Equipment Handover
+     */
+    public function collaborations(Request $request): View
+    {
+        $query = \Modules\Website\Models\WebsiteCollaboration::active()->with(['items' => function ($q) {
+            $q->orderBy('order_no', 'asc')->orderBy('id', 'asc');
+        }]);
+
+        if ($search = $request->get('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('institution_name', 'like', "%{$search}%")
+                  ->orWhere('location', 'like', "%{$search}%")
+                  ->orWhereHas('items', function ($itemQ) use ($search) {
+                      $itemQ->where('name', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        if ($category = $request->get('category')) {
+            $query->where('category', $category);
+        }
+
+        $collaborations = $query->orderBy('order_no', 'asc')->orderBy('handover_date', 'desc')->get();
+        $totalInstitutions = $collaborations->count();
+        $totalEquipmentUnits = (int) $collaborations->sum(fn($c) => $c->items->sum('quantity'));
+        $totalEquipmentTypes = (int) $collaborations->sum(fn($c) => $c->items->count());
+
+        $categories = \Modules\Website\Models\WebsiteCollaboration::active()
+            ->whereNotNull('category')
+            ->where('category', '!=', '')
+            ->distinct()
+            ->pluck('category');
+
+        return view('website::public.collaborations', compact(
+            'collaborations',
+            'categories',
+            'totalInstitutions',
+            'totalEquipmentUnits',
+            'totalEquipmentTypes',
+            'search',
+            'category'
+        ));
+    }
 }
+

@@ -24,6 +24,9 @@
                     <p class="text-xs text-gray-500 mt-1">Kelola kontak resmi yayasan, alamat kantor, profil pimpinan, dan pedoman jurnal tanpa hardcoding.</p>
                 </div>
                 <div class="flex items-center gap-2">
+                    <a href="{{ route('website.collaborations.index') }}" class="kt-btn kt-btn-outline kt-btn-sm text-xs">
+                        <i class="ki-filled ki-briefcase mr-1"></i> Kolaborasi & Alat
+                    </a>
                     <a href="{{ route('website.officers.index') }}" class="kt-btn kt-btn-outline kt-btn-sm text-xs">
                         <i class="ki-filled ki-people mr-1"></i> Dewan Pengurus
                     </a>
@@ -34,6 +37,7 @@
                         <i class="ki-filled ki-eye mr-1"></i> Pratinjau Website
                     </a>
                 </div>
+
             </div>
 
             <div class="kt-card-body p-6" x-data="{ activeTab: 'contact' }">

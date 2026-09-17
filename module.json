@@ -47,6 +47,18 @@
                     "administrator",
                     "admin"
                 ]
+            },
+            {
+                "title": "Kolaborasi & Alat",
+                "path": "website.collaborations.index",
+                "icon": "ki-filled ki-briefcase text-lg",
+                "classes": "",
+                "attributes": [],
+                "permission": "",
+                "roles": [
+                    "administrator",
+                    "admin"
+                ]
             }
         ]
     }
