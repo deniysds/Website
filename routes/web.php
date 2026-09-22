@@ -11,8 +11,11 @@ Route::name('website.')->group(function () {
     Route::get('/catalog-journals/{slug}/issue/current', [WebsiteController::class, 'currentIssue'])->name('journals.current-issue');
     Route::get('/catalog-issues/archive', [WebsiteController::class, 'issueArchive'])->name('issues.archive');
     Route::get('/catalog-issues/{id}', [WebsiteController::class, 'issueDetail'])->name('issues.show');
+    Route::get('/catalog-articles', [WebsiteController::class, 'articles'])->name('articles.index');
     Route::get('/catalog-articles/{slug}', [WebsiteController::class, 'articleDetail'])->name('articles.show');
     Route::get('/catalog-articles/{slug}/download', [WebsiteController::class, 'downloadArticle'])->name('articles.download');
+    Route::get('/catalog-articles/{slug}/export/ris', [WebsiteController::class, 'exportRis'])->name('articles.export.ris');
+    Route::get('/catalog-articles/{slug}/export/bib', [WebsiteController::class, 'exportBibtex'])->name('articles.export.bib');
     Route::get('/about-us', [WebsiteController::class, 'about'])->name('about');
     Route::get('/pengurus', [WebsiteController::class, 'officers'])->name('officers.public');
     Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');

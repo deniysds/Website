@@ -363,10 +363,29 @@
             </div>
 
             <div class="lg:col-span-6">
-                <div class="w-full h-56 sm:h-64 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 font-bold text-sm">
-                    <div class="text-center p-6 space-y-2">
-                        <i class="ki-filled ki-picture text-4xl text-slate-500"></i>
-                        <p>Banner Simposium / Proyek Utama</p>
+                <div class="w-full rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-red-950/60 border border-slate-700/80 p-6 sm:p-8 shadow-2xl relative overflow-hidden group">
+                    <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-red-600/10 rounded-full blur-3xl group-hover:bg-red-600/20 transition duration-700"></div>
+                    <div class="relative z-10 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-red-600 text-white shadow-xs">
+                                Riset & Inovasi 2026
+                            </span>
+                            <span class="text-xs font-mono text-slate-400">YSDS Genomic Hub</span>
+                        </div>
+                        <h4 class="text-xl sm:text-2xl font-black text-white tracking-tight leading-snug">
+                            Akselerasi GenAI untuk Riset Presisi & Layanan Kesehatan Indonesia
+                        </h4>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Menghubungkan lebih dari 150+ peneliti, institusi laboratorium, dan praktisi genomik nasional dalam forum ilmiah terstandarisasi.
+                        </p>
+                        <div class="pt-2 flex flex-wrap items-center gap-3">
+                            <a href="{{ route('website.contact') }}" class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-md transition inline-flex items-center gap-1.5">
+                                <i class="ki-filled ki-calendar text-xs"></i> Registrasi Partisipan &rarr;
+                            </a>
+                            <a href="{{ route('website.announcements') }}" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-semibold text-xs transition">
+                                Unduh Kerangka Acuan
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -388,8 +407,15 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             @forelse($news as $item)
                 <div class="bg-slate-50/70 rounded-2xl border border-slate-200/80 hover:bg-white hover:shadow-xl transition duration-300 overflow-hidden flex flex-col justify-between">
-                    <div class="w-full h-40 bg-slate-200 border-b border-slate-200/60 flex items-center justify-center text-slate-400">
-                        <i class="ki-filled ki-picture text-3xl"></i>
+                    <div class="w-full h-40 bg-gradient-to-tr from-slate-900 via-slate-800 to-red-950 p-5 flex flex-col justify-between relative overflow-hidden text-white border-b border-slate-200/60">
+                        <div class="flex items-center justify-between relative z-10">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-red-400 bg-red-950/80 px-2.5 py-0.5 rounded-full border border-red-800/60">{{ $item->category }}</span>
+                            <i class="ki-filled ki-document text-slate-400 text-lg"></i>
+                        </div>
+                        <div class="relative z-10">
+                            <span class="text-[11px] font-mono text-slate-300 block">Warta Riset Yayasan</span>
+                        </div>
+                        <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-red-600/20 rounded-full blur-xl"></div>
                     </div>
                     <div class="p-6 space-y-3 grow">
                         <span class="text-[10px] font-bold uppercase text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-100">{{ $item->category }}</span>

@@ -1,5 +1,51 @@
 @extends('website::layouts.public')
 
+@push('meta')
+    <!-- Google Scholar & Academic Metadata -->
+    <meta name="citation_title" content="{{ $article->title }}" />
+    @foreach($authors as $author)
+        <meta name="citation_author" content="{{ $author->name }}" />
+        @if($author->affiliation)
+            <meta name="citation_author_institution" content="{{ $author->affiliation }}" />
+        @endif
+    @endforeach
+    <meta name="citation_publication_date" content="{{ $article->published_at ? $article->published_at->format('Y/m/d') : ($issue->published_at ? $issue->published_at->format('Y/m/d') : date('Y/m/d')) }}" />
+    <meta name="citation_journal_title" content="{{ $journal->name }}" />
+    @if($journal->issn_e)
+        <meta name="citation_issn" content="{{ $journal->issn_e }}" />
+    @endif
+    <meta name="citation_volume" content="{{ $issue->volume }}" />
+    <meta name="citation_issue" content="{{ $issue->number }}" />
+    @if($article->pages)
+        @php
+            $pagesArr = explode('-', $article->pages);
+        @endphp
+        <meta name="citation_firstpage" content="{{ trim($pagesArr[0]) }}" />
+        @if(isset($pagesArr[1]))
+            <meta name="citation_lastpage" content="{{ trim($pagesArr[1]) }}" />
+        @endif
+    @endif
+    @if($article->doi)
+        <meta name="citation_doi" content="{{ $article->doi }}" />
+    @endif
+    @if($pdfFile)
+        <meta name="citation_pdf_url" content="{{ route('website.articles.download', $article->slug) }}" />
+    @endif
+    <meta name="citation_abstract_html_url" content="{{ route('website.articles.show', $article->slug) }}" />
+
+    <!-- Dublin Core Metadata -->
+    <meta name="DC.Title" content="{{ $article->title }}" />
+    @foreach($authors as $author)
+        <meta name="DC.Creator" content="{{ $author->name }}" />
+    @endforeach
+    <meta name="DC.Date" content="{{ $article->published_at ? $article->published_at->format('Y-m-d') : date('Y-m-d') }}" />
+    <meta name="DC.Description" content="{{ $article->abstract }}" />
+    <meta name="DC.Source" content="{{ $journal->name }}" />
+    @if($article->doi)
+        <meta name="DC.Identifier" content="doi:{{ $article->doi }}" />
+    @endif
+@endpush
+
 @section('public_content')
     <!-- Header Article Banner -->
     <section class="bg-slate-900 text-white py-12 border-b border-slate-800">
@@ -119,7 +165,17 @@
                             {{ $authors->pluck('name')->implode(', ') ?: 'Ignite Author' }}, {{ $issue->publication_year }}. {{ $article->title }}. {{ $journal->name }}, {{ $issue->volume }}({{ $issue->number }}), pp.{{ $article->pages ?: '1-10' }}.
                         </div>
 
-                        <div class="flex items-center justify-end">
+                        <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
+                            <div class="flex items-center gap-2">
+                                <span class="text-[11px] text-slate-500 font-semibold">Unduh Sitasi:</span>
+                                <a href="{{ route('website.articles.export.ris', $article->slug) }}" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-slate-100 hover:bg-red-50 hover:text-red-700 text-slate-700 border border-slate-200 transition" title="Format RIS untuk Mendeley, Zotero, EndNote">
+                                    <i class="ki-filled ki-file-down text-xs"></i> .RIS
+                                </a>
+                                <a href="{{ route('website.articles.export.bib', $article->slug) }}" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-slate-100 hover:bg-red-50 hover:text-red-700 text-slate-700 border border-slate-200 transition" title="Format BibTeX untuk LaTeX">
+                                    <i class="ki-filled ki-file-down text-xs"></i> .BIB
+                                </a>
+                            </div>
+
                             <button type="button" 
                                 @click="
                                     let text = document.getElementById('cite-' + format).innerText;

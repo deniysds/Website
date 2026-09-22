@@ -7,32 +7,17 @@
             <!-- Header Navbar Presisi Desain Gambar 2 -->
             <header
                 class="bg-white rounded-sm shadow-xs mb-6 px-6 py-4 flex items-center justify-between sticky top-4 z-50">
-                <!-- Logo Yayasan Satriabudi Dharma Setia Grid Brand -->
-                <a href="{{ route('website.home') }}" class="flex items-center gap-3">
-                    <div class="w-12 h-10 border border-slate-300 rounded p-0.5 grid grid-cols-2 gap-0.5 bg-white shrink-0">
-                        <div
-                            class="bg-red-700 rounded-xs flex items-center justify-center text-[7px] font-black text-white leading-none">
-                            SATRIA</div>
-                        <div
-                            class="bg-green-700 rounded-xs flex items-center justify-center text-[7px] font-black text-white leading-none">
-                            BUDI</div>
-                        <div
-                            class="bg-blue-800 rounded-xs flex items-center justify-center text-[7px] font-black text-white leading-none">
-                            DHARMA</div>
-                        <div
-                            class="bg-amber-500 rounded-xs flex items-center justify-center text-[7px] font-black text-white leading-none">
-                            SETIA</div>
-                    </div>
-                    <div class="hidden sm:block">
-                        <span class="text-xs font-black text-slate-900 uppercase tracking-wider block">YAYASAN
-                            SATRIABUDI</span>
-                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">DHARMA
-                            SETIA</span>
+                <!-- Logo Yayasan Satriabudi Dharma Setia Resmi -->
+                <a href="{{ route('website.home') }}" class="flex items-center gap-3 group">
+                    <img src="{{ asset('assets/media/app/logo-ysds.png') }}" alt="Logo Yayasan Satriabudi Dharma Setia" class="h-10 sm:h-11 w-auto object-contain shrink-0 transition group-hover:scale-105" />
+                    <div class="hidden sm:block leading-tight">
+                        <span class="text-xs font-black text-slate-900 uppercase tracking-wider block">YAYASAN SATRIABUDI</span>
+                        <span class="text-[10px] font-bold text-red-600 uppercase tracking-widest block">DHARMA SETIA</span>
                     </div>
                 </a>
 
                 <!-- Navigation Links -->
-                <nav class="hidden lg:flex items-center space-x-7">
+                <nav class="hidden lg:flex items-center space-x-6">
                     <a href="{{ route('website.home') }}"
                         class="text-sm font-semibold {{ request()->routeIs('website.home') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Beranda') }}</a>
                     <a href="{{ route('website.about') }}"
@@ -45,6 +30,8 @@
                         class="text-sm font-semibold {{ request()->routeIs('website.journals*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Program & Jurnal') }}</a>
                     <a href="{{ route('website.issues.archive') }}"
                         class="text-sm font-semibold {{ request()->routeIs('website.issues*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Publikasi') }}</a>
+                    <a href="{{ route('website.articles.index') }}"
+                        class="text-sm font-semibold {{ request()->routeIs('website.articles*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition flex items-center gap-1.5"><i class="ki-filled ki-magnifier text-xs"></i> {{ __('Cari Artikel') }}</a>
                     <a href="{{ route('website.guidelines') }}"
                         class="text-sm font-semibold {{ request()->routeIs('website.guidelines') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Panduan') }}</a>
                     <a href="{{ route('website.announcements') }}"
@@ -85,23 +72,8 @@
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                         <div class="space-y-4 md:col-span-2">
                             <div class="flex items-center gap-3">
-                                <div
-                                    class="w-10 h-8 border border-slate-600 rounded p-0.5 grid grid-cols-2 gap-0.5 bg-slate-900 shrink-0">
-                                    <div
-                                        class="bg-red-700 rounded-xs flex items-center justify-center text-[6px] font-black text-white leading-none">
-                                        SATRIA</div>
-                                    <div
-                                        class="bg-green-700 rounded-xs flex items-center justify-center text-[6px] font-black text-white leading-none">
-                                        BUDI</div>
-                                    <div
-                                        class="bg-blue-800 rounded-xs flex items-center justify-center text-[6px] font-black text-white leading-none">
-                                        DHARMA</div>
-                                    <div
-                                        class="bg-amber-500 rounded-xs flex items-center justify-center text-[6px] font-black text-white leading-none">
-                                        SETIA</div>
-                                </div>
-                                <span class="text-base font-bold text-white tracking-tight">Yayasan Satriabudi Dharma
-                                    Setia</span>
+                                <img src="{{ asset('assets/media/app/logo-ysds.png') }}" alt="Logo Yayasan Satriabudi Dharma Setia" class="h-10 w-auto object-contain rounded bg-white/95 p-1 shrink-0 shadow-xs" />
+                                <span class="text-base font-bold text-white tracking-tight">Yayasan Satriabudi Dharma Setia</span>
                             </div>
                             <p class="text-xs text-slate-400 max-w-md leading-relaxed">
                                 {{ __('Membangun Akses Kesehatan dan Pendidikan untuk Indonesia melalui publikasi ilmiah berkala, terpercaya, dan berstandar internasional.') }}
@@ -120,6 +92,8 @@
                                         class="hover:text-white transition">{{ __('Daftar Jurnal') }}</a></li>
                                 <li><a href="{{ route('website.issues.archive') }}"
                                         class="hover:text-white transition">{{ __('Arsip Terbitan') }}</a></li>
+                                <li><a href="{{ route('website.articles.index') }}"
+                                        class="hover:text-white transition text-red-400 font-semibold">{{ __('Pencarian Artikel') }}</a></li>
                                 <li><a href="{{ route('website.guidelines') }}" class="hover:text-white transition">{{ __('Panduan Penulis') }}</a></li>
                                 <li><a href="{{ route('website.ethics') }}" class="hover:text-white transition">{{ __('Etika Publikasi') }}</a></li>
                                 <li><a href="{{ route('website.indexing') }}" class="hover:text-white transition">{{ __('Informasi Pengindeksan') }}</a></li>

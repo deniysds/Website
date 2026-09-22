@@ -5,6 +5,7 @@ namespace Modules\Website\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Modules\Issues\Models\Issue;
 use Modules\Journals\Models\Journal;
 use Modules\Website\Models\WebsiteNews;
@@ -242,6 +243,166 @@ class WebsiteController extends Controller
         }
 
         abort(404, 'File naskah tidak ditemukan.');
+    }
+
+    /**
+     * Public Articles Catalog & Global Search Engine.
+     */
+    public function articles(Request $request): View
+    {
+        $search = $request->get('search');
+        $journalId = $request->get('journal_id');
+        $year = $request->get('year');
+
+        $query = \Modules\Issues\Models\Article::with([
+            'issue.journal',
+            'submission.authors',
+            'submission.files',
+        ]);
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('abstract', 'like', '%' . $search . '%')
+                  ->orWhere('doi', 'like', '%' . $search . '%')
+                  ->orWhereHas('submission.authors', function ($authorQ) use ($search) {
+                      $authorQ->where('name', 'like', '%' . $search . '%')
+                              ->orWhere('affiliation', 'like', '%' . $search . '%');
+                  });
+            });
+        }
+
+        if ($journalId) {
+            $query->whereHas('issue', function ($issueQ) use ($journalId) {
+                $issueQ->where('journal_id', $journalId);
+            });
+        }
+
+        if ($year) {
+            $query->whereHas('issue', function ($issueQ) use ($year) {
+                $issueQ->where('publication_year', $year);
+            });
+        }
+
+        $articles = $query->latest('published_at')->paginate(10)->withQueryString();
+        $journals = Journal::where('is_active', true)->get();
+        $availableYears = Issue::where('is_published', true)
+            ->distinct()
+            ->orderBy('publication_year', 'desc')
+            ->pluck('publication_year');
+
+        return view('website::public.articles', compact('articles', 'journals', 'search', 'journalId', 'year', 'availableYears'));
+    }
+
+    /**
+     * Export Article Citation to RIS format (.ris).
+     */
+    public function exportRis(string $slug)
+    {
+        $article = \Modules\Issues\Models\Article::with([
+            'issue.journal',
+            'submission.authors',
+        ])->where('slug', $slug)->firstOrFail();
+
+        $journal = $article->issue?->journal;
+        $issue = $article->issue;
+        $authors = $article->submission?->authors ?? collect();
+
+        $ris = [];
+        $ris[] = "TY  - JOUR";
+        $ris[] = "TI  - " . $article->title;
+        foreach ($authors as $author) {
+            $ris[] = "AU  - " . $author->name;
+        }
+        if ($journal) {
+            $ris[] = "T2  - " . $journal->name;
+            if ($journal->short_name) {
+                $ris[] = "J2  - " . $journal->short_name;
+            }
+            if ($journal->issn_e) {
+                $ris[] = "SN  - " . $journal->issn_e;
+            }
+        }
+        if ($issue) {
+            $ris[] = "VL  - " . $issue->volume;
+            $ris[] = "IS  - " . $issue->number;
+            $ris[] = "PY  - " . ($issue->publication_year ?: date('Y'));
+        }
+        if ($article->pages) {
+            $pages = explode('-', $article->pages);
+            $ris[] = "SP  - " . trim($pages[0]);
+            if (isset($pages[1])) {
+                $ris[] = "EP  - " . trim($pages[1]);
+            }
+        }
+        if ($article->doi) {
+            $ris[] = "DO  - " . $article->doi;
+        }
+        if ($article->abstract) {
+            $ris[] = "AB  - " . preg_replace("/\r|\n/", " ", $article->abstract);
+        }
+        if (is_array($article->keywords)) {
+            foreach ($article->keywords as $kw) {
+                $ris[] = "KW  - " . trim($kw);
+            }
+        }
+        $ris[] = "UR  - " . route('website.articles.show', $article->slug);
+        $ris[] = "ER  - \n";
+
+        $content = implode("\r\n", $ris);
+
+        return response($content, 200, [
+            'Content-Type'        => 'application/x-research-info-systems; charset=utf-8',
+            'Content-Disposition' => 'attachment; filename="' . $article->slug . '.ris"',
+        ]);
+    }
+
+    /**
+     * Export Article Citation to BibTeX format (.bib).
+     */
+    public function exportBibtex(string $slug)
+    {
+        $article = \Modules\Issues\Models\Article::with([
+            'issue.journal',
+            'submission.authors',
+        ])->where('slug', $slug)->firstOrFail();
+
+        $journal = $article->issue?->journal;
+        $issue = $article->issue;
+        $authors = $article->submission?->authors ?? collect();
+
+        $authorNames = $authors->pluck('name')->implode(' and ');
+        $citeKey = Str::slug($authors->first()?->name ?? 'ignite') . ($issue?->publication_year ?? date('Y')) . Str::slug(Str::words($article->title, 2, ''));
+
+        $bib = [];
+        $bib[] = "@article{" . $citeKey . ",";
+        $bib[] = '  title = {' . addslashes($article->title) . '},';
+        if ($authorNames) {
+            $bib[] = '  author = {' . $authorNames . '},';
+        }
+        if ($journal) {
+            $bib[] = '  journal = {' . $journal->name . '},';
+        }
+        if ($issue) {
+            $bib[] = '  volume = {' . $issue->volume . '},';
+            $bib[] = '  number = {' . $issue->number . '},';
+            $bib[] = '  year = {' . ($issue->publication_year ?: date('Y')) . '},';
+        }
+        if ($article->pages) {
+            $bib[] = '  pages = {' . $article->pages . '},';
+        }
+        if ($article->doi) {
+            $bib[] = '  doi = {' . $article->doi . '},';
+        }
+        $bib[] = '  url = {' . route('website.articles.show', $article->slug) . '}';
+        $bib[] = "}\n";
+
+        $content = implode("\n", $bib);
+
+        return response($content, 200, [
+            'Content-Type'        => 'application/x-bibtex; charset=utf-8',
+            'Content-Disposition' => 'attachment; filename="' . $article->slug . '.bib"',
+        ]);
     }
 
     /**
