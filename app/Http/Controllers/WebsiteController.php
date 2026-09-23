@@ -246,13 +246,38 @@ class WebsiteController extends Controller
     }
 
     /**
-     * Public Articles Catalog & Global Search Engine.
+     * Streams the published article PDF file in-browser for interactive reading.
+     */
+    public function viewPdf(string $slug)
+    {
+        $article = \Modules\Issues\Models\Article::with('submission.files')->where('slug', $slug)->firstOrFail();
+        $article->increment('views_count');
+
+        $pdfFile = $article->submission?->files->where('file_role', 'naskah_utama')->first();
+        if ($pdfFile) {
+            $disk = $pdfFile->disk ?: 'public';
+            if (\Illuminate\Support\Facades\Storage::disk($disk)->exists($pdfFile->path)) {
+                return \Illuminate\Support\Facades\Storage::disk($disk)->response(
+                    $pdfFile->path,
+                    $pdfFile->original_name,
+                    ['Content-Type' => 'application/pdf'],
+                    'inline'
+                );
+            }
+        }
+
+        abort(404, 'File naskah PDF tidak ditemukan.');
+    }
+
+    /**
+     * Public Articles Catalog & Global Search Engine with Multi-Criteria & Sorting.
      */
     public function articles(Request $request): View
     {
         $search = $request->get('search');
         $journalId = $request->get('journal_id');
         $year = $request->get('year');
+        $sort = $request->get('sort', 'latest');
 
         $query = \Modules\Issues\Models\Article::with([
             'issue.journal',
@@ -284,14 +309,21 @@ class WebsiteController extends Controller
             });
         }
 
-        $articles = $query->latest('published_at')->paginate(10)->withQueryString();
+        match ($sort) {
+            'popular'   => $query->orderByDesc('views_count')->orderByDesc('id'),
+            'downloads' => $query->orderByDesc('downloads_count')->orderByDesc('id'),
+            'title'     => $query->orderBy('title', 'asc'),
+            default     => $query->latest('published_at')->latest('id'),
+        };
+
+        $articles = $query->paginate(10)->withQueryString();
         $journals = Journal::where('is_active', true)->get();
         $availableYears = Issue::where('is_published', true)
             ->distinct()
             ->orderBy('publication_year', 'desc')
             ->pluck('publication_year');
 
-        return view('website::public.articles', compact('articles', 'journals', 'search', 'journalId', 'year', 'availableYears'));
+        return view('website::public.articles', compact('articles', 'journals', 'search', 'journalId', 'year', 'availableYears', 'sort'));
     }
 
     /**
@@ -559,6 +591,63 @@ class WebsiteController extends Controller
             'search',
             'category'
         ));
+    }
+
+    /**
+     * XML RSS 2.0 Feed of Published Articles with Dublin Core Metadata.
+     */
+    public function rssFeed(Request $request)
+    {
+        $articles = \Modules\Issues\Models\Article::with([
+            'issue.journal',
+            'submission.authors',
+        ])
+        ->whereHas('issue', function ($q) {
+            $q->where('is_published', true);
+        })
+        ->latest('published_at')
+        ->take(50)
+        ->get();
+
+        $xml = view('website::public.feed-rss', compact('articles'))->render();
+
+        return response($xml, 200, [
+            'Content-Type' => 'application/rss+xml; charset=utf-8',
+        ]);
+    }
+
+    /**
+     * OAI-PMH 2.0 Metadata Harvesting Endpoint (Garuda, Moraref, Google Scholar).
+     */
+    public function oaiFeed(Request $request)
+    {
+        $verb = $request->get('verb', 'Identify');
+        $metadataPrefix = $request->get('metadataPrefix', 'oai_dc');
+        $identifier = $request->get('identifier');
+
+        $query = \Modules\Issues\Models\Article::with([
+            'issue.journal',
+            'submission.authors',
+            'submission.files',
+        ])
+        ->whereHas('issue', function ($q) {
+            $q->where('is_published', true);
+        });
+
+        if ($identifier) {
+            $id = Str::afterLast($identifier, '/');
+            $query->where(function ($q) use ($id, $identifier) {
+                $q->where('id', $id)->orWhere('slug', $id)->orWhere('doi', $identifier);
+            });
+        }
+
+        $articles = $query->latest('published_at')->take(100)->get();
+
+        $xml = view('website::public.oai-pmh', compact('verb', 'metadataPrefix', 'identifier', 'articles'))->render();
+
+        return response($xml, 200, [
+            'Content-Type' => 'application/xml; charset=utf-8',
+        ]);
     }
 }
 

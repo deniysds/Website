@@ -41,7 +41,7 @@
                         </button>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-slate-100">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2 border-t border-slate-100">
                         <!-- Filter Jurnal -->
                         <div>
                             <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">{{ __('Filter Jurnal:') }}</label>
@@ -57,7 +57,7 @@
 
                         <!-- Filter Tahun -->
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">{{ __('Tahun Publikasi:') }}</label>
+                            <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">{{ __('Tahun Terbit:') }}</label>
                             <select name="year" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-hidden bg-white text-slate-700 font-medium transition">
                                 <option value="">{{ __('-- Semua Tahun --') }}</option>
                                 @foreach($availableYears as $y)
@@ -66,11 +66,22 @@
                             </select>
                         </div>
 
+                        <!-- Filter Urutan / Sort -->
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">{{ __('Urutkan Berdasarkan:') }}</label>
+                            <select name="sort" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-hidden bg-white text-slate-700 font-medium transition">
+                                <option value="latest" {{ request('sort', 'latest') == 'latest' ? 'selected' : '' }}>{{ __('Terbaru Dipublikasi') }}</option>
+                                <option value="popular" {{ request('sort') == 'popular' ? 'selected' : '' }}>{{ __('Paling Banyak Dilihat (Populer)') }}</option>
+                                <option value="downloads" {{ request('sort') == 'downloads' ? 'selected' : '' }}>{{ __('Paling Banyak Diunduh') }}</option>
+                                <option value="title" {{ request('sort') == 'title' ? 'selected' : '' }}>{{ __('Judul Naskah (A - Z)') }}</option>
+                            </select>
+                        </div>
+
                         <!-- Reset Filter -->
                         <div class="flex items-end">
-                            @if(request()->hasAny(['search', 'journal_id', 'year']))
+                            @if(request()->hasAny(['search', 'journal_id', 'year', 'sort']))
                                 <a href="{{ route('website.articles.index') }}" class="w-full py-2 px-4 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-600 font-bold text-xs text-center transition flex items-center justify-center gap-1">
-                                    <i class="ki-filled ki-cross-circle text-xs"></i> {{ __('Reset Pencarian') }}
+                                    <i class="ki-filled ki-cross-circle text-xs"></i> {{ __('Reset Filter') }}
                                 </a>
                             @else
                                 <div class="text-[11px] text-slate-400 py-2">
@@ -84,11 +95,23 @@
 
             <!-- Ringkasan Hasil & Daftar Artikel -->
             <div class="space-y-4">
-                <div class="flex items-center justify-between text-xs text-slate-500 px-1">
-                    <span>{{ __('Ditemukan') }} <strong class="text-slate-900 font-bold">{{ $articles->total() }}</strong> {{ __('artikel ilmiah') }}</span>
-                    @if(request('search'))
-                        <span>{{ __('Kata kunci:') }} <strong class="text-red-600">"{{ request('search') }}"</strong></span>
-                    @endif
+                <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500 px-1">
+                    <div>
+                        <span>{{ __('Ditemukan') }} <strong class="text-slate-900 font-bold">{{ $articles->total() }}</strong> {{ __('artikel ilmiah') }}</span>
+                        @if(request('search'))
+                            <span>• {{ __('Kata kunci:') }} <strong class="text-red-600">"{{ request('search') }}"</strong></span>
+                        @endif
+                    </div>
+                    <div class="flex items-center gap-2.5 text-[11px] font-medium">
+                        <span class="text-slate-400">Feed Pengindeksan:</span>
+                        <a href="{{ route('website.feed.rss') }}" target="_blank" class="text-amber-600 hover:text-amber-700 font-bold flex items-center gap-1" title="RSS 2.0 Feed Dublin Core">
+                            <i class="ki-filled ki-technology-4"></i> RSS 2.0
+                        </a>
+                        <span class="text-slate-300">•</span>
+                        <a href="{{ route('website.oai') }}?verb=Identify" target="_blank" class="text-blue-600 hover:text-blue-700 font-bold flex items-center gap-1" title="Open Archives Initiative Protocol for Metadata Harvesting (Garuda/Moraref/Google Scholar)">
+                            <i class="ki-filled ki-data"></i> OAI-PMH 2.0
+                        </a>
+                    </div>
                 </div>
 
                 <div class="space-y-4">
@@ -163,8 +186,11 @@
 
                                 <div class="flex items-center gap-2">
                                     @if($pdfFile)
-                                        <a href="{{ route('website.articles.download', $article->slug) }}" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition flex items-center gap-1 text-xs">
-                                            <i class="ki-filled ki-file-down text-red-600"></i> PDF
+                                        <a href="{{ route('website.articles.view_pdf', $article->slug) }}" target="_blank" class="px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-black text-white font-bold transition flex items-center gap-1 text-xs" title="Pratinjau PDF di Tab Baru">
+                                            <i class="ki-filled ki-eye text-red-500 text-xs"></i> Pratinjau
+                                        </a>
+                                        <a href="{{ route('website.articles.download', $article->slug) }}" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition flex items-center gap-1 text-xs" title="Unduh Berkas PDF">
+                                            <i class="ki-filled ki-file-down text-red-600"></i> Unduh
                                         </a>
                                     @endif
                                     <a href="{{ route('website.articles.show', $article->slug) }}" class="px-4 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold transition flex items-center gap-1 text-xs shadow-xs">

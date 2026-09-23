@@ -14,8 +14,13 @@ Route::name('website.')->group(function () {
     Route::get('/catalog-articles', [WebsiteController::class, 'articles'])->name('articles.index');
     Route::get('/catalog-articles/{slug}', [WebsiteController::class, 'articleDetail'])->name('articles.show');
     Route::get('/catalog-articles/{slug}/download', [WebsiteController::class, 'downloadArticle'])->name('articles.download');
+    Route::get('/catalog-articles/{slug}/pdf', [WebsiteController::class, 'viewPdf'])->name('articles.view_pdf');
     Route::get('/catalog-articles/{slug}/export/ris', [WebsiteController::class, 'exportRis'])->name('articles.export.ris');
     Route::get('/catalog-articles/{slug}/export/bib', [WebsiteController::class, 'exportBibtex'])->name('articles.export.bib');
+    Route::get('/feed/articles.xml', [WebsiteController::class, 'rssFeed'])->name('feed.rss');
+    Route::get('/feed/rss', [WebsiteController::class, 'rssFeed'])->name('feed.rss_alias');
+    Route::get('/oai', [WebsiteController::class, 'oaiFeed'])->name('oai');
+    Route::get('/oai-pmh', [WebsiteController::class, 'oaiFeed'])->name('oai_alias');
     Route::get('/about-us', [WebsiteController::class, 'about'])->name('about');
     Route::get('/pengurus', [WebsiteController::class, 'officers'])->name('officers.public');
     Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');

@@ -47,6 +47,7 @@
 @endpush
 
 @section('public_content')
+<div x-data="{ showPdfModal: false }">
     <!-- Header Article Banner -->
     <section class="bg-slate-900 text-white py-12 border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -195,14 +196,22 @@
                 <!-- Right 1 Col: Download Action, Journal & Issue Metadata -->
                 <div class="space-y-6">
                     
-                    <!-- PDF Download Action Box -->
+                    <!-- PDF Action Box -->
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
                         <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Berkas Naskah / Full Text</h3>
                         
                         @if($pdfFile)
-                            <a href="{{ route('website.articles.download', $article->slug) }}" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-md transition">
-                                <i class="ki-filled ki-file-down text-lg"></i> Unduh PDF Resmi
-                            </a>
+                            <div class="space-y-2.5">
+                                <button type="button" 
+                                        @click="showPdfModal = true" 
+                                        class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-slate-900 hover:bg-black text-white font-bold text-sm shadow-md transition cursor-pointer">
+                                    <i class="ki-filled ki-eye text-lg text-red-500"></i> Baca Online (PDF Viewer)
+                                </button>
+                                <a href="{{ route('website.articles.download', $article->slug) }}" 
+                                   class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-xs transition">
+                                    <i class="ki-filled ki-file-down text-base"></i> Unduh PDF Resmi
+                                </a>
+                            </div>
                             <p class="text-[11px] text-slate-500 text-center">
                                 Format: PDF • Berkas: {{ $pdfFile->original_name }}
                             </p>
@@ -253,4 +262,64 @@
             </div>
         </div>
     </section>
+
+    @if($pdfFile)
+        <!-- PDF In-Browser Viewer Modal -->
+        <div x-show="showPdfModal" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/80 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4" 
+             style="display: none;"
+             @keydown.escape.window="showPdfModal = false">
+            
+            <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-6xl max-h-[96vh] flex flex-col overflow-hidden"
+                 @click.outside="showPdfModal = false">
+                
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between px-5 py-3.5 bg-slate-900 text-white border-b border-slate-800 shrink-0">
+                    <div class="flex items-center gap-2 min-w-0 pr-4">
+                        <span class="px-2 py-0.5 rounded bg-red-600 text-[10px] font-bold uppercase tracking-wider shrink-0">PDF Galley</span>
+                        <h4 class="text-sm font-bold truncate text-slate-200" title="{{ $article->title }}">
+                            {{ $article->title }}
+                        </h4>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <a href="{{ route('website.articles.view_pdf', $article->slug) }}" target="_blank" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-1 transition" title="Buka di Tab Baru">
+                            <i class="ki-filled ki-exit-right-corner text-xs"></i> <span class="hidden sm:inline">Tab Baru</span>
+                        </a>
+                        <a href="{{ route('website.articles.download', $article->slug) }}" class="px-2.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-bold flex items-center gap-1 transition" title="Unduh Berkas PDF">
+                            <i class="ki-filled ki-file-down text-xs"></i> <span class="hidden sm:inline">Unduh</span>
+                        </a>
+                        <button type="button" @click="showPdfModal = false" class="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition cursor-pointer" title="Tutup Viewer">
+                            <i class="ki-filled ki-cross text-base"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modal PDF Viewer Body -->
+                <div class="grow bg-slate-100 relative min-h-[65vh] sm:min-h-[75vh]">
+                    <iframe src="{{ route('website.articles.view_pdf', $article->slug) }}#toolbar=1&navpanes=0" 
+                            class="w-full h-full min-h-[65vh] sm:min-h-[75vh] border-0" 
+                            title="{{ $article->title }}"
+                            loading="lazy">
+                    </iframe>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="px-5 py-2.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 shrink-0">
+                    <span class="text-[11px] truncate">
+                        {{ $journal->name }} • Vol. {{ $issue->volume }} No. {{ $issue->number }} ({{ $issue->publication_year }})
+                    </span>
+                    <span class="text-[11px] text-slate-400 hidden sm:inline">
+                        Gunakan tombol zoom dan layar penuh bawaan peramban untuk kenyamanan membaca.
+                    </span>
+                </div>
+            </div>
+        </div>
+    @endif
+</div>
 @endsection
