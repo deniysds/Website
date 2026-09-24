@@ -493,11 +493,29 @@ class WebsiteController extends Controller
     }
 
     /**
-     * Public CMS Page: Announcements
+     * Public CMS Page: Announcements & Call for Papers
      */
-    public function announcements(): View
+    public function announcements(Request $request): View
     {
-        return view('website::public.cms.announcements');
+        $query = \Modules\Journals\Models\JournalAnnouncement::published()->with('journal');
+
+        if ($type = $request->get('type')) {
+            $query->where('type', $type);
+        }
+
+        if ($journalId = $request->get('journal_id')) {
+            $query->where('journal_id', $journalId);
+        }
+
+        $announcements = $query->orderBy('is_pinned', 'desc')
+            ->latest('published_at')
+            ->latest('created_at')
+            ->paginate(10)
+            ->withQueryString();
+
+        $journals = Journal::where('is_active', true)->get();
+
+        return view('website::public.cms.announcements', compact('announcements', 'journals', 'type', 'journalId'));
     }
 
     /**
