@@ -1,68 +1,118 @@
 @extends('layouts.web')
 
 @section('content')
-    <div class="min-h-screen flex flex-col font-sans">
-        <div class="w-full max-w-7xl mx-auto flex flex-col grow">
+    <div class="min-h-screen flex flex-col font-sans min-w-0 max-w-full overflow-x-hidden">
+        <div class="w-full max-w-[1440px] 2xl:max-w-[1560px] mx-auto flex flex-col grow min-w-0 px-3 sm:px-4 lg:px-6 2xl:px-8">
 
-            <!-- Header Navbar Presisi Desain Gambar 2 -->
-            <header
-                class="bg-white rounded-sm shadow-xs mb-6 px-6 py-4 flex items-center justify-between sticky top-4 z-50">
-                <!-- Logo Yayasan Satriabudi Dharma Setia Resmi -->
-                <a href="{{ route('website.home') }}" class="flex items-center gap-3 group">
-                    <img src="{{ asset('assets/media/app/logo-ysds.png') }}" alt="Logo Yayasan Satriabudi Dharma Setia" class="h-10 sm:h-11 w-auto object-contain shrink-0 transition group-hover:scale-105" />
-                    <div class="hidden sm:block leading-tight">
-                        <span class="text-xs font-black text-slate-900 uppercase tracking-wider block">YAYASAN SATRIABUDI</span>
-                        <span class="text-[10px] font-bold text-red-600 uppercase tracking-widest block">DHARMA SETIA</span>
-                    </div>
-                </a>
-
-                <!-- Navigation Links -->
-                <nav class="hidden lg:flex items-center space-x-6">
-                    <a href="{{ route('website.home') }}"
-                        class="text-sm font-semibold {{ request()->routeIs('website.home') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Beranda') }}</a>
-                    <a href="{{ route('website.about') }}"
-                        class="text-sm font-semibold {{ request()->routeIs('website.about') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Profil') }}</a>
-                    <a href="{{ route('website.officers.public') }}"
-                        class="text-sm font-semibold {{ request()->routeIs('website.officers.public') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Pengurus') }}</a>
-                    <a href="{{ route('website.collaborations.public') }}"
-                        class="text-sm font-semibold {{ request()->routeIs('website.collaborations*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Kolaborasi') }}</a>
-                    <a href="{{ route('website.journals.index') }}"
-                        class="text-sm font-semibold {{ request()->routeIs('website.journals*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Program & Jurnal') }}</a>
-                    <a href="{{ route('website.issues.archive') }}"
-                        class="text-sm font-semibold {{ request()->routeIs('website.issues*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Publikasi') }}</a>
-                    <a href="{{ route('website.articles.index') }}"
-                        class="text-sm font-semibold {{ request()->routeIs('website.articles*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition flex items-center gap-1.5"><i class="ki-filled ki-magnifier text-xs"></i> {{ __('Cari Artikel') }}</a>
-                    <a href="{{ route('website.guidelines') }}"
-                        class="text-sm font-semibold {{ request()->routeIs('website.guidelines') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Panduan') }}</a>
-                    <a href="{{ route('website.announcements') }}"
-                        class="text-sm font-semibold {{ request()->routeIs('website.announcements') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition">{{ __('Pengumuman') }}</a>
-                </nav>
-
-                <!-- Action Button Kontak, Submit Article & Locale Switcher -->
-                <div class="flex items-center space-x-3">
-                    <!-- Public Locale Switcher -->
-                    <div class="flex items-center border border-slate-200 rounded-xl p-0.5 bg-slate-50 text-xs font-bold shadow-2xs">
-                        <a href="{{ route('locale.switch', 'id') }}" title="Bahasa Indonesia" class="px-2.5 py-1.5 rounded-lg transition {{ app()->getLocale() === 'id' ? 'bg-white text-red-600 shadow-xs font-extrabold' : 'text-slate-500 hover:text-slate-900' }}">
-                            ID 🇮🇩
-                        </a>
-                        <a href="{{ route('locale.switch', 'en') }}" title="English" class="px-2.5 py-1.5 rounded-lg transition {{ app()->getLocale() === 'en' ? 'bg-white text-red-600 shadow-xs font-extrabold' : 'text-slate-500 hover:text-slate-900' }}">
-                            EN 🇬🇧
-                        </a>
-                    </div>
-
-                    <a href="{{ route('submissions.create.step1') }}"
-                        class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5">
-                        <i class="ki-filled ki-cloud-change text-red-500"></i> {{ __('Submit Article') }}
+            <!-- Header Navbar Presisi Desain Responsive -->
+            <header x-data="{ mobileMenuOpen: false }"
+                class="bg-white rounded-2xl shadow-xs mb-6 px-3 sm:px-5 py-3 sm:py-3.5 sticky top-4 z-50 border border-slate-200/80 transition-all">
+                <div class="flex items-center justify-between gap-2.5 2xl:gap-4">
+                    <!-- Logo Yayasan Satriabudi Dharma Setia Resmi (Hanya Logo tanpa teks agar navbar lega) -->
+                    <a href="{{ route('website.home') }}" class="flex items-center group shrink-0" title="Yayasan Satriabudi Dharma Setia">
+                        <img src="{{ asset('assets/media/app/logo-ysds.png') }}" alt="Logo Yayasan Satriabudi Dharma Setia" class="h-9 sm:h-10 w-auto object-contain shrink-0 transition group-hover:scale-105" />
                     </a>
-                    <a href="{{ route('website.contact') }}"
-                        class="px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-md transition flex items-center gap-1">
-                        {{ __('Kontak') }} &nearr;
-                    </a>
+
+                    <!-- Navigation Links (Desktop) -->
+                    <nav class="hidden xl:flex items-center gap-2 2xl:gap-5 text-xs 2xl:text-sm font-semibold shrink-0">
+                        <a href="{{ route('website.home') }}"
+                            class="{{ request()->routeIs('website.home') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Beranda') }}</a>
+                        <a href="{{ route('website.about') }}"
+                            class="{{ request()->routeIs('website.about') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Profil') }}</a>
+                        <a href="{{ route('website.officers.public') }}"
+                            class="{{ request()->routeIs('website.officers.public') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Pengurus') }}</a>
+                        <a href="{{ route('website.collaborations.public') }}"
+                            class="{{ request()->routeIs('website.collaborations*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Kolaborasi') }}</a>
+                        <a href="{{ route('website.journals.index') }}"
+                            class="{{ request()->routeIs('website.journals*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Program & Jurnal') }}</a>
+                        <a href="{{ route('website.issues.archive') }}"
+                            class="{{ request()->routeIs('website.issues*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Publikasi') }}</a>
+                        <a href="{{ route('website.articles.index') }}"
+                            class="{{ request()->routeIs('website.articles*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition flex items-center gap-1 whitespace-nowrap"><i class="ki-filled ki-magnifier text-[11px]"></i> {{ __('Cari Artikel') }}</a>
+                        <a href="{{ route('website.guidelines') }}"
+                            class="{{ request()->routeIs('website.guidelines') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Panduan') }}</a>
+                        <a href="{{ route('website.announcements') }}"
+                            class="{{ request()->routeIs('website.announcements') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Pengumuman') }}</a>
+                        <a href="{{ route('website.news.index') }}"
+                            class="{{ request()->routeIs('website.news*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Berita & Warta') }}</a>
+                    </nav>
+
+                    <!-- Action Button Kontak, Submit Article & Locale Switcher (Desktop) -->
+                    <div class="hidden xl:flex items-center gap-2 shrink-0">
+                        <!-- Public Locale Switcher -->
+                        <div class="flex items-center border border-slate-200 rounded-xl p-0.5 bg-slate-50 text-[11px] font-bold shadow-2xs">
+                            <a href="{{ route('locale.switch', 'id') }}" title="Bahasa Indonesia" class="px-2 py-1 rounded-lg transition {{ app()->getLocale() === 'id' ? 'bg-white text-red-600 shadow-xs font-extrabold' : 'text-slate-500 hover:text-slate-900' }}">
+                                ID 🇮🇩
+                            </a>
+                            <a href="{{ route('locale.switch', 'en') }}" title="English" class="px-2 py-1 rounded-lg transition {{ app()->getLocale() === 'en' ? 'bg-white text-red-600 shadow-xs font-extrabold' : 'text-slate-500 hover:text-slate-900' }}">
+                                EN 🇬🇧
+                            </a>
+                        </div>
+
+                        <a href="{{ route('submissions.create.step1') }}"
+                            class="px-2.5 2xl:px-3.5 py-1.5 2xl:py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-md transition flex items-center gap-1 whitespace-nowrap">
+                            <i class="ki-filled ki-cloud-change text-red-500"></i> {{ __('Submit Article') }}
+                        </a>
+                        <a href="{{ route('website.contact') }}"
+                            class="px-2.5 2xl:px-3.5 py-1.5 2xl:py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-md transition flex items-center gap-1 whitespace-nowrap">
+                            {{ __('Kontak') }} &nearr;
+                        </a>
+                    </div>
+
+                    <!-- Mobile & Tablet Hamburger Toggle -->
+                    <div class="flex xl:hidden items-center gap-2">
+                        <!-- Locale switch for mobile -->
+                        <div class="flex items-center border border-slate-200 rounded-lg p-0.5 bg-slate-50 text-[11px] font-bold">
+                            <a href="{{ route('locale.switch', 'id') }}" class="px-2 py-1 rounded {{ app()->getLocale() === 'id' ? 'bg-white text-red-600 font-extrabold shadow-2xs' : 'text-slate-500' }}">ID</a>
+                            <a href="{{ route('locale.switch', 'en') }}" class="px-2 py-1 rounded {{ app()->getLocale() === 'en' ? 'bg-white text-red-600 font-extrabold shadow-2xs' : 'text-slate-500' }}">EN</a>
+                        </div>
+
+                        <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition focus:outline-none" aria-label="Toggle navigation">
+                            <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                            <svg x-show="mobileMenuOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile & Tablet Navigation Drawer/Dropdown -->
+                <div x-show="mobileMenuOpen"
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 -translate-y-2"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     x-transition:leave="transition ease-in duration-150"
+                     x-transition:leave-start="opacity-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 -translate-y-2"
+                     x-cloak
+                     class="xl:hidden pt-4 mt-4 border-t border-slate-200/80 space-y-3">
+                    <nav class="flex flex-col space-y-1 text-sm font-semibold text-slate-700">
+                        <a href="{{ route('website.home') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.home') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Beranda') }}</a>
+                        <a href="{{ route('website.about') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.about') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Profil') }}</a>
+                        <a href="{{ route('website.officers.public') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.officers.public') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Pengurus') }}</a>
+                        <a href="{{ route('website.collaborations.public') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.collaborations*') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Kolaborasi') }}</a>
+                        <a href="{{ route('website.journals.index') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.journals*') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Program & Jurnal') }}</a>
+                        <a href="{{ route('website.issues.archive') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.issues*') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Publikasi') }}</a>
+                        <a href="{{ route('website.articles.index') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.articles*') ? 'text-red-600 font-bold bg-red-50/50' : '' }} flex items-center gap-1.5"><i class="ki-filled ki-magnifier text-xs"></i> {{ __('Cari Artikel') }}</a>
+                        <a href="{{ route('website.guidelines') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.guidelines') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Panduan') }}</a>
+                        <a href="{{ route('website.announcements') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.announcements') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Pengumuman') }}</a>
+                        <a href="{{ route('website.news.index') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.news*') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Berita & Warta') }}</a>
+                    </nav>
+                    <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row gap-2">
+                        <a href="{{ route('submissions.create.step1') }}" class="w-full text-center px-4 py-2.5 rounded-xl bg-slate-900 text-white font-bold text-xs shadow transition flex items-center justify-center gap-1.5">
+                            <i class="ki-filled ki-cloud-change text-red-500"></i> {{ __('Submit Article') }}
+                        </a>
+                        <a href="{{ route('website.contact') }}" class="w-full text-center px-4 py-2.5 rounded-xl bg-red-600 text-white font-bold text-xs shadow transition flex items-center justify-center gap-1">
+                            {{ __('Kontak') }} &nearr;
+                        </a>
+                    </div>
                 </div>
             </header>
 
             <!-- Main Content Container Centered -->
-            <main class="grow space-y-6">
+            <main class="grow space-y-6 min-w-0 max-w-full">
                 @yield('public_content')
             </main>
 
@@ -92,8 +142,10 @@
                                         class="hover:text-white transition">{{ __('Daftar Jurnal') }}</a></li>
                                 <li><a href="{{ route('website.issues.archive') }}"
                                         class="hover:text-white transition">{{ __('Arsip Terbitan') }}</a></li>
+                                <li><a href="{{ route('website.news.index') }}"
+                                        class="hover:text-white transition">{{ __('Berita & Warta Populer') }}</a></li>
                                 <li><a href="{{ route('website.articles.index') }}"
-                                        class="hover:text-white transition text-red-400 font-semibold">{{ __('Pencarian Artikel') }}</a></li>
+                                        class="hover:text-white transition text-red-400 font-semibold">{{ __('Pencarian Artikel Jurnal') }}</a></li>
                                 <li><a href="{{ route('website.guidelines') }}" class="hover:text-white transition">{{ __('Panduan Penulis') }}</a></li>
                                 <li><a href="{{ route('website.ethics') }}" class="hover:text-white transition">{{ __('Etika Publikasi') }}</a></li>
                                 <li><a href="{{ route('website.indexing') }}" class="hover:text-white transition">{{ __('Informasi Pengindeksan') }}</a></li>

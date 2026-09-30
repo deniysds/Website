@@ -49,13 +49,13 @@
 @section('public_content')
 <div x-data="{ showPdfModal: false }">
     <!-- Header Article Banner -->
-    <section class="bg-slate-900 text-white py-12 border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="relative overflow-hidden rounded-3xl bg-slate-900 border border-slate-800 p-8 sm:p-10 mb-8 shadow-xl">
+        <div class="relative z-10">
             <!-- Breadcrumbs -->
             <nav class="flex items-center gap-2 text-xs text-slate-400 mb-4 flex-wrap">
-                <a href="{{ route('website.home') }}" class="hover:text-white transition">Beranda</a>
+                <a href="{{ route('website.home') }}" class="hover:text-white transition">{{ __('Beranda') }}</a>
                 <span>/</span>
-                <a href="{{ route('website.journals.index') }}" class="hover:text-white transition">Katalog Jurnal</a>
+                <a href="{{ route('website.journals.index') }}" class="hover:text-white transition">{{ __('Katalog Jurnal') }}</a>
                 <span>/</span>
                 <a href="{{ route('website.journals.show', $journal->slug) }}" class="hover:text-white transition">{{ $journal->short_name ?: $journal->name }}</a>
                 <span>/</span>
@@ -63,7 +63,7 @@
             </nav>
 
             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20 mb-3">
-                <i class="ki-filled ki-document"></i> Naskah Terbit / Published Article
+                <i class="ki-filled ki-document"></i> {{ __('Naskah Terbit / Published Article') }}
             </span>
             <h1 class="text-2xl sm:text-3xl font-extrabold text-white leading-tight mt-1 max-w-5xl">
                 {{ $article->title }}
@@ -78,7 +78,7 @@
                             <span class="text-xs text-slate-400">({{ $author->affiliation }})</span>
                         @endif
                         @if($author->is_corresponding_author)
-                            <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono" title="Penulis Korespondensi">Koresponden</span>
+                            <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono" title="{{ __('Koresponden') }}">{{ __('Koresponden') }}</span>
                         @endif
                     </div>
                 @empty
@@ -95,19 +95,20 @@
                     </span>
                     <span>•</span>
                 @endif
-                <span>Terbit: {{ $article->published_at ? $article->published_at->format('d F Y') : ($issue->published_at ? $issue->published_at->format('d F Y') : '-') }}</span>
+                <span>{{ __('Terbit') }}: {{ $article->published_at ? $article->published_at->format('d F Y') : ($issue->published_at ? $issue->published_at->format('d F Y') : '-') }}</span>
                 <span>•</span>
-                <span>Halaman: {{ $article->pages ?: '1-10' }}</span>
+                <span>{{ __('Halaman') }}: {{ $article->pages ?: '1-10' }}</span>
                 <span>•</span>
-                <span><i class="ki-filled ki-eye text-slate-400"></i> {{ number_format($article->views_count) }} Kali Dilihat</span>
+                <span><i class="ki-filled ki-eye text-slate-400"></i> {{ number_format($article->views_count) }} {{ __('Kali Dilihat') }}</span>
                 <span>•</span>
-                <span><i class="ki-filled ki-file-down text-slate-400"></i> {{ number_format($article->downloads_count) }} Kali Diunduh</span>
+                <span><i class="ki-filled ki-file-down text-slate-400"></i> {{ number_format($article->downloads_count) }} {{ __('Kali Diunduh') }}</span>
             </div>
         </div>
-    </section>
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    </div>
 
     <!-- Main Content & Sidebar -->
-    <section class="py-12 bg-slate-50 min-h-[60vh]">
+    <div class="w-full pb-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
@@ -117,16 +118,16 @@
                     <!-- Abstract Card -->
                     <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-4">
                         <h2 class="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
-                            <i class="ki-filled ki-text-align-left text-red-600"></i> Abstrak / Abstract
+                            <i class="ki-filled ki-text-align-left text-red-600"></i> {{ __('Abstrak / Abstract') }}
                         </h2>
                         <div class="text-slate-700 text-sm leading-relaxed whitespace-pre-line text-justify">
-                            {{ $article->abstract ?: 'Abstrak tidak tersedia untuk naskah ini.' }}
+                            {{ $article->abstract ?: __('Abstrak tidak tersedia untuk naskah ini.') }}
                         </div>
 
                         <!-- Keywords -->
                         @if(!empty($article->keywords) && is_array($article->keywords))
                             <div class="pt-4 border-t border-slate-100">
-                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">Kata Kunci / Keywords:</span>
+                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">{{ __('Kata Kunci / Keywords:') }}</span>
                                 <div class="flex flex-wrap gap-2">
                                     @foreach($article->keywords as $keyword)
                                         <span class="px-2.5 py-1 rounded-lg text-xs bg-slate-100 text-slate-700 font-medium border border-slate-200">
@@ -142,7 +143,7 @@
                     <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-4" x-data="{ format: 'apa', copied: false }">
                         <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                             <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-                                <i class="ki-filled ki-quote-up text-red-600"></i> Sitasi Naskah Ini (How to Cite)
+                                <i class="ki-filled ki-quote-up text-red-600"></i> {{ __('Sitasi Naskah Ini (How to Cite)') }}
                             </h3>
                             <div class="flex items-center gap-1 text-xs">
                                 <button type="button" @click="format = 'apa'" :class="format === 'apa' ? 'bg-red-600 text-white font-bold' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'" class="px-2.5 py-1 rounded-md transition">APA</button>
@@ -168,7 +169,7 @@
 
                         <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
                             <div class="flex items-center gap-2">
-                                <span class="text-[11px] text-slate-500 font-semibold">Unduh Sitasi:</span>
+                                <span class="text-[11px] text-slate-500 font-semibold">{{ __('Unduh Sitasi:') }}</span>
                                 <a href="{{ route('website.articles.export.ris', $article->slug) }}" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-slate-100 hover:bg-red-50 hover:text-red-700 text-slate-700 border border-slate-200 transition" title="Format RIS untuk Mendeley, Zotero, EndNote">
                                     <i class="ki-filled ki-file-down text-xs"></i> .RIS
                                 </a>
@@ -186,7 +187,7 @@
                                 " 
                                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
                                 <i class="ki-filled" :class="copied ? 'ki-check text-green-600' : 'ki-copy'"></i>
-                                <span x-text="copied ? 'Disalin ke Clipboard!' : 'Salin Sitasi'"></span>
+                                <span x-text="copied ? '{{ __('Disalin ke Clipboard!') }}' : '{{ __('Salin Sitasi') }}'"></span>
                             </button>
                         </div>
                     </div>
@@ -198,18 +199,18 @@
                     
                     <!-- PDF Action Box -->
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
-                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Berkas Naskah / Full Text</h3>
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">{{ __('Berkas Naskah / Full Text') }}</h3>
                         
                         @if($pdfFile)
                             <div class="space-y-2.5">
                                 <button type="button" 
                                         @click="showPdfModal = true" 
                                         class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-slate-900 hover:bg-black text-white font-bold text-sm shadow-md transition cursor-pointer">
-                                    <i class="ki-filled ki-eye text-lg text-red-500"></i> Baca Online (PDF Viewer)
+                                    <i class="ki-filled ki-eye text-lg text-red-500"></i> {{ __('Baca Online (PDF Viewer)') }}
                                 </button>
                                 <a href="{{ route('website.articles.download', $article->slug) }}" 
                                    class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-xs transition">
-                                    <i class="ki-filled ki-file-down text-base"></i> Unduh PDF Resmi
+                                    <i class="ki-filled ki-file-down text-base"></i> {{ __('Unduh PDF Resmi') }}
                                 </a>
                             </div>
                             <p class="text-[11px] text-slate-500 text-center">
@@ -224,36 +225,36 @@
 
                     <!-- Issue Details Card -->
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
-                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Informasi Terbitan</h3>
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">{{ __('Informasi Terbitan') }}</h3>
                         <div class="space-y-3 text-xs text-slate-600">
                             <div class="flex justify-between border-b border-slate-100 pb-2">
-                                <span class="text-slate-400">Jurnal</span>
+                                <span class="text-slate-400">{{ __('Jurnal') }}</span>
                                 <span class="font-semibold text-slate-800 text-right">{{ $journal->name }}</span>
                             </div>
                             <div class="flex justify-between border-b border-slate-100 pb-2">
-                                <span class="text-slate-400">Volume / No</span>
+                                <span class="text-slate-400">{{ __('Volume / No') }}</span>
                                 <span class="font-semibold text-slate-800">Vol. {{ $issue->volume }} No. {{ $issue->number }}</span>
                             </div>
                             <div class="flex justify-between border-b border-slate-100 pb-2">
-                                <span class="text-slate-400">Tahun</span>
+                                <span class="text-slate-400">{{ __('Tahun') }}</span>
                                 <span class="font-semibold text-slate-800">{{ $issue->publication_year }}</span>
                             </div>
                             <div class="flex justify-between border-b border-slate-100 pb-2">
-                                <span class="text-slate-400">ISSN (Cetak / Online)</span>
+                                <span class="text-slate-400">{{ __('ISSN (Cetak / Online)') }}</span>
                                 <span class="font-semibold text-slate-800 font-mono">{{ $journal->issn_p ?: '-' }} / {{ $journal->issn_e ?: '-' }}</span>
                             </div>
                         </div>
 
                         <a href="{{ route('website.issues.show', $issue->id) }}" class="block text-center py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 text-red-600 font-semibold text-xs transition border border-slate-200">
-                            Lihat Semua Artikel di Edisi Ini →
+                            {{ __('Lihat Semua Artikel di Edisi Ini →') }}
                         </a>
                     </div>
 
                     <!-- Copyright & Licensing Card -->
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-2">
-                        <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Lisensi & Hak Cipta</h4>
+                        <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">{{ __('Lisensi & Hak Cipta') }}</h4>
                         <p class="text-[11px] text-slate-500 leading-relaxed">
-                            Artikel ini dilisensikan di bawah lisensi Creative Commons Attribution 4.0 International (CC BY 4.0). Penulis memegang hak cipta penuh atas isi naskah.
+                            {{ __('Artikel ini dilisensikan di bawah lisensi Creative Commons Attribution 4.0 International (CC BY 4.0). Penulis memegang hak cipta penuh atas isi naskah.') }}
                         </p>
                     </div>
 
@@ -261,7 +262,7 @@
 
             </div>
         </div>
-    </section>
+    </div>
 
     @if($pdfFile)
         <!-- PDF In-Browser Viewer Modal -->

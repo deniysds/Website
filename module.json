@@ -25,6 +25,18 @@
                 ]
             },
             {
+                "title": "Artikel Non-Jurnal",
+                "path": "website.articles.admin.index",
+                "icon": "ki-filled ki-notepad-edit text-lg",
+                "classes": "",
+                "attributes": [],
+                "permission": "",
+                "roles": [
+                    "administrator",
+                    "admin"
+                ]
+            },
+            {
                 "title": "Manajemen Mitra",
                 "path": "website.partners.index",
                 "icon": "ki-filled ki-element-11 text-lg",

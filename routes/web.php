@@ -30,11 +30,24 @@ Route::name('website.')->group(function () {
     Route::get('/indexing-info', [WebsiteController::class, 'indexingInfo'])->name('indexing');
     Route::get('/announcements', [WebsiteController::class, 'announcements'])->name('announcements');
     Route::get('/kolaborasi', [WebsiteController::class, 'collaborations'])->name('collaborations.public');
+    Route::get('/berita', [WebsiteController::class, 'news'])->name('news.index');
+    Route::get('/berita/{slug}', [WebsiteController::class, 'newsDetail'])->name('news.show');
 
     // Admin CMS Settings, Partners, Officers & Contacts Inquiry Routes
     Route::middleware(['auth'])->prefix('admin/website')->group(function () {
         Route::get('/settings', [WebsiteController::class, 'adminSettings'])->name('settings');
         Route::post('/settings', [WebsiteController::class, 'updateAdminSettings'])->name('settings.update');
+
+        // Artikel & Berita Non-Jurnal (Articles & News Management)
+        Route::prefix('articles')->name('articles.admin.')->group(function () {
+            Route::get('/', [\Modules\Website\Http\Controllers\AdminArticleController::class, 'index'])->name('index');
+            Route::get('/create', [\Modules\Website\Http\Controllers\AdminArticleController::class, 'create'])->name('create');
+            Route::post('/', [\Modules\Website\Http\Controllers\AdminArticleController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [\Modules\Website\Http\Controllers\AdminArticleController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [\Modules\Website\Http\Controllers\AdminArticleController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminArticleController::class, 'destroy'])->name('destroy');
+            Route::patch('/{id}/toggle', [\Modules\Website\Http\Controllers\AdminArticleController::class, 'toggleStatus'])->name('toggle');
+        });
 
         // Officers Management (Dewan Pengurus & Struktur Organisasi)
         Route::prefix('officers')->name('officers.')->group(function () {
@@ -66,13 +79,20 @@ Route::name('website.')->group(function () {
         // Collaborations & Equipments Management (Kolaborasi & Penyerahan Alat ke Instansi)
         Route::prefix('collaborations')->name('collaborations.')->group(function () {
             Route::get('/', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'index'])->name('index');
+            Route::get('/export/csv', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'exportCsv'])->name('export');
             Route::post('/', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'store'])->name('store');
             Route::get('/{id}', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'show'])->name('show');
             Route::put('/{id}', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'update'])->name('update');
             Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'destroy'])->name('destroy');
             Route::patch('/{id}/toggle', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'toggleStatus'])->name('toggle');
 
+            // Cetak BAST Penyerahan Peralatan Instansi
+            Route::get('/{id}/print-bast', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'printBast'])->name('print_bast');
+
             // Peralatan yang telah diserahkan (Equipments / Items)
+            Route::get('/{id}/items/export/csv', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'exportItemsCsv'])->name('items.export');
+            Route::get('/{id}/items/import-template', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'downloadImportTemplate'])->name('items.import_template');
+            Route::post('/{id}/items/import', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'importItems'])->name('items.import');
             Route::post('/{id}/items', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'storeItem'])->name('items.store');
             Route::put('/{id}/items/{itemId}', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'updateItem'])->name('items.update');
             Route::delete('/{id}/items/{itemId}', [\Modules\Website\Http\Controllers\AdminCollaborationController::class, 'destroyItem'])->name('items.destroy');

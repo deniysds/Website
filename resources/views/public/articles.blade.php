@@ -2,9 +2,9 @@
 
 @section('public_content')
     <!-- Banner Header Halaman Pencarian Artikel -->
-    <section class="bg-slate-900 text-white py-14 border-b border-slate-800 relative overflow-hidden">
+    <div class="relative overflow-hidden rounded-3xl bg-slate-900 border border-slate-800 p-8 sm:p-12 mb-8 shadow-xl">
         <div class="absolute inset-0 bg-gradient-to-r from-red-900/30 via-slate-900/80 to-slate-900 pointer-events-none"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="relative z-10">
             <!-- Breadcrumbs -->
             <nav class="flex items-center gap-2 text-xs text-slate-400 mb-4 flex-wrap">
                 <a href="{{ route('website.home') }}" class="hover:text-white transition">{{ __('Beranda') }}</a>
@@ -22,11 +22,11 @@
                 {{ __('Telusuri seluruh naskah riset, laporan genomik, dan artikel ilmiah yang telah melalui proses telaah sejawat (peer-review) dan dipublikasikan oleh portal jurnal IGNITE - Yayasan Satriabudi Dharma Setia.') }}
             </p>
         </div>
-    </section>
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    </div>
 
     <!-- Konten Utama: Filter & Hasil Pencarian -->
-    <section class="py-10 bg-slate-50 min-h-[70vh]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div class="w-full space-y-8 pb-12">
 
             <!-- Filter & Bar Pencarian -->
             <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs space-y-4">
@@ -225,6 +225,5 @@
                 @endif
             </div>
 
-        </div>
-    </section>
+    </div>
 @endsection

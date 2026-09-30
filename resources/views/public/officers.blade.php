@@ -2,9 +2,9 @@
 
 @section('public_content')
     <!-- Banner Header Halaman Pengurus -->
-    <section class="bg-slate-900 text-white py-14 border-b border-slate-800 relative overflow-hidden">
+    <div class="relative overflow-hidden rounded-3xl bg-slate-900 border border-slate-800 p-8 sm:p-12 mb-8 shadow-xl">
         <div class="absolute inset-0 bg-gradient-to-r from-red-900/20 via-slate-900/80 to-slate-900 pointer-events-none"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="relative z-10">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold uppercase tracking-widest mb-3">
                 <i class="ki-filled ki-people text-sm"></i> {{ __('Struktur Organisasi') }}
             </div>
@@ -15,11 +15,11 @@
                 {{ __('Struktur kepengurusan resmi Yayasan Satriabudi Dharma Setia dan dewan redaksi jurnal ilmiah IGNITE yang berdedikasi mewujudkan kemajuan riset kesehatan serta publikasi ilmiah terpercaya.') }}
             </p>
         </div>
-    </section>
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    </div>
 
     <!-- Konten Utama Struktur Organisasi Berjenjang (Hierarki) -->
-    <section class="py-14 bg-slate-50 min-h-[70vh]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <div class="w-full space-y-16 pb-12">
 
             <!-- TINGKAT 1: DEWAN PEMBINA & DEWAN PENGAWAS -->
             @if(isset($officersByHierarchy[1]) && $officersByHierarchy[1]->isNotEmpty())
@@ -237,6 +237,5 @@
                 </div>
             </div>
 
-        </div>
-    </section>
+    </div>
 @endsection

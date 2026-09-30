@@ -1,16 +1,18 @@
 @extends('website::layouts.public')
 
 @section('public_content')
-    <section class="bg-slate-900 text-white py-12 border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header Banner -->
+    <div class="relative overflow-hidden rounded-3xl bg-slate-900 border border-slate-800 p-8 sm:p-10 mb-8 shadow-xl">
+        <div class="relative z-10">
             <span class="text-xs font-bold text-red-500 uppercase tracking-widest">{{ __('Hubungi Kami') }}</span>
-            <h1 class="text-3xl font-extrabold text-white mt-1">{{ __('Kontak Redaksi & Layanan Publik') }}</h1>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">{{ __('Kontak Redaksi & Layanan Publik') }}</h1>
         </div>
-    </section>
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    </div>
 
-    <section class="py-12 bg-slate-50 min-h-[60vh]">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto pb-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-xs space-y-4">
                     <h3 class="text-lg font-bold text-slate-900">{{ __('Alamat Kantor Redaksi') }}</h3>
                     <div class="text-slate-600 text-sm leading-relaxed space-y-1">
@@ -42,7 +44,7 @@
                         <div class="pt-4 border-t border-slate-100">
                             <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings['contact_whatsapp']) }}?text=Halo%20Admin%20IGNITE%20Yayasan%20Satriabudi%20Dharma%20Setia" target="_blank" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition flex items-center justify-center gap-2">
                                 <i class="ki-filled ki-whatsapp text-base"></i>
-                                <span>Chat WhatsApp Layanan Cepat</span>
+                                <span>{{ __('Chat WhatsApp Layanan Cepat') }}</span>
                             </a>
                         </div>
                     @endif
@@ -101,7 +103,6 @@
                         </button>
                     </form>
                 </div>
-            </div>
         </div>
-    </section>
+    </div>
 @endsection

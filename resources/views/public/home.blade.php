@@ -2,21 +2,21 @@
 
 @section('public_content')
     <!-- 1. Hero Section Banner Presisi Gambar 2 (Kartu Melengkung Terpusat dengan Banner Merah Overlay) -->
-    <section class="relative bg-slate-900 text-white rounded-3xl overflow-hidden py-16 sm:py-24 shadow-xl border border-slate-800">
+    <section class="relative bg-slate-900 text-white rounded-3xl overflow-hidden py-16 sm:py-24 shadow-xl border border-slate-800 min-w-0 max-w-full">
         <!-- Overlay Background Pattern & Gradient Gedung Satriabudi -->
         <div class="absolute inset-0 z-0 bg-cover bg-center opacity-30 mix-blend-luminosity filter brightness-75" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop');"></div>
         <div class="absolute inset-0 z-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent"></div>
 
         <div class="max-w-4xl mx-auto px-6 relative z-10 text-center space-y-6">
             <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
-                {{ $settings['hero_title'] ?? 'Yayasan Satriabudi Dharma Setia' }}
+                {{ __($settings['hero_title'] ?? 'Yayasan Satriabudi Dharma Setia') }}
             </h1>
             <p class="text-base sm:text-xl text-slate-200 font-light max-w-2xl mx-auto leading-relaxed">
-                {{ $settings['hero_subtitle'] ?? 'Membangun Akses Kesehatan dan Pendidikan untuk Indonesia.' }}
+                {{ __($settings['hero_subtitle'] ?? 'Membangun Akses Kesehatan dan Pendidikan untuk Indonesia.') }}
             </p>
             <div class="pt-2">
                 <a href="{{ $settings['hero_button_url'] ?? '#profil' }}" class="inline-flex items-center justify-center px-7 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-xl shadow-red-600/40 transition duration-200">
-                    {{ $settings['hero_button_text'] ?? 'Donasi' }} &nearr;
+                    {{ __($settings['hero_button_text'] ?? 'Baca Selengkapnya') }} &nearr;
                 </a>
             </div>
 
@@ -25,15 +25,15 @@
                 <div class="bg-gradient-to-r from-red-700 via-red-600 to-red-700 rounded-2xl p-6 sm:p-8 shadow-2xl border border-red-500/40 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center divide-y sm:divide-y-0 sm:divide-x divide-red-500/40">
                     <div class="pt-4 sm:pt-0">
                         <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_1_number'] ?? '150+' }}</div>
-                        <div class="text-xs font-semibold text-red-100 mt-1 uppercase tracking-wider">{{ $settings['stat_1_label'] ?? 'Kerjasama Sukses' }}</div>
+                        <div class="text-xs font-semibold text-red-100 mt-1 uppercase tracking-wider">{{ __($settings['stat_1_label'] ?? 'Kerjasama Sukses') }}</div>
                     </div>
                     <div class="pt-4 sm:pt-0 sm:pl-6">
                         <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_2_number'] ?? '125 T' }}</div>
-                        <div class="text-xs font-semibold text-red-100 mt-1 uppercase tracking-wider">{{ $settings['stat_2_label'] ?? 'Dana Terkumpul' }}</div>
+                        <div class="text-xs font-semibold text-red-100 mt-1 uppercase tracking-wider">{{ __($settings['stat_2_label'] ?? 'Dana Terkumpul') }}</div>
                     </div>
                     <div class="pt-4 sm:pt-0 sm:pl-6">
                         <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_3_number'] ?? '79+' }}</div>
-                        <div class="text-xs font-semibold text-red-100 mt-1 uppercase tracking-wider">{{ $settings['stat_3_label'] ?? 'Mitra Jejaring' }}</div>
+                        <div class="text-xs font-semibold text-red-100 mt-1 uppercase tracking-wider">{{ __($settings['stat_3_label'] ?? 'Mitra Jejaring') }}</div>
                     </div>
                 </div>
             </div>
@@ -41,32 +41,32 @@
     </section>
 
     <!-- 2. Section Profil (Menciptakan generasi muda unggul...) -->
-    <section id="profil" class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            <div class="lg:col-span-6 space-y-6">
-                <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ $settings['profile_tag'] ?? 'Profil' }}</span>
+    <section id="profil" class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8 min-w-0 max-w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            <div class="space-y-6">
+                <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __($settings['profile_tag'] ?? 'Profil') }}</span>
                 <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
-                    {{ $settings['profile_title'] ?? 'Menciptakan generasi muda unggul melalui pendidikan bermutu, kesehatan prima, dan lingkungan hidup yang terpelihara.' }}
+                    {{ __($settings['profile_title'] ?? 'Menciptakan generasi muda unggul melalui pendidikan bermutu, kesehatan prima, dan lingkungan hidup yang terpelihara.') }}
                 </h2>
                 <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-                    {{ $settings['profile_desc'] ?? 'Melalui aliansi strategis dengan institusi nasional dan internasional, kami menghadirkan program berbasis bukti riset ilmiah yang transparan dan akuntabel.' }}
+                    {{ __($settings['profile_desc'] ?? 'Melalui aliansi strategis dengan institusi nasional dan internasional, kami menghadirkan program berbasis bukti riset ilmiah yang transparan dan akuntabel.') }}
                 </p>
                 <div class="pt-2">
                     <a href="{{ route('website.about') }}" class="inline-flex items-center text-sm font-bold text-red-600 hover:text-red-700 border-b-2 border-red-600 pb-1 transition">
-                        {{ $settings['profile_button_text'] ?? 'Selengkapnya tentang kami' }} &rarr;
+                        {{ __($settings['profile_button_text'] ?? 'Selengkapnya tentang kami') }} &rarr;
                     </a>
                 </div>
             </div>
 
             <!-- 3 Box Sisi Kanan (Pendidikan, Kesehatan, Lingkungan) -->
-            <div class="lg:col-span-6 space-y-4">
+            <div class="space-y-4">
                 <div class="p-6 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:bg-white hover:shadow-md transition flex items-start gap-4">
                     <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center font-bold shrink-0">
                         <i class="ki-filled ki-teacher text-lg"></i>
                     </div>
                     <div class="space-y-1">
-                        <h4 class="font-bold text-slate-900 text-base">{{ $settings['profile_box_1_title'] ?? 'Pendidikan' }}</h4>
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ $settings['profile_box_1_desc'] ?? 'Penguatan kapabilitas SDM riset dan beasiswa tingkat tinggi secara berkesinambungan.' }}</p>
+                        <h4 class="font-bold text-slate-900 text-base">{{ __($settings['profile_box_1_title'] ?? 'Pendidikan') }}</h4>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ __($settings['profile_box_1_desc'] ?? 'Penguatan kapabilitas SDM riset dan beasiswa tingkat tinggi secara berkesinambungan.') }}</p>
                     </div>
                 </div>
 
@@ -75,8 +75,8 @@
                         <i class="ki-filled ki-heart text-lg"></i>
                     </div>
                     <div class="space-y-1">
-                        <h4 class="font-bold text-slate-900 text-base">{{ $settings['profile_box_2_title'] ?? 'Kesehatan' }}</h4>
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ $settings['profile_box_2_desc'] ?? 'Dukungan fasilitas kesehatan, diagnostik molekuler, dan pencegahan penyakit tropis.' }}</p>
+                        <h4 class="font-bold text-slate-900 text-base">{{ __($settings['profile_box_2_title'] ?? 'Kesehatan') }}</h4>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ __($settings['profile_box_2_desc'] ?? 'Dukungan fasilitas kesehatan, diagnostik molekuler, dan pencegahan penyakit tropis.') }}</p>
                     </div>
                 </div>
 
@@ -85,8 +85,8 @@
                         <i class="ki-filled ki-element-11 text-lg"></i>
                     </div>
                     <div class="space-y-1">
-                        <h4 class="font-bold text-slate-900 text-base">{{ $settings['profile_box_3_title'] ?? 'Lingkungan' }}</h4>
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ $settings['profile_box_3_desc'] ?? 'Pelestarian keanekaragaman hayati dan penerapan riset sains ramah lingkungan.' }}</p>
+                        <h4 class="font-bold text-slate-900 text-base">{{ __($settings['profile_box_3_title'] ?? 'Lingkungan') }}</h4>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ __($settings['profile_box_3_desc'] ?? 'Pelestarian keanekaragaman hayati dan penerapan riset sains ramah lingkungan.') }}</p>
                     </div>
                 </div>
             </div>
@@ -94,14 +94,14 @@
     </section>
 
     <!-- 3. Section Program (Kami Membangun Program untuk Dampak Nyata - 5 Kategori Cards) -->
-    <section class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8">
+    <section class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8 min-w-0 max-w-full">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div class="space-y-2">
-                <span class="text-xs font-bold text-red-600 uppercase tracking-widest">Program</span>
-                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">Kami Membangun Program untuk Dampak Nyata</h2>
+                <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Program') }}</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">{{ __('Kami Membangun Program untuk Dampak Nyata') }}</h2>
             </div>
             <a href="{{ route('website.about') }}" class="px-5 py-2.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold text-xs transition inline-flex items-center gap-1 self-start sm:self-auto">
-                Hubungi kami &nearr;
+                {{ __('Hubungi kami') }} &nearr;
             </a>
         </div>
 
@@ -113,12 +113,12 @@
                         <div class="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center font-bold shadow-md">
                             <i class="{{ $prog->icon ?? 'ki-filled ki-rocket' }} text-lg"></i>
                         </div>
-                        <h3 class="text-xl font-black text-slate-900">{{ $prog->title }}</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed">{{ $prog->description }}</p>
+                        <h3 class="text-xl font-black text-slate-900">{{ __($prog->title) }}</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">{{ __($prog->description) }}</p>
                     </div>
                     <div class="pt-2 border-t border-slate-200/60">
                         <a href="{{ $prog->link_url ?? '/catalog-journals' }}" class="text-xs font-bold text-slate-900 hover:text-red-600 flex items-center justify-between transition">
-                            <span>Selengkapnya</span>
+                            <span>{{ __('Selengkapnya') }}</span>
                             <span>&nearr;</span>
                         </a>
                     </div>
@@ -128,42 +128,42 @@
     </section>
 
     <!-- 4. Section Metode / Pendekatan Terarah (Dark Banner Card 1, 2, 3 Steps) -->
-    <section class="bg-slate-950 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-xl relative overflow-hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <section class="bg-slate-950 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-xl relative overflow-hidden min-w-0 max-w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <!-- Left Title & Description -->
-            <div class="lg:col-span-5 space-y-6">
-                <span class="text-xs font-bold text-red-500 uppercase tracking-widest">{{ $settings['method_tag'] ?? 'Metode' }}</span>
+            <div class="space-y-6">
+                <span class="text-xs font-bold text-red-500 uppercase tracking-widest">{{ __($settings['method_tag'] ?? 'Metode') }}</span>
                 <h2 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
-                    {{ $settings['method_title'] ?? 'Pendekatan terarah untuk mencapai hasil yang optimal' }}
+                    {{ __($settings['method_title'] ?? 'Pendekatan terarah untuk mencapai hasil yang optimal') }}
                 </h2>
                 <p class="text-sm text-slate-300 leading-relaxed">
-                    {{ $settings['method_desc'] ?? 'Kami menerjemahkan komitmen menjadi dampak berkesinambungan melalui aliansi strategis bersama mitra riset terpercaya di seluruh Indonesia.' }}
+                    {{ __($settings['method_desc'] ?? 'Kami menerjemahkan komitmen menjadi dampak berkesinambungan melalui aliansi strategis bersama mitra riset terpercaya di seluruh Indonesia.') }}
                 </p>
             </div>
 
             <!-- Right 3 Steps List (Red Active Box 1, Dark Gray 2 & 3) -->
-            <div class="lg:col-span-7 space-y-4">
+            <div class="space-y-4">
                 <div class="p-6 rounded-2xl bg-red-600 text-white shadow-xl flex items-start gap-5 border border-red-500">
                     <span class="text-2xl font-black text-white shrink-0">1</span>
                     <div class="space-y-1">
-                        <h4 class="font-bold text-base text-white">{{ $settings['method_step_1_title'] ?? 'Mengkaji Riset & Kebutuhan' }}</h4>
-                        <p class="text-xs text-red-100 leading-relaxed">{{ $settings['method_step_1_desc'] ?? 'Pemetaan isu strategis sains & kesehatan berbasis fakta ilmiah untuk pemangku kepentingan nasional.' }}</p>
+                        <h4 class="font-bold text-base text-white">{{ __($settings['method_step_1_title'] ?? 'Mengkaji Riset & Kebutuhan') }}</h4>
+                        <p class="text-xs text-red-100 leading-relaxed">{{ __($settings['method_step_1_desc'] ?? 'Pemetaan isu strategis sains & kesehatan berbasis fakta ilmiah untuk pemangku kepentingan nasional.') }}</p>
                     </div>
                 </div>
 
                 <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 text-white flex items-start gap-5 hover:border-slate-700 transition">
                     <span class="text-2xl font-black text-slate-400 shrink-0">2</span>
                     <div class="space-y-1">
-                        <h4 class="font-bold text-base text-white">{{ $settings['method_step_2_title'] ?? 'Merancang dan Menjalankan Program' }}</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed">{{ $settings['method_step_2_desc'] ?? 'Eksekusi program publikasi & fasilitas riset secara transparan dengan standar akuntabilitas tinggi.' }}</p>
+                        <h4 class="font-bold text-base text-white">{{ __($settings['method_step_2_title'] ?? 'Merancang dan Menjalankan Program') }}</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">{{ __($settings['method_step_2_desc'] ?? 'Eksekusi program publikasi & fasilitas riset secara transparan dengan standar akuntabilitas tinggi.') }}</p>
                     </div>
                 </div>
 
                 <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 text-white flex items-start gap-5 hover:border-slate-700 transition">
                     <span class="text-2xl font-black text-slate-400 shrink-0">3</span>
                     <div class="space-y-1">
-                        <h4 class="font-bold text-base text-white">{{ $settings['method_step_3_title'] ?? 'Menevaluasi dan Mengembangkan' }}</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed">{{ $settings['method_step_3_desc'] ?? 'Pemeriksaan berkala untuk memastikan efektivitas dampak program ilmiah yang kontinyu bagi masyarakat.' }}</p>
+                        <h4 class="font-bold text-base text-white">{{ __($settings['method_step_3_title'] ?? 'Menevaluasi dan Mengembangkan') }}</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">{{ __($settings['method_step_3_desc'] ?? 'Pemeriksaan berkala untuk memastikan efektivitas dampak program ilmiah yang kontinyu bagi masyarakat.') }}</p>
                     </div>
                 </div>
             </div>
@@ -171,14 +171,14 @@
     </section>
 
     <!-- 5. Section Publikasi Jurnal Terbaru -->
-    <section class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8">
+    <section class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8 min-w-0 max-w-full">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div class="space-y-2">
-                <span class="text-xs font-bold text-red-600 uppercase tracking-widest">Jurnal</span>
-                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">Publikasi Jurnal Terbaru</h2>
+                <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Jurnal') }}</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">{{ __('Publikasi Jurnal Terbaru') }}</h2>
             </div>
             <a href="{{ route('website.journals.index') }}" class="px-5 py-2.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold text-xs transition inline-flex items-center gap-1 self-start sm:self-auto">
-                Lihat Semua Jurnal &rarr;
+                {{ __('Lihat Semua Jurnal') }} &rarr;
             </a>
         </div>
 
@@ -199,22 +199,22 @@
                     </div>
 
                     <div class="pt-4 border-t border-slate-200/60 flex items-center justify-between text-xs">
-                        <span class="text-slate-500 font-medium"><i class="ki-filled ki-profile-user mr-1 text-slate-400"></i> {{ $journal->editorial_boards_count }} Redaksi</span>
+                        <span class="text-slate-500 font-medium"><i class="ki-filled ki-profile-user mr-1 text-slate-400"></i> {{ $journal->editorial_boards_count }} {{ __('Redaksi') }}</span>
                         <a href="{{ route('website.journals.show', $journal->slug) }}" class="font-bold text-slate-900 hover:text-red-600 flex items-center gap-1 transition">
-                            <span>Selengkapnya</span> &rarr;
+                            <span>{{ __('Selengkapnya') }}</span> &rarr;
                         </a>
                     </div>
                 </div>
             @empty
                 <div class="col-span-3 bg-slate-50 p-12 text-center rounded-2xl border border-slate-200">
-                    <p class="text-slate-500 text-sm">Belum ada jurnal aktif yang dipublikasikan.</p>
+                    <p class="text-slate-500 text-sm">{{ __('Belum ada jurnal aktif yang dipublikasikan.') }}</p>
                 </div>
             @endforelse
         </div>
     </section>
 
     <!-- 6. Section Mitra Kami (Presisi Screenshot: Mitra Utama & Logo Berjalan Universitas/Pendukung) -->
-    <section class="bg-black text-white rounded-3xl p-8 sm:p-14 border border-slate-800/80 shadow-2xl space-y-12 overflow-hidden relative">
+    <section class="bg-black text-white rounded-3xl p-8 sm:p-14 border border-slate-800/80 shadow-2xl space-y-12 overflow-hidden relative min-w-0 max-w-full">
         <style>
             @keyframes marquee-scroll {
                 0% { transform: translateX(0%); }
@@ -223,6 +223,12 @@
             @keyframes marquee-scroll-reverse {
                 0% { transform: translateX(-50%); }
                 100% { transform: translateX(0%); }
+            }
+            .marquee-container {
+                width: 100%;
+                max-width: 100%;
+                min-width: 0;
+                overflow: hidden;
             }
             .marquee-track {
                 display: flex;
@@ -348,12 +354,12 @@
     </section>
 
     <!-- 6. Section Proyek Terbaru / Simposium -->
-    <section class="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-xl">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div class="lg:col-span-6 space-y-4">
-                <span class="text-xs font-bold text-red-500 uppercase tracking-widest">{{ $settings['project_tag'] ?? 'Proyek Terbaru' }}</span>
+    <section class="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-xl min-w-0 max-w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div class="space-y-4">
+                <span class="text-xs font-bold text-red-500 uppercase tracking-widest">{{ __($settings['project_tag'] ?? 'Proyek Terbaru') }}</span>
                 <h3 class="text-2xl sm:text-3xl font-extrabold text-white">
-                    {{ $settings['project_title'] ?? 'GenAI and Genomics Symposium - Indonesia' }}
+                    {{ __($settings['project_title'] ?? 'GenAI and Genomics Symposium - Indonesia') }}
                 </h3>
                 <div class="space-y-2 text-xs sm:text-sm text-slate-300 font-medium pt-2">
                     <p class="flex items-center gap-2"><i class="ki-filled ki-time text-red-500"></i> {{ $settings['project_time'] ?? '10.00 - 16.00 WIB' }}</p>
@@ -362,28 +368,28 @@
                 </div>
             </div>
 
-            <div class="lg:col-span-6">
+            <div class="w-full">
                 <div class="w-full rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-red-950/60 border border-slate-700/80 p-6 sm:p-8 shadow-2xl relative overflow-hidden group">
                     <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-red-600/10 rounded-full blur-3xl group-hover:bg-red-600/20 transition duration-700"></div>
                     <div class="relative z-10 space-y-4">
                         <div class="flex items-center justify-between">
                             <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-red-600 text-white shadow-xs">
-                                Riset & Inovasi 2026
+                                {{ __('Riset & Inovasi 2026') }}
                             </span>
                             <span class="text-xs font-mono text-slate-400">YSDS Genomic Hub</span>
                         </div>
                         <h4 class="text-xl sm:text-2xl font-black text-white tracking-tight leading-snug">
-                            Akselerasi GenAI untuk Riset Presisi & Layanan Kesehatan Indonesia
+                            {{ __('Akselerasi GenAI untuk Riset Presisi & Layanan Kesehatan Indonesia') }}
                         </h4>
                         <p class="text-xs text-slate-300 leading-relaxed">
-                            Menghubungkan lebih dari 150+ peneliti, institusi laboratorium, dan praktisi genomik nasional dalam forum ilmiah terstandarisasi.
+                            {{ __('Menghubungkan lebih dari 150+ peneliti, institusi laboratorium, dan praktisi genomik nasional dalam forum ilmiah terstandarisasi.') }}
                         </p>
                         <div class="pt-2 flex flex-wrap items-center gap-3">
                             <a href="{{ route('website.contact') }}" class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-md transition inline-flex items-center gap-1.5">
-                                <i class="ki-filled ki-calendar text-xs"></i> Registrasi Partisipan &rarr;
+                                <i class="ki-filled ki-calendar text-xs"></i> {{ __('Registrasi Partisipan') }} &rarr;
                             </a>
                             <a href="{{ route('website.announcements') }}" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-semibold text-xs transition">
-                                Unduh Kerangka Acuan
+                                {{ __('Unduh Kerangka Acuan') }}
                             </a>
                         </div>
                     </div>
@@ -393,13 +399,13 @@
     </section>
 
     <!-- 7. Section Berita Terbaru -->
-    <section class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8">
+    <section class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8 min-w-0 max-w-full">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div class="space-y-2">
                 <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Berita Terbaru') }}</span>
                 <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">{{ __('Temukan informasi dan kegiatan terbaru dari kami.') }}</h2>
             </div>
-            <a href="{{ route('website.announcements') }}" class="px-5 py-2.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold text-xs transition inline-flex items-center gap-1 self-start sm:self-auto">
+            <a href="{{ route('website.news.index') }}" class="px-5 py-2.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold text-xs transition inline-flex items-center gap-1 self-start sm:self-auto">
                 {{ __('Lihat Semua Berita') }} &rarr;
             </a>
         </div>
@@ -408,42 +414,45 @@
             @forelse($news as $item)
                 <div class="bg-slate-50/70 rounded-2xl border border-slate-200/80 hover:bg-white hover:shadow-xl transition duration-300 overflow-hidden flex flex-col justify-between">
                     <div class="w-full h-40 bg-gradient-to-tr from-slate-900 via-slate-800 to-red-950 p-5 flex flex-col justify-between relative overflow-hidden text-white border-b border-slate-200/60">
+                        @if($item->image_url)
+                            <img src="{{ $item->image_url }}" alt="{{ $item->title }}" class="absolute inset-0 w-full h-full object-cover opacity-60" />
+                        @endif
                         <div class="flex items-center justify-between relative z-10">
                             <span class="text-[10px] font-black uppercase tracking-widest text-red-400 bg-red-950/80 px-2.5 py-0.5 rounded-full border border-red-800/60">{{ $item->category }}</span>
                             <i class="ki-filled ki-document text-slate-400 text-lg"></i>
                         </div>
                         <div class="relative z-10">
-                            <span class="text-[11px] font-mono text-slate-300 block">Warta Riset Yayasan</span>
+                            <span class="text-[11px] font-mono text-slate-300 block">{{ __('Warta Riset Yayasan') }}</span>
                         </div>
                         <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-red-600/20 rounded-full blur-xl"></div>
                     </div>
                     <div class="p-6 space-y-3 grow">
                         <span class="text-[10px] font-bold uppercase text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-100">{{ $item->category }}</span>
                         <h4 class="font-bold text-slate-900 text-base leading-snug hover:text-red-600 transition">
-                            <a href="{{ route('website.announcements') }}">{{ $item->title }}</a>
+                            <a href="{{ route('website.news.show', $item->slug ?: $item->id) }}">{{ $item->title }}</a>
                         </h4>
                         <p class="text-xs text-slate-600 leading-relaxed line-clamp-3">{{ $item->summary }}</p>
                     </div>
                     <div class="p-6 pt-0 flex items-center justify-between text-xs text-slate-500 border-t border-slate-200/60 mt-2">
                         <span>{{ $item->published_at ? $item->published_at->format('d M Y') : '-' }}</span>
-                        <a href="{{ route('website.announcements') }}" class="font-bold text-slate-900 hover:text-red-600 flex items-center gap-1">
-                            <span>Selengkapnya</span> &rarr;
+                        <a href="{{ route('website.news.show', $item->slug ?: $item->id) }}" class="font-bold text-slate-900 hover:text-red-600 flex items-center gap-1">
+                            <span>{{ __('Selengkapnya') }}</span> &rarr;
                         </a>
                     </div>
                 </div>
             @empty
                 <div class="col-span-3 bg-slate-50 p-12 text-center rounded-2xl border border-slate-200">
-                    <p class="text-slate-500 text-sm">Belum ada berita terbaru.</p>
+                    <p class="text-slate-500 text-sm">{{ __('Belum ada berita terbaru.') }}</p>
                 </div>
             @endforelse
         </div>
     </section>
 
     <!-- 8. Section Butuh Informasi Lebih Lanjut? Sampaikan Pertanyaan Anda kepada Kami (Presisi Screenshot) -->
-    <section class="rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-r from-red-950 via-red-800 to-red-600 text-white p-8 sm:p-14 border border-red-700/50">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+    <section class="rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-r from-red-950 via-red-800 to-red-600 text-white p-8 sm:p-14 border border-red-700/50 min-w-0 max-w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <!-- Kolom Kiri: Headline & Deskripsi -->
-            <div class="lg:col-span-6 space-y-6">
+            <div class="space-y-6">
                 <div class="space-y-3">
                     <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight tracking-tight">
                         {{ __('Butuh Informasi Lebih Lanjut?') }}<br>
@@ -463,7 +472,7 @@
             </div>
 
             <!-- Kolom Kanan: Card Formulir Putih Modern -->
-            <div class="lg:col-span-6">
+            <div class="w-full">
                 <div class="bg-white rounded-3xl p-6 sm:p-8 text-slate-900 shadow-2xl border border-white/80">
                     <form action="{{ route('website.contact.submit') }}" method="POST" class="space-y-4">
                         @csrf

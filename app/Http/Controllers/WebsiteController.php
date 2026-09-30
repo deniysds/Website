@@ -667,5 +667,96 @@ class WebsiteController extends Controller
             'Content-Type' => 'application/xml; charset=utf-8',
         ]);
     }
+
+    /**
+     * Public page: Non-journal articles & news listing (/berita).
+     */
+    public function news(Request $request): View
+    {
+        $query = WebsiteNews::published();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('summary', 'like', "%{$search}%")
+                  ->orWhere('content', 'like', "%{$search}%")
+                  ->orWhere('author_name', 'like', "%{$search}%")
+                  ->orWhere('tags', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        $featuredArticle = null;
+        if (! $request->filled('search') && ! $request->filled('category')) {
+            $featuredArticle = (clone $query)->where('is_featured', true)->latest('published_at')->first();
+        }
+
+        if ($featuredArticle) {
+            $query->where('id', '!=', $featuredArticle->id);
+        }
+
+        $news = $query->latest('published_at')
+            ->latest('created_at')
+            ->paginate(9)
+            ->withQueryString();
+
+        $categories = WebsiteNews::published()
+            ->whereNotNull('category')
+            ->where('category', '!=', '')
+            ->distinct()
+            ->pluck('category');
+
+        $activeCategory = $request->category;
+        $searchQuery = $request->search;
+
+        return view('website::public.news', compact(
+            'news',
+            'featuredArticle',
+            'categories',
+            'activeCategory',
+            'searchQuery'
+        ));
+    }
+
+    /**
+     * Public page: Non-journal article detail reading page (/berita/{slug}).
+     */
+    public function newsDetail(string $slug): View
+    {
+        $article = WebsiteNews::published()
+            ->where(function ($q) use ($slug) {
+                $q->where('slug', $slug);
+                if (is_numeric($slug)) {
+                    $q->orWhere('id', (int) $slug);
+                }
+            })
+            ->firstOrFail();
+
+        // Increment view count
+        $article->increment('views_count');
+
+        // Fetch related articles in the same category
+        $relatedArticles = WebsiteNews::published()
+            ->where('id', '!=', $article->id)
+            ->where('category', $article->category)
+            ->latest('published_at')
+            ->take(3)
+            ->get();
+
+        if ($relatedArticles->isEmpty()) {
+            $relatedArticles = WebsiteNews::published()
+                ->where('id', '!=', $article->id)
+                ->latest('published_at')
+                ->take(3)
+                ->get();
+        }
+
+        return view('website::public.news-detail', compact('article', 'relatedArticles'));
+    }
 }
+
 

@@ -16,7 +16,10 @@
                 <h1 class="text-2xl font-bold text-gray-900">Kolaborasi & Penyerahan Peralatan Instansi</h1>
                 <p class="text-xs text-gray-500 mt-1">Kelola data instansi mitra penerima bantuan peralatan riset/kesehatan serta inventaris peralatan yang diserahkan.</p>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2 flex-wrap">
+                <a href="{{ route('website.collaborations.export', request()->query()) }}" class="kt-btn kt-btn-outline text-xs">
+                    <i class="ki-filled ki-file-down mr-1"></i> Ekspor Rekap (CSV/Excel)
+                </a>
                 <a href="{{ route('website.collaborations.public') }}" target="_blank" class="kt-btn kt-btn-outline text-xs">
                     <i class="ki-filled ki-eye mr-1"></i> Pratinjau Publik
                 </a>

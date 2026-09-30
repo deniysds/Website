@@ -259,4 +259,218 @@ class AdminCollaborationControllerTest extends TestCase
         $filterResponse->assertSee('RS Jiwa Daerah');
         $filterResponse->assertDontSee('Universitas Indonesia');
     }
+
+    public function test_authenticated_user_can_export_collaborations_recap_to_csv(): void
+    {
+        $collab = WebsiteCollaboration::create([
+            'institution_name' => 'RSUP Dr. Sardjito',
+            'category'         => 'Rumah Sakit',
+            'location'         => 'Yogyakarta',
+            'pic_name'         => 'Direktur Lab',
+            'is_active'        => true,
+        ]);
+
+        $collab->items()->create([
+            'item_number' => '1',
+            'name'        => 'Real-Time PCR System',
+            'unit'        => 'Unit',
+            'quantity'    => 2,
+        ]);
+
+        $response = $this->actingAs($this->user)->get(route('website.collaborations.export'));
+
+        $response->assertStatus(200);
+        $this->assertTrue($response->headers->get('content-type') === 'text/csv; charset=UTF-8');
+        $this->assertStringContainsString('rekap_kolaborasi_penyerahan_alat_', $response->headers->get('content-disposition'));
+
+        $content = $response->streamedContent();
+        $this->assertStringContainsString('RSUP Dr. Sardjito', $content);
+        $this->assertStringContainsString('Real-Time PCR System', $content);
+        $this->assertStringContainsString('Yogyakarta', $content);
+    }
+
+    public function test_authenticated_user_can_export_collaboration_items_to_csv(): void
+    {
+        $collab = WebsiteCollaboration::create([
+            'institution_name' => 'RSUP Dr. Sardjito',
+            'category'         => 'Rumah Sakit',
+            'location'         => 'Yogyakarta',
+            'is_active'        => true,
+        ]);
+
+        $collab->items()->create([
+            'item_number'    => '01',
+            'name'           => 'Biosafety Cabinet Class II',
+            'unit'           => 'Unit',
+            'quantity'       => 1,
+            'specifications' => 'HEPA filter 99.995%',
+        ]);
+
+        $response = $this->actingAs($this->user)->get(route('website.collaborations.items.export', $collab->id));
+
+        $response->assertStatus(200);
+        $this->assertTrue($response->headers->get('content-type') === 'text/csv; charset=UTF-8');
+        $this->assertStringContainsString('peralatan_diserahkan_rsup_dr_sardjito_', $response->headers->get('content-disposition'));
+
+        $content = $response->streamedContent();
+        $this->assertStringContainsString('Biosafety Cabinet Class II', $content);
+        $this->assertStringContainsString('HEPA filter 99.995%', $content);
+        $this->assertStringContainsString('RSUP Dr. Sardjito', $content);
+    }
+
+    public function test_authenticated_user_can_view_printable_bast(): void
+    {
+        $collab = WebsiteCollaboration::create([
+            'institution_name' => 'RSUP Dr. Sardjito',
+            'category'         => 'Rumah Sakit',
+            'location'         => 'Yogyakarta',
+            'pic_name'         => 'Dr. Sutomo',
+            'is_active'        => true,
+        ]);
+
+        $collab->items()->create([
+            'item_number' => '1',
+            'name'        => 'Ultra-Low Temperature Freezer',
+            'unit'        => 'Unit',
+            'quantity'    => 1,
+        ]);
+
+        $response = $this->actingAs($this->user)->get(route('website.collaborations.print_bast', $collab->id));
+
+        $response->assertStatus(200);
+        $response->assertViewIs('website::admin.collaborations.print-bast');
+        $response->assertSee('BERITA ACARA SERAH TERIMA (BAST)');
+        $response->assertSee('RSUP Dr. Sardjito');
+        $response->assertSee('Ultra-Low Temperature Freezer');
+        $response->assertSee('Dr. Sutomo');
+    }
+
+    public function test_authenticated_user_can_download_import_template(): void
+    {
+        $collab = WebsiteCollaboration::create([
+            'institution_name' => 'RSUP Dr. Sardjito',
+            'category'         => 'Rumah Sakit',
+            'location'         => 'Yogyakarta',
+            'is_active'        => true,
+        ]);
+
+        $response = $this->actingAs($this->user)->get(route('website.collaborations.items.import_template', $collab->id));
+
+        $response->assertStatus(200);
+        $this->assertTrue($response->headers->get('content-type') === 'text/csv; charset=UTF-8');
+        $this->assertStringContainsString('template_import_peralatan_', $response->headers->get('content-disposition'));
+
+        $content = $response->streamedContent();
+        $this->assertStringContainsString('Nomor', $content);
+        $this->assertStringContainsString('Nama Peralatan', $content);
+        $this->assertStringContainsString('Satuan', $content);
+        $this->assertStringContainsString('Jumlah', $content);
+        $this->assertStringContainsString('Spesifikasi / Merk / Catatan', $content);
+    }
+
+    public function test_authenticated_user_can_import_equipment_items_from_csv(): void
+    {
+        $collab = WebsiteCollaboration::create([
+            'institution_name' => 'RSUP Dr. Sardjito',
+            'category'         => 'Rumah Sakit',
+            'location'         => 'Yogyakarta',
+            'is_active'        => true,
+        ]);
+
+        $csvContent = "Nomor,Nama Peralatan,Satuan,Jumlah,Spesifikasi\n"
+                    . "EQ-001,Incubator CO2,Unit,2,Panasonic InCu saFe 170L\n"
+                    . "EQ-002,Vortex Mixer,Unit,4,Labnet VX-200 variable speed\n";
+
+        $file = UploadedFile::fake()->createWithContent('peralatan.csv', $csvContent);
+
+        $response = $this->actingAs($this->user)->post(route('website.collaborations.items.import', $collab->id), [
+            'file' => $file,
+            'mode' => 'append',
+        ]);
+
+        $response->assertRedirect(route('website.collaborations.show', $collab->id));
+        $response->assertSessionHas('success');
+
+        $this->assertDatabaseHas('website_collaboration_items', [
+            'collaboration_id' => $collab->id,
+            'item_number'      => 'EQ-001',
+            'name'             => 'Incubator CO2',
+            'unit'             => 'Unit',
+            'quantity'         => 2,
+        ]);
+
+        $this->assertDatabaseHas('website_collaboration_items', [
+            'collaboration_id' => $collab->id,
+            'item_number'      => 'EQ-002',
+            'name'             => 'Vortex Mixer',
+            'unit'             => 'Unit',
+            'quantity'         => 4,
+        ]);
+
+        $this->assertEquals(2, $collab->items()->count());
+    }
+
+    public function test_authenticated_user_can_import_with_replace_mode(): void
+    {
+        $collab = WebsiteCollaboration::create([
+            'institution_name' => 'RSUP Dr. Sardjito',
+            'category'         => 'Rumah Sakit',
+            'location'         => 'Yogyakarta',
+            'is_active'        => true,
+        ]);
+
+        $collab->items()->create([
+            'item_number' => 'OLD-01',
+            'name'        => 'Old Microscope',
+            'unit'        => 'Unit',
+            'quantity'    => 1,
+        ]);
+
+        $this->assertEquals(1, $collab->items()->count());
+
+        $csvContent = "nomor,nama_peralatan,satuan,jumlah,spesifikasi\n"
+                    . "NEW-01,New Autoclave,Unit,3,High pressure 50L\n";
+
+        $file = UploadedFile::fake()->createWithContent('new_items.csv', $csvContent);
+
+        $response = $this->actingAs($this->user)->post(route('website.collaborations.items.import', $collab->id), [
+            'file' => $file,
+            'mode' => 'replace',
+        ]);
+
+        $response->assertRedirect(route('website.collaborations.show', $collab->id));
+        $response->assertSessionHas('success');
+
+        $this->assertDatabaseMissing('website_collaboration_items', [
+            'name' => 'Old Microscope',
+        ]);
+
+        $this->assertDatabaseHas('website_collaboration_items', [
+            'collaboration_id' => $collab->id,
+            'item_number'      => 'NEW-01',
+            'name'             => 'New Autoclave',
+            'quantity'         => 3,
+        ]);
+
+        $this->assertEquals(1, $collab->items()->count());
+    }
+
+    public function test_import_validation_fails_for_invalid_file_extension(): void
+    {
+        $collab = WebsiteCollaboration::create([
+            'institution_name' => 'RSUP Dr. Sardjito',
+            'category'         => 'Rumah Sakit',
+            'location'         => 'Yogyakarta',
+            'is_active'        => true,
+        ]);
+
+        $file = UploadedFile::fake()->create('document.pdf', 100, 'application/pdf');
+
+        $response = $this->actingAs($this->user)->post(route('website.collaborations.items.import', $collab->id), [
+            'file' => $file,
+            'mode' => 'append',
+        ]);
+
+        $response->assertSessionHasErrors('file');
+    }
 }

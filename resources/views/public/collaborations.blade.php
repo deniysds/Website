@@ -2,9 +2,9 @@
 
 @section('public_content')
     <!-- Banner Header Halaman Kolaborasi -->
-    <section class="bg-slate-900 text-white py-14 border-b border-slate-800 relative overflow-hidden">
+    <div class="relative overflow-hidden rounded-3xl bg-slate-900 border border-slate-800 p-8 sm:p-12 mb-8 shadow-xl">
         <div class="absolute inset-0 bg-gradient-to-r from-red-900/30 via-slate-900/80 to-slate-900 pointer-events-none"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="relative z-10">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold uppercase tracking-widest mb-3">
                 <i class="ki-filled ki-briefcase text-sm"></i> {{ __('Kemitraan & Penyerahan Bantuan') }}
             </div>
@@ -31,11 +31,11 @@
                 </div>
             </div>
         </div>
-    </section>
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    </div>
 
     <!-- Konten Utama: Filter & Daftar Instansi Kolaborasi -->
-    <section class="py-12 bg-slate-50 min-h-[70vh]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div class="w-full space-y-8 pb-12">
 
             <!-- Filter & Pencarian -->
             <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs">
@@ -105,14 +105,14 @@
                                             @if($collab->handover_date)
                                                 <div class="flex items-center gap-1 font-mono text-[11px]">
                                                     <i class="ki-filled ki-calendar text-slate-400 text-xs"></i>
-                                                    <span>Serah Terima: {{ $collab->handover_date->translatedFormat('d F Y') }}</span>
+                                                    <span>{{ __('Serah Terima') }}: {{ $collab->handover_date->translatedFormat('d F Y') }}</span>
                                                 </div>
                                             @endif
 
                                             @if($collab->pic_name)
                                                 <div class="flex items-center gap-1 text-[11px]">
-                                                    <i class="ki-filled ki-profile-user text-slate-400 text-xs"></i>
-                                                    <span>Penerima: <strong class="text-slate-700">{{ $collab->pic_name }}</strong></span>
+                                                    <i class="ki-filled ki-user text-slate-400 text-xs"></i>
+                                                    <span>{{ __('Penerima') }}: <strong class="text-slate-700">{{ $collab->pic_name }}</strong></span>
                                                 </div>
                                             @endif
                                         </div>
@@ -122,7 +122,7 @@
                                 <div class="self-start md:self-center shrink-0">
                                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-red-50 text-red-700 border border-red-100 font-bold text-xs">
                                         <i class="ki-filled ki-cube-2 text-sm text-red-600"></i>
-                                        <span>{{ (int) $collab->items->sum('quantity') }} Unit ({{ $collab->items->count() }} Jenis)</span>
+                                        <span>{{ (int) $collab->items->sum('quantity') }} {{ __('Unit') }} ({{ $collab->items->count() }} {{ __('Jenis') }})</span>
                                     </div>
                                 </div>
                             </div>
@@ -240,6 +240,5 @@
                 </div>
             </div>
 
-        </div>
-    </section>
+    </div>
 @endsection

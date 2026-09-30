@@ -23,7 +23,16 @@
                     <p class="text-xs text-gray-500 mt-1">Rincian profil instansi dan daftar peralatan yang telah diserahkan (nomor, nama, satuan, jumlah).</p>
                 </div>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2 flex-wrap">
+                <button type="button" onclick="openImportModal()" class="kt-btn kt-btn-outline text-xs">
+                    <i class="ki-filled ki-file-up mr-1"></i> Import Excel
+                </button>
+                <a href="{{ route('website.collaborations.items.export', $collaboration->id) }}" class="kt-btn kt-btn-outline text-xs">
+                    <i class="ki-filled ki-file-down mr-1"></i> Ekspor CSV / Excel
+                </a>
+                <a href="{{ route('website.collaborations.print_bast', $collaboration->id) }}" target="_blank" class="kt-btn kt-btn-outline text-xs">
+                    <i class="ki-filled ki-printer mr-1"></i> Cetak BAST
+                </a>
                 <a href="{{ route('website.collaborations.public') }}" target="_blank" class="kt-btn kt-btn-outline text-xs">
                     <i class="ki-filled ki-eye mr-1"></i> Pratinjau Publik
                 </a>
@@ -121,9 +130,17 @@
                     </h3>
                     <p class="text-xs text-gray-500 mt-0.5">Rincian spesifikasi, satuan, dan jumlah unit peralatan hibah/bantuan resmi yayasan.</p>
                 </div>
-                <button type="button" onclick="openAddItemModal()" class="kt-btn kt-btn-primary text-white text-xs font-semibold px-3.5 py-2">
-                    <i class="ki-filled ki-plus text-white mr-1"></i> Tambah Peralatan
-                </button>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="openImportModal()" class="kt-btn kt-btn-outline kt-btn-sm text-xs">
+                        <i class="ki-filled ki-file-up mr-1"></i> Import Excel
+                    </button>
+                    <a href="{{ route('website.collaborations.items.export', $collaboration->id) }}" class="kt-btn kt-btn-outline kt-btn-sm text-xs">
+                        <i class="ki-filled ki-file-down mr-1"></i> Ekspor Peralatan
+                    </a>
+                    <button type="button" onclick="openAddItemModal()" class="kt-btn kt-btn-primary text-white text-xs font-semibold px-3.5 py-2">
+                        <i class="ki-filled ki-plus text-white mr-1"></i> Tambah Peralatan
+                    </button>
+                </div>
             </div>
 
             <div class="p-6">
@@ -310,6 +327,74 @@
         </div>
     </div>
 
+    <!-- Modal Import Excel / CSV -->
+    <div id="importModal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl max-w-lg w-full overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-green-50 text-green-600 flex items-center justify-center">
+                        <i class="ki-filled ki-file-up text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900 text-sm">Import Peralatan dari Excel / CSV</h3>
+                        <p class="text-xs text-gray-500">Unggah berkas untuk memasukkan daftar peralatan sekaligus.</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeImportModal()" class="text-gray-400 hover:text-gray-600 text-lg">✕</button>
+            </div>
+
+            <form action="{{ route('website.collaborations.items.import', $collaboration->id) }}" method="POST" enctype="multipart/form-data" class="p-6 space-y-4">
+                @csrf
+
+                <!-- Download Template Banner -->
+                <div class="p-3.5 bg-blue-50 border border-blue-150 rounded-xl flex items-center justify-between gap-3">
+                    <div class="text-xs text-blue-900">
+                        <span class="font-bold block">Gunakan Format Standar</span>
+                        Pastikan kolom sesuai (nomor, nama_peralatan, satuan, jumlah, spesifikasi).
+                    </div>
+                    <a href="{{ route('website.collaborations.items.import_template', $collaboration->id) }}" class="kt-btn kt-btn-outline kt-btn-sm text-xs bg-white text-blue-600 border-blue-200 hover:bg-blue-100 shrink-0 font-semibold">
+                        <i class="ki-filled ki-file-down mr-1"></i> Format CSV
+                    </a>
+                </div>
+
+                <!-- File input -->
+                <div class="space-y-1.5">
+                    <label class="font-bold text-gray-700 text-xs">Pilih Berkas Excel / CSV <span class="text-red-500">*</span></label>
+                    <input type="file" name="file" accept=".xlsx,.xls,.csv,text/csv" required class="kt-input w-full text-xs file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200" />
+                    <p class="text-[11px] text-gray-400">Format yang didukung: <strong>.xlsx, .xls, .csv</strong> (Maksimal 5MB).</p>
+                </div>
+
+                <!-- Mode import -->
+                <div class="space-y-2 pt-2 border-t border-gray-100">
+                    <label class="font-bold text-gray-700 text-xs block">Metode Import:</label>
+                    <div class="space-y-2">
+                        <label class="flex items-start gap-2.5 p-2.5 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer">
+                            <input type="radio" name="mode" value="append" checked class="mt-0.5 text-red-600 focus:ring-red-500" />
+                            <div class="text-xs">
+                                <span class="font-semibold text-gray-800 block">Tambahkan Data (Append)</span>
+                                <span class="text-gray-500 text-[11px]">Pertahankan data peralatan yang ada dan tambahkan baris baru dari berkas.</span>
+                            </div>
+                        </label>
+                        <label class="flex items-start gap-2.5 p-2.5 rounded-lg border border-red-200 bg-red-50/40 hover:bg-red-50 cursor-pointer">
+                            <input type="radio" name="mode" value="replace" class="mt-0.5 text-red-600 focus:ring-red-500" />
+                            <div class="text-xs">
+                                <span class="font-semibold text-red-700 block">Ganti Seluruh Data (Replace)</span>
+                                <span class="text-red-600/80 text-[11px]">Hapus seluruh peralatan lama instansi ini, lalu masukkan data baru dari berkas.</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-gray-200 flex justify-end gap-2">
+                    <button type="button" onclick="closeImportModal()" class="kt-btn kt-btn-outline text-xs">Batal</button>
+                    <button type="submit" class="kt-btn kt-btn-primary text-white text-xs font-bold px-4">
+                        <i class="ki-filled ki-file-up mr-1 text-white"></i> Mulai Import
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         function openAddItemModal() {
             document.getElementById('addItemModal').classList.remove('hidden');
@@ -317,6 +402,14 @@
 
         function closeAddItemModal() {
             document.getElementById('addItemModal').classList.add('hidden');
+        }
+
+        function openImportModal() {
+            document.getElementById('importModal').classList.remove('hidden');
+        }
+
+        function closeImportModal() {
+            document.getElementById('importModal').classList.add('hidden');
         }
 
         function openEditItemModal(item) {
