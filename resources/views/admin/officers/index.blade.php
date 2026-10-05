@@ -49,7 +49,7 @@
         @endif
 
         <!-- Stat Counter Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             <div class="kt-card p-5 flex items-center gap-4">
                 <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl font-black">
                     <i class="ki-filled ki-crown"></i>
@@ -89,6 +89,16 @@
                     <div class="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Level 4: Redaksi & Ahli</div>
                 </div>
             </div>
+
+            <div class="kt-card p-5 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl font-black">
+                    <i class="ki-filled ki-user-square"></i>
+                </div>
+                <div>
+                    <div class="text-xl font-extrabold text-gray-900">{{ $countLevel5 }}</div>
+                    <div class="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Level 5: Staff Yayasan</div>
+                </div>
+            </div>
         </div>
 
         <!-- Filter & Table Card -->
@@ -110,6 +120,7 @@
                         <option value="2" {{ request('hierarchy_level') == '2' ? 'selected' : '' }}>Tingkat 2: Pimpinan Harian / Ketua</option>
                         <option value="3" {{ request('hierarchy_level') == '3' ? 'selected' : '' }}>Tingkat 3: Sekretaris / Manajemen</option>
                         <option value="4" {{ request('hierarchy_level') == '4' ? 'selected' : '' }}>Tingkat 4: Dewan Redaksi & Ahli</option>
+                        <option value="5" {{ request('hierarchy_level') == '5' ? 'selected' : '' }}>Tingkat 5: Staff Operasional</option>
                     </select>
 
                     <select name="category" onchange="this.form.submit()" class="kt-select text-xs">
@@ -119,6 +130,7 @@
                         <option value="pengurus_harian" {{ request('category') == 'pengurus_harian' ? 'selected' : '' }}>Pengurus Harian</option>
                         <option value="dewan_redaksi" {{ request('category') == 'dewan_redaksi' ? 'selected' : '' }}>Dewan Redaksi Jurnal</option>
                         <option value="tim_ahli" {{ request('category') == 'tim_ahli' ? 'selected' : '' }}>Komite Ilmiah & Tim Ahli</option>
+                        <option value="staff" {{ request('category') == 'staff' ? 'selected' : '' }}>Staff Operasional Yayasan</option>
                     </select>
 
                     <button type="submit" class="kt-btn kt-btn-outline kt-btn-sm text-xs">
@@ -273,6 +285,7 @@
                             <option value="pengurus_harian" selected>Pengurus Harian</option>
                             <option value="dewan_redaksi">Dewan Redaksi Jurnal</option>
                             <option value="tim_ahli">Komite Ilmiah & Tim Ahli</option>
+                            <option value="staff">Staff Operasional Yayasan</option>
                         </select>
                     </div>
                     <div>
@@ -282,6 +295,7 @@
                             <option value="2">Tingkat 2: Pimpinan Harian / Ketua</option>
                             <option value="3">Tingkat 3: Sekretaris / Manajemen Eksekutif</option>
                             <option value="4">Tingkat 4: Dewan Redaksi Jurnal & Tim Ahli</option>
+                            <option value="5">Tingkat 5: Staff Operasional Yayasan</option>
                         </select>
                     </div>
                 </div>

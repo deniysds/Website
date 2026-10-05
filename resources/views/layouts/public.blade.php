@@ -119,27 +119,32 @@
             <!-- Footer -->
             <footer class="bg-slate-950 text-slate-300 rounded-xl border border-slate-800 mt-12 overflow-hidden">
                 <div class="px-6 sm:px-8 py-10">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <div class="space-y-4 md:col-span-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="space-y-4">
                             <div class="flex items-center gap-3">
                                 <img src="{{ asset('assets/media/app/logo-ysds.png') }}" alt="Logo Yayasan Satriabudi Dharma Setia" class="h-10 w-auto object-contain rounded bg-white/95 p-1 shrink-0 shadow-xs" />
                                 <span class="text-base font-bold text-white tracking-tight">Yayasan Satriabudi Dharma Setia</span>
                             </div>
-                            <p class="text-xs text-slate-400 max-w-md leading-relaxed">
+                            <p class="text-xs text-slate-400 max-w-sm leading-relaxed">
                                 {{ __('Membangun Akses Kesehatan dan Pendidikan untuk Indonesia melalui publikasi ilmiah berkala, terpercaya, dan berstandar internasional.') }}
                             </p>
+                            <div class="pt-2">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-950/80 border border-red-800/60 text-red-400 text-[11px] font-medium">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span> YSDS Digital Ecosystem
+                                </span>
+                            </div>
                         </div>
                         <div>
-                            <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4">{{ __('Navigasi Publik') }}</h4>
+                            <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4">{{ __('Navigasi Portal') }}</h4>
                             <ul class="space-y-2 text-xs">
                                 <li><a href="{{ route('website.about') }}"
                                         class="hover:text-white transition">{{ __('Profil & Tentang Kami') }}</a></li>
                                 <li><a href="{{ route('website.officers.public') }}"
-                                        class="hover:text-white transition">{{ __('Struktur Pengurus & Redaksi') }}</a></li>
+                                        class="hover:text-white transition">{{ __('Struktur Pengurus & Staff') }}</a></li>
                                 <li><a href="{{ route('website.collaborations.public') }}"
                                         class="hover:text-white transition">{{ __('Kolaborasi & Penyerahan Alat') }}</a></li>
                                 <li><a href="{{ route('website.journals.index') }}"
-                                        class="hover:text-white transition">{{ __('Daftar Jurnal') }}</a></li>
+                                        class="hover:text-white transition">{{ __('Katalog Jurnal Ilmiah') }}</a></li>
                                 <li><a href="{{ route('website.issues.archive') }}"
                                         class="hover:text-white transition">{{ __('Arsip Terbitan') }}</a></li>
                                 <li><a href="{{ route('website.news.index') }}"
@@ -152,7 +157,48 @@
                             </ul>
                         </div>
                         <div>
-                            <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4">{{ __('Kontak & Informasi') }}</h4>
+                            <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4">{{ __('Unit & Ekosistem YSDS') }}</h4>
+                            <ul class="space-y-2 text-xs text-slate-300">
+                                <li>
+                                    <a href="https://www.kliniksatriabudi.com" target="_blank" rel="noopener noreferrer" class="hover:text-white transition flex items-center justify-between group">
+                                        <span>Klinik Satriabudi Medika BSD</span>
+                                        <i class="ki-filled ki-arrow-up-right text-[10px] text-slate-500 group-hover:text-white"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://genom.dharma.or.id" target="_blank" rel="noopener noreferrer" class="hover:text-white transition flex items-center justify-between group">
+                                        <span>Program Riset Genomik</span>
+                                        <i class="ki-filled ki-arrow-up-right text-[10px] text-slate-500 group-hover:text-white"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://pelangi.sch.id" target="_blank" rel="noopener noreferrer" class="hover:text-white transition flex items-center justify-between group">
+                                        <span>Pelangi Indonesia Cyberschool</span>
+                                        <i class="ki-filled ki-arrow-up-right text-[10px] text-slate-500 group-hover:text-white"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://fensensius.sch.id" target="_blank" rel="noopener noreferrer" class="hover:text-white transition flex items-center justify-between group">
+                                        <span>SMK Fensensius</span>
+                                        <i class="ki-filled ki-arrow-up-right text-[10px] text-slate-500 group-hover:text-white"></i>
+                                    </a>
+                                </li>
+                                <li class="pt-2 border-t border-slate-900">
+                                    <a href="https://pacbio.dharma.or.id" target="_blank" rel="noopener noreferrer" class="hover:text-white transition flex items-center justify-between group">
+                                        <span class="text-slate-400">YSDS x PacBio Collaboration</span>
+                                        <i class="ki-filled ki-arrow-up-right text-[10px] text-slate-500 group-hover:text-white"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://ont.dharma.or.id" target="_blank" rel="noopener noreferrer" class="hover:text-white transition flex items-center justify-between group">
+                                        <span class="text-slate-400">YSDS x Oxford Nanopore</span>
+                                        <i class="ki-filled ki-arrow-up-right text-[10px] text-slate-500 group-hover:text-white"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4">{{ __('Kontak & Operasional') }}</h4>
                             <ul class="space-y-2 text-xs text-slate-400">
                                 <li class="flex items-start gap-2">
                                     <i class="ki-filled ki-geolocation text-red-500 mt-0.5 shrink-0"></i>
@@ -174,7 +220,7 @@
                                 @endif
                                 <li class="pt-2 border-t border-slate-900">
                                     <a href="{{ $settings['parent_website_url'] ?? 'https://www.dharma.or.id' }}" target="_blank" class="text-red-400 hover:text-red-300 transition flex items-center gap-1.5 font-semibold text-[11px]">
-                                        <i class="ki-filled ki-arrow-up-right text-xs"></i> Situs Utama Yayasan (dharma.or.id)
+                                        <i class="ki-filled ki-arrow-up-right text-xs"></i> Situs Resmi Yayasan (dharma.or.id)
                                     </a>
                                 </li>
                             </ul>

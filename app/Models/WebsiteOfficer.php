@@ -65,6 +65,7 @@ class WebsiteOfficer extends Model
             2 => 'Tingkat 2: Pimpinan Harian / Ketua',
             3 => 'Tingkat 3: Sekretaris & Manajemen Eksekutif',
             4 => 'Tingkat 4: Dewan Redaksi Jurnal & Tim Ahli',
+            5 => 'Tingkat 5: Staff Operasional Yayasan',
             default => 'Lainnya',
         };
     }
@@ -80,6 +81,7 @@ class WebsiteOfficer extends Model
             'pengurus_harian' => 'Pengurus Harian',
             'dewan_redaksi' => 'Dewan Redaksi Jurnal',
             'tim_ahli' => 'Komite Ilmiah & Tim Ahli',
+            'staff' => 'Staff Operasional Yayasan',
             default => ucfirst(str_replace('_', ' ', $this->category)),
         };
     }

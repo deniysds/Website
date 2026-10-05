@@ -9,61 +9,83 @@
     ],
     "files": [],
     "menu": {
-        "main": [],
+        "main": [
+            {
+                "title": "Portal Website",
+                "path": "website.portal",
+                "icon": "ki-filled ki-screen text-lg",
+                "classes": "",
+                "attributes": [],
+                "permission": "",
+                "roles": [
+                    "administrator",
+                    "admin"
+                ],
+                "sub": [
+                    {
+                        "title": "Artikel Non-Jurnal",
+                        "path": "website.articles.admin.index",
+                        "classes": "",
+                        "attributes": [],
+                        "permission": "",
+                        "roles": [
+                            "administrator",
+                            "admin"
+                        ]
+                    },
+                    {
+                        "title": "Manajemen Pengurus",
+                        "path": "website.officers.index",
+                        "classes": "",
+                        "attributes": [],
+                        "permission": "",
+                        "roles": [
+                            "administrator",
+                            "admin"
+                        ]
+                    },
+                    {
+                        "title": "Manajemen Mitra",
+                        "path": "website.partners.index",
+                        "classes": "",
+                        "attributes": [],
+                        "permission": "",
+                        "roles": [
+                            "administrator",
+                            "admin"
+                        ]
+                    },
+                    {
+                        "title": "Kotak Masuk Pertanyaan",
+                        "path": "website.contacts.index",
+                        "classes": "",
+                        "attributes": [],
+                        "permission": "",
+                        "roles": [
+                            "administrator",
+                            "admin"
+                        ]
+                    },
+                    {
+                        "title": "Kolaborasi & Alat",
+                        "path": "website.collaborations.index",
+                        "classes": "",
+                        "attributes": [],
+                        "permission": "",
+                        "roles": [
+                            "administrator",
+                            "admin"
+                        ]
+                    }
+                ]
+            }
+        ],
         "master": [],
         "system": [
             {
                 "title": "Website Settings",
                 "path": "website.settings",
                 "icon": "ki-filled ki-setting-2 text-lg",
-                "classes": "",
-                "attributes": [],
-                "permission": "",
-                "roles": [
-                    "administrator",
-                    "admin"
-                ]
-            },
-            {
-                "title": "Artikel Non-Jurnal",
-                "path": "website.articles.admin.index",
-                "icon": "ki-filled ki-notepad-edit text-lg",
-                "classes": "",
-                "attributes": [],
-                "permission": "",
-                "roles": [
-                    "administrator",
-                    "admin"
-                ]
-            },
-            {
-                "title": "Manajemen Mitra",
-                "path": "website.partners.index",
-                "icon": "ki-filled ki-element-11 text-lg",
-                "classes": "",
-                "attributes": [],
-                "permission": "",
-                "roles": [
-                    "administrator",
-                    "admin"
-                ]
-            },
-            {
-                "title": "Kotak Masuk Pertanyaan",
-                "path": "website.contacts.index",
-                "icon": "ki-filled ki-sms text-lg",
-                "classes": "",
-                "attributes": [],
-                "permission": "",
-                "roles": [
-                    "administrator",
-                    "admin"
-                ]
-            },
-            {
-                "title": "Kolaborasi & Alat",
-                "path": "website.collaborations.index",
-                "icon": "ki-filled ki-briefcase text-lg",
                 "classes": "",
                 "attributes": [],
                 "permission": "",

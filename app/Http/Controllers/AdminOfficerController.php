@@ -44,13 +44,15 @@ class AdminOfficerController extends Controller
         $countLevel2 = WebsiteOfficer::byHierarchy(2)->count();
         $countLevel3 = WebsiteOfficer::byHierarchy(3)->count();
         $countLevel4 = WebsiteOfficer::byHierarchy(4)->count();
+        $countLevel5 = WebsiteOfficer::byHierarchy(5)->count();
 
         return view('website::admin.officers.index', compact(
             'officers',
             'countLevel1',
             'countLevel2',
             'countLevel3',
-            'countLevel4'
+            'countLevel4',
+            'countLevel5'
         ));
     }
 

@@ -153,4 +153,21 @@ class WebsiteOfficerTest extends TestCase
             'id' => $officer->id,
         ]);
     }
+
+    public function test_public_officers_page_renders_level_5_staff_yayasan(): void
+    {
+        WebsiteOfficer::create([
+            'name' => 'Daeng Deni Mardaeni',
+            'position' => 'Senior Developer',
+            'category' => 'staff',
+            'hierarchy_level' => 5,
+            'is_active' => true,
+        ]);
+
+        $response = $this->get(route('website.officers.public'));
+        $response->assertStatus(200);
+        $response->assertSee('Daeng Deni Mardaeni');
+        $response->assertSee('Senior Developer');
+        $response->assertSee('Staff Yayasan Satriabudi Dharma Setia');
+    }
 }

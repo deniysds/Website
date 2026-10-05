@@ -221,6 +221,44 @@
                 </div>
             @endif
 
+            <!-- TINGKAT 5: STAFF OPERASIONAL YAYASAN -->
+            @if(isset($officersByHierarchy[5]) && $officersByHierarchy[5]->isNotEmpty())
+                <div class="space-y-6">
+                    <div class="text-center max-w-xl mx-auto">
+                        <span class="text-xs font-extrabold text-purple-600 uppercase tracking-widest block">{{ __('Operasional & Pelaksana') }}</span>
+                        <h2 class="text-xl font-bold text-slate-900 mt-1">{{ __('Staff Yayasan Satriabudi Dharma Setia') }}</h2>
+                        <div class="w-12 h-1 bg-purple-600 mx-auto mt-2 rounded-full"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        @foreach($officersByHierarchy[5] as $officer)
+                            <div class="bg-white rounded-xl border border-slate-200/80 shadow-2xs hover:shadow-xs transition p-5 flex items-start gap-4">
+                                @if($officer->photo_path)
+                                    <img src="{{ asset('storage/' . $officer->photo_path) }}" alt="{{ $officer->name }}" class="w-14 h-14 rounded-xl object-cover border border-slate-200 shrink-0" />
+                                @else
+                                    <div class="w-14 h-14 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center font-bold text-base border border-purple-100 shrink-0">
+                                        {{ strtoupper(substr($officer->name, 0, 2)) }}
+                                    </div>
+                                @endif
+
+                                <div class="grow min-w-0">
+                                    <h4 class="text-sm font-bold text-slate-900 truncate" title="{{ $officer->full_name_with_title }}">{{ $officer->full_name_with_title }}</h4>
+                                    <div class="text-xs font-semibold text-purple-600 mt-0.5">{{ $officer->position }}</div>
+                                    @if($officer->affiliation)
+                                        <div class="text-[11px] text-slate-500 mt-1 truncate">{{ $officer->affiliation }}</div>
+                                    @endif
+                                    @if($officer->email)
+                                        <a href="mailto:{{ $officer->email }}" class="text-[11px] text-slate-400 hover:text-red-600 mt-1 inline-block truncate">
+                                            {{ $officer->email }}
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             <!-- Back to Home / Contact Box -->
             <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-6">
                 <div>
