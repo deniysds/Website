@@ -76,6 +76,17 @@
                             "administrator",
                             "admin"
                         ]
+                    },
+                    {
+                        "title": "Permohonan Bantuan Faskes",
+                        "path": "website.assistance.index",
+                        "classes": "",
+                        "attributes": [],
+                        "permission": "",
+                        "roles": [
+                            "administrator",
+                            "admin"
+                        ]
                     }
                 ]
             }

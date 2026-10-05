@@ -32,6 +32,8 @@ Route::name('website.')->group(function () {
     Route::get('/kolaborasi', [WebsiteController::class, 'collaborations'])->name('collaborations.public');
     Route::get('/berita', [WebsiteController::class, 'news'])->name('news.index');
     Route::get('/berita/{slug}', [WebsiteController::class, 'newsDetail'])->name('news.show');
+    Route::get('/permohonan-bantuan', [WebsiteController::class, 'assistanceRequest'])->name('assistance.public');
+    Route::post('/permohonan-bantuan', [WebsiteController::class, 'submitAssistanceRequest'])->name('assistance.submit')->middleware('throttle:10,1');
 
     // Admin CMS Settings, Partners, Officers & Contacts Inquiry Routes
     Route::middleware(['auth'])->prefix('admin/website')->group(function () {
@@ -74,6 +76,15 @@ Route::name('website.')->group(function () {
             Route::get('/{id}', [\Modules\Website\Http\Controllers\AdminContactController::class, 'show'])->name('show');
             Route::put('/{id}/status', [\Modules\Website\Http\Controllers\AdminContactController::class, 'updateStatus'])->name('status');
             Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminContactController::class, 'destroy'])->name('destroy');
+        });
+
+        // Assistance Requests Management (Permohonan Bantuan Faskes & Alkes)
+        Route::prefix('assistance-requests')->name('assistance.')->group(function () {
+            Route::get('/', [\Modules\Website\Http\Controllers\AdminAssistanceRequestController::class, 'index'])->name('index');
+            Route::get('/export/csv', [\Modules\Website\Http\Controllers\AdminAssistanceRequestController::class, 'exportCsv'])->name('export');
+            Route::get('/{id}', [\Modules\Website\Http\Controllers\AdminAssistanceRequestController::class, 'show'])->name('show');
+            Route::put('/{id}/status', [\Modules\Website\Http\Controllers\AdminAssistanceRequestController::class, 'updateStatus'])->name('status');
+            Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminAssistanceRequestController::class, 'destroy'])->name('destroy');
         });
 
         // Collaborations & Equipments Management (Kolaborasi & Penyerahan Alat ke Instansi)

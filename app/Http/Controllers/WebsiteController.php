@@ -4,6 +4,7 @@ namespace Modules\Website\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Modules\Issues\Models\Issue;
@@ -756,6 +757,65 @@ class WebsiteController extends Controller
         }
 
         return view('website::public.news-detail', compact('article', 'relatedArticles'));
+    }
+
+    /**
+     * Public Page: Permohonan Bantuan Faskes & Fasilitas Medis
+     */
+    public function assistanceRequest(): View
+    {
+        return view('website::public.assistance-request');
+    }
+
+    /**
+     * Submit Permohonan Bantuan Faskes & Fasilitas Medis
+     */
+    public function submitAssistanceRequest(Request $request): RedirectResponse
+    {
+        // Anti-spam Honeypot trap: bots fill hidden field website_hp
+        if ($request->filled('website_hp')) {
+            return redirect()->back()->with('success', 'Permohonan bantuan fasilitas kesehatan berhasil diajukan. Tim verifikasi Yayasan Satriabudi Dharma Setia akan segera menelaah dan menindaklanjuti permohonan Anda.');
+        }
+
+        $validated = $request->validate([
+            'institution_name' => 'required|string|max:200',
+            'institution_type' => 'required|string|max:100',
+            'pic_name'         => 'required|string|max:150',
+            'pic_position'     => 'nullable|string|max:100',
+            'pic_phone'        => 'required|string|max:30',
+            'pic_email'        => 'required|email|max:150',
+            'province'         => 'nullable|string|max:100',
+            'city'             => 'nullable|string|max:100',
+            'address'          => 'nullable|string|max:500',
+            'assistance_type'  => 'required|string|max:150',
+            'equipment_needed' => 'required|string|max:3000',
+            'urgency_reason'   => 'nullable|string|max:3000',
+            'attachment'       => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240', // Max 10MB
+        ]);
+
+        $attachmentPath = null;
+        if ($request->hasFile('attachment')) {
+            $attachmentPath = $request->file('attachment')->store('assistance_attachments', 'public');
+        }
+
+        \Modules\Website\Models\WebsiteAssistanceRequest::create([
+            'institution_name' => strip_tags(trim($validated['institution_name'])),
+            'institution_type' => strip_tags(trim($validated['institution_type'])),
+            'pic_name'         => strip_tags(trim($validated['pic_name'])),
+            'pic_position'     => !empty($validated['pic_position']) ? strip_tags(trim($validated['pic_position'])) : null,
+            'pic_phone'        => strip_tags(trim($validated['pic_phone'])),
+            'pic_email'        => filter_var(trim($validated['pic_email']), FILTER_SANITIZE_EMAIL),
+            'province'         => !empty($validated['province']) ? strip_tags(trim($validated['province'])) : null,
+            'city'             => !empty($validated['city']) ? strip_tags(trim($validated['city'])) : null,
+            'address'          => !empty($validated['address']) ? strip_tags(trim($validated['address'])) : null,
+            'assistance_type'  => strip_tags(trim($validated['assistance_type'])),
+            'equipment_needed' => strip_tags(trim($validated['equipment_needed'])),
+            'urgency_reason'   => !empty($validated['urgency_reason']) ? strip_tags(trim($validated['urgency_reason'])) : null,
+            'attachment_path'  => $attachmentPath,
+            'status'           => 'pending',
+        ]);
+
+        return redirect()->back()->with('success', 'Permohonan bantuan fasilitas kesehatan berhasil diajukan. Tim verifikasi Yayasan Satriabudi Dharma Setia akan segera menelaah dan menghubungi PIC instansi Anda.');
     }
 }
 
