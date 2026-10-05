@@ -19,8 +19,11 @@
                     <i class="ki-filled ki-arrow-left text-base"></i>
                 </a>
                 <div>
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2 flex-wrap">
                         <h1 class="text-2xl font-bold text-gray-900">{{ $assistanceRequest->institution_name }}</h1>
+                        <span class="px-2.5 py-0.5 rounded-lg bg-gray-900 text-white font-mono text-xs font-bold tracking-wider">
+                            {{ $assistanceRequest->ticket_code }}
+                        </span>
                         <span class="px-2.5 py-0.5 rounded-full text-xs font-bold border {{ $assistanceRequest->status_badge_class }}">
                             {{ $assistanceRequest->status_label }}
                         </span>
@@ -29,12 +32,23 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 flex-wrap">
+                <a href="{{ route('website.assistance.print', $assistanceRequest->id) }}" target="_blank" class="kt-btn kt-btn-outline text-gray-700 hover:bg-gray-100 text-xs px-3.5 py-2">
+                    <i class="ki-filled ki-printer mr-1"></i> Cetak Disposisi
+                </a>
+
+                <form action="{{ route('website.assistance.convert_collaboration', $assistanceRequest->id) }}" method="POST" onsubmit="return confirm('Konversi permohonan ini ke data Penyerahan Alat & BAST resmi? Data instansi dan PIC akan otomatis disalin ke modul Kolaborasi.');">
+                    @csrf
+                    <button type="submit" class="kt-btn bg-red-600 hover:bg-red-700 text-white text-xs px-3.5 py-2">
+                        <i class="ki-filled ki-plus-circle mr-1"></i> Konversi ke BAST
+                    </button>
+                </form>
+
                 <form action="{{ route('website.assistance.destroy', $assistanceRequest->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus permohonan ini?');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="kt-btn kt-btn-outline text-red-600 border-red-200 hover:bg-red-50 text-xs px-3.5 py-2">
-                        <i class="ki-filled ki-trash mr-1"></i> Hapus Permohonan
+                        <i class="ki-filled ki-trash mr-1"></i> Hapus
                     </button>
                 </form>
             </div>

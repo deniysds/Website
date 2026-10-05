@@ -6,9 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Modules\Issues\Models\Issue;
 use Modules\Journals\Models\Journal;
+use Modules\Website\Mail\AssistanceRequestAdminNotificationMail;
+use Modules\Website\Mail\AssistanceRequestConfirmationMail;
+use Modules\Website\Models\WebsiteAssistanceRequest;
 use Modules\Website\Models\WebsiteNews;
 use Modules\Website\Models\WebsiteProgram;
 use Modules\Website\Models\WebsiteSetting;
@@ -798,7 +803,7 @@ class WebsiteController extends Controller
             $attachmentPath = $request->file('attachment')->store('assistance_attachments', 'public');
         }
 
-        \Modules\Website\Models\WebsiteAssistanceRequest::create([
+        $assistanceRequest = WebsiteAssistanceRequest::create([
             'institution_name' => strip_tags(trim($validated['institution_name'])),
             'institution_type' => strip_tags(trim($validated['institution_type'])),
             'pic_name'         => strip_tags(trim($validated['pic_name'])),
@@ -815,7 +820,46 @@ class WebsiteController extends Controller
             'status'           => 'pending',
         ]);
 
-        return redirect()->back()->with('success', 'Permohonan bantuan fasilitas kesehatan berhasil diajukan. Tim verifikasi Yayasan Satriabudi Dharma Setia akan segera menelaah dan menghubungi PIC instansi Anda.');
+        // Kirim email notifikasi ke admin dan konfirmasi tanda terima ke PIC
+        try {
+            $adminEmail = WebsiteSetting::where('key', 'contact_email')->value('value') ?: config('mail.from.address', 'admin@dharma.or.id');
+            Mail::to($adminEmail)->send(new AssistanceRequestAdminNotificationMail($assistanceRequest));
+            Mail::to($assistanceRequest->pic_email)->send(new AssistanceRequestConfirmationMail($assistanceRequest));
+        } catch (\Throwable $e) {
+            Log::warning('Gagal mengirimkan email permohonan bantuan: ' . $e->getMessage());
+        }
+
+        return redirect()->back()
+            ->with('success', 'Permohonan bantuan fasilitas kesehatan berhasil diajukan. Simpan nomor registrasi Anda untuk melacak status verifikasi.')
+            ->with('ticket_code', $assistanceRequest->ticket_code);
+    }
+
+    /**
+     * Public Page: Pelacakan Mandiri Status Permohonan Bantuan Faskes (/permohonan-bantuan/lacak)
+     */
+    public function trackAssistanceRequest(Request $request): View
+    {
+        $ticket = strtoupper(trim($request->get('ticket', '')));
+        $contact = trim($request->get('contact', ''));
+
+        $assistanceRequest = null;
+        $searched = false;
+
+        if (!empty($ticket)) {
+            $searched = true;
+            $query = WebsiteAssistanceRequest::where('ticket_code', $ticket);
+
+            if (!empty($contact)) {
+                $query->where(function ($q) use ($contact) {
+                    $q->where('pic_email', $contact)
+                      ->orWhere('pic_phone', 'like', "%{$contact}%");
+                });
+            }
+
+            $assistanceRequest = $query->first();
+        }
+
+        return view('website::public.assistance-track', compact('assistanceRequest', 'ticket', 'contact', 'searched'));
     }
 }
 

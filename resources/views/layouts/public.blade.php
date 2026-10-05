@@ -148,6 +148,8 @@
                                         class="hover:text-white transition">{{ __('Kolaborasi & Penyerahan Alat') }}</a></li>
                                 <li><a href="{{ route('website.assistance.public') }}"
                                         class="hover:text-white transition text-red-400 font-semibold">{{ __('Permohonan Bantuan Faskes') }}</a></li>
+                                <li><a href="{{ route('website.assistance.track') }}"
+                                        class="hover:text-white transition text-slate-400">{{ __('Lacak Status Permohonan') }}</a></li>
                                 <li><a href="{{ route('website.journals.index') }}"
                                         class="hover:text-white transition">{{ __('Katalog Jurnal Ilmiah') }}</a></li>
                                 <li><a href="{{ route('website.issues.archive') }}"

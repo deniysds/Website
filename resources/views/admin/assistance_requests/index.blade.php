@@ -133,7 +133,10 @@
                         @forelse($requests as $item)
                             <tr class="hover:bg-gray-50/80 transition {{ $item->status === 'pending' ? 'bg-amber-50/20 font-medium' : '' }}">
                                 <td class="py-3.5 px-4">
-                                    <div class="font-bold text-gray-900 text-sm">{{ $item->institution_name }}</div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-bold text-gray-900 text-sm">{{ $item->institution_name }}</span>
+                                        <span class="px-1.5 py-0.5 rounded bg-gray-900 text-white font-mono text-[10px] font-bold">{{ $item->ticket_code }}</span>
+                                    </div>
                                     <div class="text-[11px] text-gray-500 mt-0.5">
                                         <span class="inline-block px-1.5 py-0.5 rounded bg-gray-100 text-gray-700 font-semibold mr-1">{{ $item->institution_type }}</span>
                                         {{ $item->city ? $item->city . ', ' : '' }}{{ $item->province ?? '-' }}

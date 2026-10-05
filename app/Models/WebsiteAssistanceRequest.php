@@ -3,12 +3,14 @@
 namespace Modules\Website\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class WebsiteAssistanceRequest extends Model
 {
     protected $table = 'website_assistance_requests';
 
     protected $fillable = [
+        'ticket_code',
         'institution_name',
         'institution_type',
         'pic_name',
@@ -34,6 +36,24 @@ class WebsiteAssistanceRequest extends Model
         'approved_at' => 'datetime',
         'distributed_at' => 'datetime',
     ];
+
+    protected static function booted(): void
+    {
+        static::creating(function (WebsiteAssistanceRequest $model) {
+            if (empty($model->ticket_code)) {
+                $model->ticket_code = static::generateTicketCode();
+            }
+        });
+    }
+
+    public static function generateTicketCode(): string
+    {
+        do {
+            $code = 'REQ-' . date('ym') . '-' . strtoupper(Str::random(5));
+        } while (static::where('ticket_code', $code)->exists());
+
+        return $code;
+    }
 
     public function scopePending($query)
     {

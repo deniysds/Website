@@ -33,6 +33,7 @@ Route::name('website.')->group(function () {
     Route::get('/berita', [WebsiteController::class, 'news'])->name('news.index');
     Route::get('/berita/{slug}', [WebsiteController::class, 'newsDetail'])->name('news.show');
     Route::get('/permohonan-bantuan', [WebsiteController::class, 'assistanceRequest'])->name('assistance.public');
+    Route::get('/permohonan-bantuan/lacak', [WebsiteController::class, 'trackAssistanceRequest'])->name('assistance.track');
     Route::post('/permohonan-bantuan', [WebsiteController::class, 'submitAssistanceRequest'])->name('assistance.submit')->middleware('throttle:10,1');
 
     // Admin CMS Settings, Partners, Officers & Contacts Inquiry Routes
@@ -83,6 +84,8 @@ Route::name('website.')->group(function () {
             Route::get('/', [\Modules\Website\Http\Controllers\AdminAssistanceRequestController::class, 'index'])->name('index');
             Route::get('/export/csv', [\Modules\Website\Http\Controllers\AdminAssistanceRequestController::class, 'exportCsv'])->name('export');
             Route::get('/{id}', [\Modules\Website\Http\Controllers\AdminAssistanceRequestController::class, 'show'])->name('show');
+            Route::get('/{id}/print', [\Modules\Website\Http\Controllers\AdminAssistanceRequestController::class, 'printDisposisi'])->name('print');
+            Route::post('/{id}/convert-collaboration', [\Modules\Website\Http\Controllers\AdminAssistanceRequestController::class, 'convertToCollaboration'])->name('convert_collaboration');
             Route::put('/{id}/status', [\Modules\Website\Http\Controllers\AdminAssistanceRequestController::class, 'updateStatus'])->name('status');
             Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminAssistanceRequestController::class, 'destroy'])->name('destroy');
         });

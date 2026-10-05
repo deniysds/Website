@@ -6,7 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Modules\Website\Mail\AssistanceRequestStatusUpdatedMail;
 use Modules\Website\Models\WebsiteAssistanceRequest;
+use Modules\Website\Models\WebsiteCollaboration;
+use Modules\Website\Models\WebsiteSetting;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AdminAssistanceRequestController extends Controller
@@ -21,7 +26,8 @@ class AdminAssistanceRequestController extends Controller
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
-                $q->where('institution_name', 'like', "%{$search}%")
+                $q->where('ticket_code', 'like', "%{$search}%")
+                  ->orWhere('institution_name', 'like', "%{$search}%")
                   ->orWhere('pic_name', 'like', "%{$search}%")
                   ->orWhere('pic_email', 'like', "%{$search}%")
                   ->orWhere('pic_phone', 'like', "%{$search}%")
@@ -99,10 +105,66 @@ class AdminAssistanceRequestController extends Controller
             $updates['distributed_at'] = now();
         }
 
+        $oldStatus = $assistanceRequest->status;
         $assistanceRequest->update($updates);
+
+        // Kirim email pembaruan status ke PIC pemohon bila status menjadi approved, distributed, atau rejected
+        if ($oldStatus !== $validated['status'] && in_array($validated['status'], ['approved', 'distributed', 'rejected'])) {
+            try {
+                Mail::to($assistanceRequest->pic_email)->send(new AssistanceRequestStatusUpdatedMail($assistanceRequest));
+            } catch (\Throwable $e) {
+                Log::warning('Gagal mengirim email status update ke PIC: ' . $e->getMessage());
+            }
+        }
 
         return redirect()->route('website.assistance.show', $assistanceRequest->id)
             ->with('success', "Status permohonan bantuan dari '{$assistanceRequest->institution_name}' berhasil diperbarui menjadi '{$assistanceRequest->status_label}'.");
+    }
+
+    /**
+     * Display printable disposition and review sheet for medical board review.
+     */
+    public function printDisposisi(int $id): View
+    {
+        $assistanceRequest = WebsiteAssistanceRequest::findOrFail($id);
+        $settings = WebsiteSetting::pluck('value', 'key')->all();
+
+        return view('website::admin.assistance_requests.print', compact('assistanceRequest', 'settings'));
+    }
+
+    /**
+     * Convert approved assistance request to official collaboration & equipment handover entry.
+     */
+    public function convertToCollaboration(int $id): RedirectResponse
+    {
+        $assistanceRequest = WebsiteAssistanceRequest::findOrFail($id);
+
+        $location = trim(($assistanceRequest->city ? $assistanceRequest->city . ', ' : '') . ($assistanceRequest->province ?: 'Indonesia'));
+
+        $collaboration = WebsiteCollaboration::create([
+            'institution_name' => $assistanceRequest->institution_name,
+            'category'         => $assistanceRequest->institution_type,
+            'location'         => $location ?: 'Indonesia',
+            'pic_name'         => $assistanceRequest->pic_name,
+            'description'      => "Realisasi permohonan bantuan kesehatan (Tiket: {$assistanceRequest->ticket_code}). Rincian: {$assistanceRequest->equipment_needed}",
+            'handover_date'    => now()->toDateString(),
+            'is_active'        => true,
+            'order_no'         => 0,
+        ]);
+
+        // Catat referensi konversi di catatan permohonan bantuan
+        $conversionNote = "Dikonversi ke Kerjasama & Penyerahan Alat ID #{$collaboration->id} pada " . now()->format('d/m/Y H:i');
+        $newNotes = $assistanceRequest->admin_notes ? $assistanceRequest->admin_notes . "\n" . $conversionNote : $conversionNote;
+
+        $updateData = ['admin_notes' => $newNotes];
+        if ($assistanceRequest->status === 'pending' || $assistanceRequest->status === 'reviewed') {
+            $updateData['status'] = 'approved';
+            $updateData['approved_at'] = $assistanceRequest->approved_at ?: now();
+        }
+        $assistanceRequest->update($updateData);
+
+        return redirect()->route('website.collaborations.show', $collaboration->id)
+            ->with('success', "Permohonan bantuan dari '{$assistanceRequest->institution_name}' berhasil dikonversi menjadi data Kerjasama & Penyerahan Alat (#{$collaboration->id}). Anda sekarang dapat melengkapi rincian unit alat atau mencetak BAST.");
     }
 
     /**
@@ -134,6 +196,7 @@ class AdminAssistanceRequestController extends Controller
             // Header baris CSV
             fputcsv($handle, [
                 'ID',
+                'No. Registrasi / Tiket',
                 'Nama Instansi / Faskes',
                 'Jenis Instansi',
                 'Nama PIC',
@@ -155,6 +218,7 @@ class AdminAssistanceRequestController extends Controller
                 foreach ($records as $item) {
                     fputcsv($handle, [
                         $item->id,
+                        $item->ticket_code,
                         $item->institution_name,
                         $item->institution_type,
                         $item->pic_name,

@@ -105,19 +105,36 @@
             <!-- Kolom Kanan: Form Pendaftaran Permohonan Bantuan (8 Kolom) -->
             <div class="lg:col-span-8">
                 <div class="bg-white rounded-2xl p-8 sm:p-10 border border-slate-200 shadow-xs space-y-6">
-                    <div>
-                        <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Formulir Resmi') }}</span>
-                        <h2 class="text-2xl font-black text-slate-900 mt-1">{{ __('Pengajuan Bantuan Instansi') }}</h2>
-                        <p class="text-xs text-slate-500 mt-1">{{ __('Isi seluruh informasi di bawah ini secara lengkap. Kolom bertanda bintang (*) wajib diisi.') }}</p>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div>
+                            <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Formulir Resmi') }}</span>
+                            <h2 class="text-2xl font-black text-slate-900 mt-1">{{ __('Pengajuan Bantuan Instansi') }}</h2>
+                            <p class="text-xs text-slate-500 mt-1">{{ __('Isi seluruh informasi di bawah ini secara lengkap. Kolom bertanda bintang (*) wajib diisi.') }}</p>
+                        </div>
+                        <a href="{{ route('website.assistance.track') }}" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold shrink-0 transition">
+                            <i class="ki-filled ki-magnifier text-red-600"></i> {{ __('Lacak Permohonan') }} &rarr;
+                        </a>
                     </div>
 
                     @if(session('success'))
-                        <div class="p-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium space-y-1">
+                        <div class="p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium space-y-3">
                             <div class="flex items-center gap-2 font-bold text-sm text-emerald-900">
                                 <i class="ki-filled ki-check-circle text-emerald-600 text-lg"></i>
                                 <span>{{ __('Permohonan Berhasil Dikirim!') }}</span>
                             </div>
-                            <p class="pl-6">{{ session('success') }}</p>
+                            <p>{{ session('success') }}</p>
+
+                            @if(session('ticket_code'))
+                                <div class="p-4 rounded-xl bg-white border border-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                    <div>
+                                        <span class="text-[10px] uppercase font-bold text-emerald-700 tracking-wider block">{{ __('Nomor Registrasi / Kode Tiket Anda:') }}</span>
+                                        <span class="text-lg font-mono font-black text-slate-900 tracking-wider">{{ session('ticket_code') }}</span>
+                                    </div>
+                                    <a href="{{ route('website.assistance.track', ['ticket' => session('ticket_code')]) }}" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition text-center shadow-xs">
+                                        {{ __('Lacak Status Sekarang') }} &rarr;
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                     @endif
 
