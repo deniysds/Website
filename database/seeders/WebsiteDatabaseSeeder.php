@@ -12,6 +12,8 @@ use Modules\Website\Models\WebsiteProgram;
 use Modules\Website\Models\WebsiteSetting;
 use Modules\Website\Models\WebsiteVisitation;
 use Modules\Website\Models\WebsiteDonation;
+use Modules\Website\Models\WebsiteDocument;
+use Illuminate\Support\Facades\Storage;
 
 class WebsiteDatabaseSeeder extends Seeder
 {
@@ -850,6 +852,106 @@ class WebsiteDatabaseSeeder extends Seeder
             WebsiteDonation::updateOrCreate(
                 ['donation_code' => $donationData['donation_code']],
                 $donationData
+            );
+        }
+
+        // Mock PDF file for seeder if not exists
+        $mockPdfContent = "%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj\n3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R/Resources<<>>>>endobj\nxref\n0 4\n0000000000 65535 f\n0000000009 00000 n\n0000000052 00000 n\n0000000098 00000 n\ntrailer<</Size 4/Root 1 0 R>>\nstartxref\n178\n%%EOF\n";
+        $mockDir = 'website/documents';
+        if (!Storage::disk('public')->exists($mockDir)) {
+            Storage::disk('public')->makeDirectory($mockDir);
+        }
+        $mockPdfPath = $mockDir . '/sample_ysds_doc.pdf';
+        if (!Storage::disk('public')->exists($mockPdfPath)) {
+            Storage::disk('public')->put($mockPdfPath, $mockPdfContent);
+        }
+
+        // Default Authentic YSDS Official Documents & Downloads
+        $sampleDocuments = [
+            [
+                'title'          => 'Laporan Tahunan Yayasan Satriabudi Dharma Setia (Annual Report 2024)',
+                'slug'           => 'laporan-tahunan-ysds-2024',
+                'category'       => 'laporan_tahunan',
+                'description'    => 'Laporan komprehensif kinerja program kemanusiaan, serah terima alat diagnostik molekuler, beasiswa vokasi, serta capaian strategis YSDS sepanjang tahun 2024.',
+                'file_path'      => $mockPdfPath,
+                'file_size'      => 4520192,
+                'file_extension' => 'pdf',
+                'published_year' => 2024,
+                'download_count' => 142,
+                'order_no'       => 1,
+                'is_active'      => true,
+            ],
+            [
+                'title'          => 'Laporan Keuangan Teraudit Independen YSDS Tahun Buku 2023 (Opini WTP)',
+                'slug'           => 'laporan-keuangan-teraudit-ysds-2023',
+                'category'       => 'laporan_keuangan',
+                'description'    => 'Hasil audit keuangan independen oleh Kantor Akuntan Publik (KAP) dengan opini Wajar Tanpa Pengecualian (WTP) sebagai bukti akuntabilitas dan tata kelola yayasan yang bersih.',
+                'file_path'      => $mockPdfPath,
+                'file_size'      => 2840500,
+                'file_extension' => 'pdf',
+                'published_year' => 2023,
+                'download_count' => 89,
+                'order_no'       => 2,
+                'is_active'      => true,
+            ],
+            [
+                'title'          => 'Salinan Akta Pendirian & Keputusan Menkumham RI Badan Hukum Yayasan',
+                'slug'           => 'sk-kemenkumham-akta-pendirian-yayasan-ysds',
+                'category'       => 'legalitas_sk',
+                'description'    => 'Dokumen legalitas formal pengesahan badan hukum Yayasan Satriabudi Dharma Setia dari Kementerian Hukum dan HAM Republik Indonesia beserta NPWP resmi yayasan.',
+                'file_path'      => $mockPdfPath,
+                'file_size'      => 1230400,
+                'file_extension' => 'pdf',
+                'published_year' => 2016,
+                'download_count' => 215,
+                'order_no'       => 3,
+                'is_active'      => true,
+            ],
+            [
+                'title'          => 'Standar Operasional Prosedur (SOP) Pengajuan Hibah Alkes & Mesin PCR 3T',
+                'slug'           => 'sop-pengajuan-hibah-alkes-mesin-pcr-3t',
+                'category'       => 'panduan_sop',
+                'description'    => 'Pedoman baku, tata cara permohonan, kriteria kelayakan, dan tahapan verifikasi fasilitas kesehatan (RSUD/Labkesda) di daerah Tertinggal, Terdepan, dan Terluar (3T).',
+                'file_path'      => $mockPdfPath,
+                'file_size'      => 1650300,
+                'file_extension' => 'pdf',
+                'published_year' => 2024,
+                'download_count' => 320,
+                'order_no'       => 4,
+                'is_active'      => true,
+            ],
+            [
+                'title'          => 'Petunjuk Teknis & Panduan Seleksi Beasiswa Pendidikan SMK Fensensius',
+                'slug'           => 'panduan-seleksi-beasiswa-smk-fensensius',
+                'category'       => 'panduan_sop',
+                'description'    => 'Informasi syarat pendaftaran, alur tes kemampuan akademik, wawancara, dan fasilitas bebas biaya sekolah & asrama bagi siswa berprestasi.',
+                'file_path'      => $mockPdfPath,
+                'file_size'      => 980200,
+                'file_extension' => 'pdf',
+                'published_year' => 2025,
+                'download_count' => 178,
+                'order_no'       => 5,
+                'is_active'      => true,
+            ],
+            [
+                'title'          => 'Company Profile & Dokumen Profil Ekosistem Yayasan Satriabudi Dharma Setia',
+                'slug'           => 'company-profile-ekosistem-ysds',
+                'category'       => 'brosur_profil',
+                'description'    => 'Brosur dan portofolio resmi profil yayasan, visi misi, rekam jejak riset genomik, klinik kesehatan, jaringan sekolah, dan mitra internasional.',
+                'file_path'      => $mockPdfPath,
+                'file_size'      => 5820400,
+                'file_extension' => 'pdf',
+                'published_year' => 2024,
+                'download_count' => 412,
+                'order_no'       => 6,
+                'is_active'      => true,
+            ],
+        ];
+
+        foreach ($sampleDocuments as $docData) {
+            WebsiteDocument::updateOrCreate(
+                ['slug' => $docData['slug']],
+                $docData
             );
         }
     }

@@ -109,6 +109,17 @@
                             "administrator",
                             "admin"
                         ]
+                    },
+                    {
+                        "title": "Pusat Dokumen & Unduhan",
+                        "path": "website.documents.admin.index",
+                        "classes": "",
+                        "attributes": [],
+                        "permission": "",
+                        "roles": [
+                            "administrator",
+                            "admin"
+                        ]
                     }
                 ]
             }

@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Modules\Issues\Models\Issue;
 use Modules\Journals\Models\Journal;
@@ -15,6 +16,7 @@ use Modules\Website\Mail\AssistanceRequestAdminNotificationMail;
 use Modules\Website\Mail\AssistanceRequestConfirmationMail;
 use Modules\Website\Mail\DonationConfirmationMail;
 use Modules\Website\Models\WebsiteAssistanceRequest;
+use Modules\Website\Models\WebsiteDocument;
 use Modules\Website\Models\WebsiteDonation;
 use Modules\Website\Models\WebsiteNews;
 use Modules\Website\Models\WebsiteProgram;
@@ -980,7 +982,122 @@ class WebsiteController extends Controller
             ->with('success', 'Konfirmasi donasi Anda berhasil dikirim dengan kode ' . $donation->donation_code . '. Tim YSDS akan memverifikasi dan mengirimkan bukti tanda terima ke email Anda.')
             ->with('donation_code', $donation->donation_code);
     }
+
+    /**
+     * Public Page: Pusat Unduhan & Dokumen Publik (/dokumen)
+     */
+    public function documents(Request $request): View
+    {
+        $query = WebsiteDocument::active();
+
+        $keyword = $request->input('search') ?: $request->input('q');
+        if (!empty($keyword)) {
+            $query->where(function ($q) use ($keyword) {
+                $q->where('title', 'like', "%{$keyword}%")
+                  ->orWhere('description', 'like', "%{$keyword}%")
+                  ->orWhere('published_year', 'like', "%{$keyword}%");
+            });
+        }
+
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        $documents = $query->orderBy('order_no', 'asc')
+            ->orderBy('published_year', 'desc')
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
+
+        $categoryCounts = [
+            'all'               => WebsiteDocument::active()->count(),
+            'laporan_tahunan'   => WebsiteDocument::active()->where('category', 'laporan_tahunan')->count(),
+            'laporan_keuangan'  => WebsiteDocument::active()->where('category', 'laporan_keuangan')->count(),
+            'legalitas_sk'      => WebsiteDocument::active()->where('category', 'legalitas_sk')->count(),
+            'panduan_sop'       => WebsiteDocument::active()->where('category', 'panduan_sop')->count(),
+            'brosur_profil'     => WebsiteDocument::active()->where('category', 'brosur_profil')->count(),
+        ];
+
+        $totalDownloads = WebsiteDocument::active()->sum('download_count');
+
+        return view('website::public.documents', compact(
+            'documents',
+            'categoryCounts',
+            'totalDownloads'
+        ));
+    }
+
+    /**
+     * Public Action: Download Document File (/dokumen/{slug}/download)
+     */
+    public function downloadDocument(string $slug)
+    {
+        $document = WebsiteDocument::active()->where('slug', $slug)->firstOrFail();
+
+        // Increment download counter
+        $document->increment('download_count');
+
+        $disk = Storage::disk('public');
+        if (! $disk->exists($document->file_path)) {
+            abort(404, 'Berkas dokumen tidak ditemukan di server.');
+        }
+
+        $fileName = Str::slug($document->title) . '.' . $document->file_extension;
+
+        return $disk->download($document->file_path, $fileName);
+    }
+
+    /**
+     * Public Action: Preview Document PDF in Browser (/dokumen/{slug}/preview)
+     */
+    public function previewDocument(string $slug)
+    {
+        $document = WebsiteDocument::active()->where('slug', $slug)->firstOrFail();
+
+        $disk = Storage::disk('public');
+        if (! $disk->exists($document->file_path)) {
+            abort(404, 'Berkas dokumen tidak ditemukan di server.');
+        }
+
+        $filePath = $disk->path($document->file_path);
+
+        return response()->file($filePath, [
+            'Content-Type'        => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . Str::slug($document->title) . '.pdf"',
+        ]);
+    }
+
+    /**
+     * Public Action: Dynamic XML Sitemap (/sitemap.xml)
+     */
+    public function sitemapXml()
+    {
+        $articles = \Modules\Issues\Models\Article::with(['issue.journal'])
+            ->whereHas('issue', function ($q) {
+                $q->where('is_published', true);
+            })
+            ->latest('published_at')
+            ->get();
+
+        $news = WebsiteNews::published()->latest('published_at')->get();
+        $visitations = WebsiteVisitation::published()->latest('visit_date')->get();
+        $journals = Journal::where('is_active', true)->get();
+        $documents = WebsiteDocument::active()->latest()->get();
+
+        $content = view('website::public.sitemap-xml', compact(
+            'articles',
+            'news',
+            'visitations',
+            'journals',
+            'documents'
+        ))->render();
+
+        return response($content, 200, [
+            'Content-Type' => 'application/xml; charset=utf-8',
+        ]);
+    }
 }
+
 
 
 

@@ -39,6 +39,10 @@ Route::name('website.')->group(function () {
     Route::get('/permohonan-bantuan', [WebsiteController::class, 'assistanceRequest'])->name('assistance.public');
     Route::get('/permohonan-bantuan/lacak', [WebsiteController::class, 'trackAssistanceRequest'])->name('assistance.track');
     Route::post('/permohonan-bantuan', [WebsiteController::class, 'submitAssistanceRequest'])->name('assistance.submit')->middleware('throttle:10,1');
+    Route::get('/dokumen', [WebsiteController::class, 'documents'])->name('documents.public');
+    Route::get('/dokumen/{slug}/download', [WebsiteController::class, 'downloadDocument'])->name('documents.download');
+    Route::get('/dokumen/{slug}/preview', [WebsiteController::class, 'previewDocument'])->name('documents.preview');
+    Route::get('/sitemap.xml', [WebsiteController::class, 'sitemapXml'])->name('sitemap.xml');
 
     // Admin CMS Settings, Partners, Officers & Contacts Inquiry Routes
     Route::middleware(['auth'])->prefix('admin/website')->group(function () {
@@ -112,6 +116,17 @@ Route::name('website.')->group(function () {
             Route::get('/{id}', [\Modules\Website\Http\Controllers\AdminDonationController::class, 'show'])->name('show');
             Route::put('/{id}/status', [\Modules\Website\Http\Controllers\AdminDonationController::class, 'updateStatus'])->name('status');
             Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminDonationController::class, 'destroy'])->name('destroy');
+        });
+
+        // Documents Management (Pusat Unduhan & Dokumen Publik)
+        Route::prefix('documents')->name('documents.admin.')->group(function () {
+            Route::get('/', [\Modules\Website\Http\Controllers\AdminDocumentController::class, 'index'])->name('index');
+            Route::get('/create', [\Modules\Website\Http\Controllers\AdminDocumentController::class, 'create'])->name('create');
+            Route::post('/', [\Modules\Website\Http\Controllers\AdminDocumentController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [\Modules\Website\Http\Controllers\AdminDocumentController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [\Modules\Website\Http\Controllers\AdminDocumentController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminDocumentController::class, 'destroy'])->name('destroy');
+            Route::patch('/{id}/toggle', [\Modules\Website\Http\Controllers\AdminDocumentController::class, 'toggleStatus'])->name('toggle');
         });
 
         // Collaborations & Equipments Management (Kolaborasi & Penyerahan Alat ke Instansi)

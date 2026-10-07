@@ -41,6 +41,8 @@
                             class="{{ request()->routeIs('website.announcements') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Pengumuman') }}</a>
                         <a href="{{ route('website.news.index') }}"
                             class="{{ request()->routeIs('website.news*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Berita & Warta') }}</a>
+                        <a href="{{ route('website.documents.public') }}"
+                            class="{{ request()->routeIs('website.documents*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap flex items-center gap-1"><i class="ki-filled ki-file-down text-[11px] text-red-500"></i> {{ __('Dokumen') }}</a>
                     </nav>
 
                     <!-- Action Button Kontak, Submit Article & Locale Switcher (Desktop) -->
@@ -108,6 +110,7 @@
                         <a href="{{ route('website.guidelines') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.guidelines') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Panduan') }}</a>
                         <a href="{{ route('website.announcements') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.announcements') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Pengumuman') }}</a>
                         <a href="{{ route('website.news.index') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.news*') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Berita & Warta') }}</a>
+                        <a href="{{ route('website.documents.public') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.documents*') ? 'text-red-600 font-bold bg-red-50/50' : '' }} flex items-center gap-1.5"><i class="ki-filled ki-file-down text-xs text-red-600"></i> {{ __('Pusat Dokumen & Unduhan') }}</a>
                     </nav>
                     <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row gap-2">
                         <a href="{{ route('submissions.create.step1') }}" class="w-full text-center px-4 py-2.5 rounded-xl bg-slate-900 text-white font-bold text-xs shadow transition flex items-center justify-center gap-1.5">
@@ -166,11 +169,14 @@
                                         class="hover:text-white transition">{{ __('Arsip Terbitan') }}</a></li>
                                 <li><a href="{{ route('website.news.index') }}"
                                         class="hover:text-white transition">{{ __('Berita & Warta Populer') }}</a></li>
+                                <li><a href="{{ route('website.documents.public') }}"
+                                        class="hover:text-white transition text-red-400 font-semibold flex items-center gap-1.5"><i class="ki-filled ki-file-down text-xs"></i> {{ __('Pusat Dokumen & Unduhan Resmi') }}</a></li>
                                 <li><a href="{{ route('website.articles.index') }}"
                                         class="hover:text-white transition text-red-400 font-semibold">{{ __('Pencarian Artikel Jurnal') }}</a></li>
                                 <li><a href="{{ route('website.guidelines') }}" class="hover:text-white transition">{{ __('Panduan Penulis') }}</a></li>
                                 <li><a href="{{ route('website.ethics') }}" class="hover:text-white transition">{{ __('Etika Publikasi') }}</a></li>
                                 <li><a href="{{ route('website.indexing') }}" class="hover:text-white transition">{{ __('Informasi Pengindeksan') }}</a></li>
+                                <li><a href="{{ url('/sitemap.xml') }}" target="_blank" class="hover:text-white transition text-slate-400 flex items-center gap-1 text-[11px]"><i class="ki-filled ki-code text-xs"></i> {{ __('Peta Situs (Sitemap XML)') }}</a></li>
                             </ul>
                         </div>
                         <div>
