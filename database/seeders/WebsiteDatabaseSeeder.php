@@ -10,6 +10,8 @@ use Modules\Website\Models\WebsiteOfficer;
 use Modules\Website\Models\WebsitePartner;
 use Modules\Website\Models\WebsiteProgram;
 use Modules\Website\Models\WebsiteSetting;
+use Modules\Website\Models\WebsiteVisitation;
+use Modules\Website\Models\WebsiteDonation;
 
 class WebsiteDatabaseSeeder extends Seeder
 {
@@ -664,6 +666,191 @@ class WebsiteDatabaseSeeder extends Seeder
             foreach ($items as $itemData) {
                 $collab->items()->create($itemData);
             }
+        }
+
+        // Default Authentic YSDS Field Visitations
+        $visitations = [
+            [
+                'title'            => 'Visitasi Penyerahan Mesin PCR & Pelatihan Diagnostik RSUD TC Hillers Maumere',
+                'slug'             => 'visitasi-penyerahan-mesin-pcr-rsud-tc-hillers-maumere',
+                'institution_name' => 'RSUD Dr. T.C. Hillers Maumere',
+                'city'             => 'Kabupaten Sikka',
+                'province'         => 'Nusa Tenggara Timur',
+                'visit_date'       => '2023-10-18',
+                'delegation_team'  => 'dr. Vincent, Sp.PK & Tim Teknis YSDS',
+                'summary'          => 'Instalasi mesin Real-Time PCR serta pelatihan operasional bagi analis laboratorium RSUD Dr. T.C. Hillers Maumere guna mempercepat deteksi molekuler di Flores.',
+                'description'      => "Tim Yayasan Satriabudi Dharma Setia (YSDS) melaksanakan visitasi langsung ke RSUD Dr. T.C. Hillers Maumere, Kabupaten Sikka, Nusa Tenggara Timur.\n\nDalam kunjungan ini, tim YSDS melakukan serah terima resmi 1 unit Real-Time PCR 96-well, 1 unit Biosafety Cabinet Class II, serta reagen pendukung deteksi molekuler. Selain penyerahan alat, tim ahli YSDS memberikan pendampingan teknis intensif selama 3 hari kepada para analis laboratorium setempat mengenai standar biosafety, ekstraksi asam nukleat, dan interpretasi kurva amplifikasi PCR.",
+                'is_published'     => true,
+                'order_no'         => 1,
+            ],
+            [
+                'title'            => 'Supervisi Fasilitas Diagnostik & Penguatan Lab Biomolekuler RSUD Ben Mboi Ruteng',
+                'slug'             => 'supervisi-fasilitas-diagnostik-rsud-ben-mboi-ruteng',
+                'institution_name' => 'RSUD Dr. Ben Mboi Ruteng',
+                'city'             => 'Kabupaten Manggarai',
+                'province'         => 'Nusa Tenggara Timur',
+                'visit_date'       => '2023-11-05',
+                'delegation_team'  => 'dr. Yunianti Lafau & Tim Biomedis YSDS',
+                'summary'          => 'Kunjungan supervisi dan kalibrasi peralatan laboratorium molekuler di dataran tinggi Flores untuk memperkuat kesiapsiagaan deteksi dini penyakit menular.',
+                'description'      => "Yayasan Satriabudi Dharma Setia melakukan kunjungan supervisi ke laboratorium RSUD Dr. Ben Mboi di Ruteng, Kabupaten Manggarai.\n\nKegiatan meliputi pengecekan performa mesin thermal cycler, verifikasi alur kerja ruangan PCR bertekanan negatif, dan sesi diskusi bersama jajaran manajemen RSUD serta dokter spesialis patologi klinik terkait ketersediaan reagensia diagnostik.",
+                'is_published'     => true,
+                'order_no'         => 2,
+            ],
+            [
+                'title'            => 'Visitasi Program Savu Smart Island & Peningkatan Kapasitas Lab Sabu Raijua',
+                'slug'             => 'visitasi-program-savu-smart-island-sabu-raijua',
+                'institution_name' => 'Dinas Kesehatan & Labkesda Kab. Sabu Raijua',
+                'city'             => 'Kabupaten Sabu Raijua',
+                'province'         => 'Nusa Tenggara Timur',
+                'visit_date'       => '2024-02-14',
+                'delegation_team'  => 'Daeng Deni Mardaeni & Tim Lapangan YSDS',
+                'summary'          => 'Monitoring implementasi digitalisasi pendidikan Savu Smart Island serta peninjauan fasilitas cold chain rantai dingin sampel medis di pulau terluar NTT.',
+                'description'      => "Kunjungan kerja gabungan tim pendidikan dan kesehatan YSDS ke Pulau Sabu (Sabu Raijua).\n\nTim memantau pemanfaatan perangkat digital pembelajaran di sekolah-sekolah sasaran Program Organisasi Penggerak (POP) Kemendikbudristek, serta meninjau kesiapan sarana penyimpanan spesimen medis di fasilitas kesehatan setempat.",
+                'is_published'     => true,
+                'order_no'         => 3,
+            ],
+            [
+                'title'            => 'Visitasi Kesiapan Laboratorium Ekstraksi Genomik RSUD Komodo Labuan Bajo',
+                'slug'             => 'visitasi-kesiapan-lab-genomik-rsud-komodo-labuan-bajo',
+                'institution_name' => 'RSUD Komodo Labuan Bajo',
+                'city'             => 'Kabupaten Manggarai Barat',
+                'province'         => 'Nusa Tenggara Timur',
+                'visit_date'       => '2024-05-22',
+                'delegation_team'  => 'dr. Vincent, Sp.PK & Konsultan Molekuler',
+                'summary'          => 'Pendampingan teknis dan verifikasi ruang laboratorium diagnostik modern di destinasi pariwisata super prioritas Labuan Bajo.',
+                'description'      => "Sebagai bagian dari komitmen pemerataan akses diagnostik berstandar internasional, tim YSDS meninjau instalasi laboratorium di RSUD Komodo Labuan Bajo.\n\nVisitasi difokuskan pada penguatan kapasitas tenaga medis dalam mengoperasikan alat otomatisasi ekstraksi DNA/RNA dan penyusunan SOP alur sampel rujukan wisatawan maupun masyarakat lokal.",
+                'is_published'     => true,
+                'order_no'         => 4,
+            ],
+            [
+                'title'            => 'Kunjungan Kemitraan Riset Genomik Lab Mikrobiologi Fakultas Kedokteran UI',
+                'slug'             => 'kunjungan-kemitraan-riset-genomik-lab-mikrobiologi-fkui',
+                'institution_name' => 'Laboratorium Mikrobiologi FKUI',
+                'city'             => 'Jakarta Pusat',
+                'province'         => 'DKI Jakarta',
+                'visit_date'       => '2024-07-10',
+                'delegation_team'  => 'Pengurus Yayasan & Tim Riset PacBio YSDS',
+                'summary'          => 'Diskusi strategis percepatan riset sekuensing genom dan evaluasi pemanfaatan instrumen laboratorium hasil kemitraan akademik.',
+                'description'      => "Pertemuan koordinasi berkala antara YSDS dan tim peneliti Departemen Mikrobiologi FKUI - RSCM.\n\nDiskusi menyoroti capaian publikasi riset genomik patogen, pemanfaatan platform sekuensing long-read PacBio dan Oxford Nanopore, serta rencana pelatihan bioinformatika bagi akademisi.",
+                'is_published'     => true,
+                'order_no'         => 5,
+            ],
+            [
+                'title'            => 'Visitasi Penyerahan Alat & Supervisi Cold Chain RSUD Kalabahi Alor',
+                'slug'             => 'visitasi-penyerahan-alat-supervisi-rsud-kalabahi-alor',
+                'institution_name' => 'RSUD Kalabahi Alor',
+                'city'             => 'Kabupaten Alor',
+                'province'         => 'Nusa Tenggara Timur',
+                'visit_date'       => '2024-08-30',
+                'delegation_team'  => 'dr. Yunianti Lafau & Tim Logistik YSDS',
+                'summary'          => 'Peninjauan langsung sistem cold chain dan serah terima peralatan penunjang laboratorium di kepulauan Alor.',
+                'description'      => "Menjangkau fasilitas kesehatan di wilayah kepulauan timur Indonesia, YSDS melaksanakan visitasi ke RSUD Kalabahi, Alor.\n\nTim memverifikasi berfungsinya freezer biomedis suhu rendah, mikrosentrifus, dan micropipette set guna menunjang akurasi uji diagnostik warga kepulauan Alor tanpa harus merujuk sampel ke Kupang.",
+                'is_published'     => true,
+                'order_no'         => 6,
+            ],
+        ];
+
+        foreach ($visitations as $visitData) {
+            WebsiteVisitation::updateOrCreate(
+                ['slug' => $visitData['slug']],
+                $visitData
+            );
+        }
+
+        // Default Sample Verified Donations
+        $sampleDonations = [
+            [
+                'donation_code'   => 'DON-2610-PCR01',
+                'donor_name'      => 'PT Sinar Mitra Farma',
+                'donor_type'      => 'institution',
+                'email'           => 'csr@sinarmitrafarma.co.id',
+                'phone'           => '02157891234',
+                'program_target'  => 'alkes_pcr_3t',
+                'amount'          => 25000000,
+                'transfer_date'   => '2026-10-01',
+                'payment_method'  => 'bank_transfer',
+                'bank_name'       => 'BCA',
+                'is_anonymous'    => false,
+                'message'         => 'Semoga bantuan sarana diagnostik PCR bermanfaat bagi faskes dan masyarakat di NTT.',
+                'status'          => 'verified',
+                'admin_notes'     => 'Dana CSR korporasi telah masuk ke rekening BCA YSDS.',
+                'verified_at'     => '2026-10-01 14:30:00',
+            ],
+            [
+                'donation_code'   => 'DON-2610-BSW02',
+                'donor_name'      => 'dr. Robert Tanujaya, Sp.A',
+                'donor_type'      => 'individual',
+                'email'           => 'robert.tanujaya@gmail.com',
+                'phone'           => '081298765432',
+                'program_target'  => 'beasiswa_smk_fensensius',
+                'amount'          => 5000000,
+                'transfer_date'   => '2026-10-02',
+                'payment_method'  => 'bank_transfer',
+                'bank_name'       => 'Bank Mandiri',
+                'is_anonymous'    => false,
+                'message'         => 'Dukungan untuk biaya pendidikan dan asrama adik-adik siswa SMK Fensensius.',
+                'status'          => 'verified',
+                'admin_notes'     => 'Mutasi Mandiri confirmed.',
+                'verified_at'     => '2026-10-02 16:15:00',
+            ],
+            [
+                'donation_code'   => 'DON-2610-RBH03',
+                'donor_name'      => 'Hamba Allah',
+                'donor_type'      => 'individual',
+                'email'           => 'donatur.peduli@yahoo.com',
+                'phone'           => '081388990011',
+                'program_target'  => 'rumah_baca_halmahera',
+                'amount'          => 1500000,
+                'transfer_date'   => '2026-10-03',
+                'payment_method'  => 'bank_transfer',
+                'bank_name'       => 'BCA',
+                'is_anonymous'    => true,
+                'message'         => 'Untuk pengadaan buku-buku sains dan perpustakaan anak Halmahera.',
+                'status'          => 'verified',
+                'admin_notes'     => 'Valid. Anonim publik.',
+                'verified_at'     => '2026-10-03 10:20:00',
+            ],
+            [
+                'donation_code'   => 'DON-2610-UMM04',
+                'donor_name'      => 'Alumni FK Angkatan 2005',
+                'donor_type'      => 'institution',
+                'email'           => 'alumni.fk05@alumni.ac.id',
+                'phone'           => '081122334455',
+                'program_target'  => 'umum',
+                'amount'          => 10000000,
+                'transfer_date'   => '2026-10-04',
+                'payment_method'  => 'bank_transfer',
+                'bank_name'       => 'BCA',
+                'is_anonymous'    => false,
+                'message'         => 'Apresiasi program kemanusiaan YSDS. Teruslah mengabdi untuk Indonesia.',
+                'status'          => 'verified',
+                'admin_notes'     => 'Terverifikasi.',
+                'verified_at'     => '2026-10-04 11:00:00',
+            ],
+            [
+                'donation_code'   => 'DON-2610-NEW05',
+                'donor_name'      => 'Ibu Maria Christine',
+                'donor_type'      => 'individual',
+                'email'           => 'maria.christine@outlook.com',
+                'phone'           => '081765432109',
+                'program_target'  => 'beasiswa_smk_fensensius',
+                'amount'          => 750000,
+                'transfer_date'   => '2026-10-06',
+                'payment_method'  => 'bank_transfer',
+                'bank_name'       => 'BCA',
+                'is_anonymous'    => false,
+                'message'         => 'Semoga berkah untuk adik-adik perawat.',
+                'status'          => 'pending',
+                'admin_notes'     => null,
+                'verified_at'     => null,
+            ],
+        ];
+
+        foreach ($sampleDonations as $donationData) {
+            WebsiteDonation::updateOrCreate(
+                ['donation_code' => $donationData['donation_code']],
+                $donationData
+            );
         }
     }
 }

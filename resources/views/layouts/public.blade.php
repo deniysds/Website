@@ -23,8 +23,12 @@
                             class="{{ request()->routeIs('website.officers.public') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Pengurus') }}</a>
                         <a href="{{ route('website.collaborations.public') }}"
                             class="{{ request()->routeIs('website.collaborations*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Kolaborasi') }}</a>
+                        <a href="{{ route('website.visitations.public') }}"
+                            class="{{ request()->routeIs('website.visitations*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Visitasi') }}</a>
                         <a href="{{ route('website.assistance.public') }}"
-                            class="{{ request()->routeIs('website.assistance*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap flex items-center gap-1"><i class="ki-filled ki-heart text-[11px] text-red-500"></i> {{ __('Permohonan Bantuan') }}</a>
+                            class="{{ request()->routeIs('website.assistance*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap flex items-center gap-1"><i class="ki-filled ki-shield-tick text-[11px] text-red-500"></i> {{ __('Bantuan') }}</a>
+                        <a href="{{ route('website.donation.public') }}"
+                            class="{{ request()->routeIs('website.donation*') ? 'text-red-600 font-bold' : 'text-red-600 hover:text-red-700 font-bold' }} transition whitespace-nowrap flex items-center gap-1"><i class="ki-filled ki-heart text-[11px] text-red-500"></i> {{ __('Donasi') }}</a>
                         <a href="{{ route('website.journals.index') }}"
                             class="{{ request()->routeIs('website.journals*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Program & Jurnal') }}</a>
                         <a href="{{ route('website.issues.archive') }}"
@@ -95,7 +99,9 @@
                         <a href="{{ route('website.about') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.about') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Profil') }}</a>
                         <a href="{{ route('website.officers.public') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.officers.public') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Pengurus') }}</a>
                         <a href="{{ route('website.collaborations.public') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.collaborations*') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Kolaborasi') }}</a>
-                        <a href="{{ route('website.assistance.public') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.assistance*') ? 'text-red-600 font-bold bg-red-50/50' : '' }} flex items-center gap-1.5"><i class="ki-filled ki-heart text-xs text-red-600"></i> {{ __('Permohonan Bantuan') }}</a>
+                        <a href="{{ route('website.visitations.public') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.visitations*') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Visitasi Lapangan') }}</a>
+                        <a href="{{ route('website.assistance.public') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.assistance*') ? 'text-red-600 font-bold bg-red-50/50' : '' }} flex items-center gap-1.5"><i class="ki-filled ki-shield-tick text-xs text-red-600"></i> {{ __('Permohonan Bantuan') }}</a>
+                        <a href="{{ route('website.donation.public') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.donation*') ? 'text-red-600 font-bold bg-red-50/50' : 'text-red-600 font-bold' }} flex items-center gap-1.5"><i class="ki-filled ki-heart text-xs text-red-600"></i> {{ __('Donasi & Rekening') }}</a>
                         <a href="{{ route('website.journals.index') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.journals*') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Program & Jurnal') }}</a>
                         <a href="{{ route('website.issues.archive') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.issues*') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Publikasi') }}</a>
                         <a href="{{ route('website.articles.index') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.articles*') ? 'text-red-600 font-bold bg-red-50/50' : '' }} flex items-center gap-1.5"><i class="ki-filled ki-magnifier text-xs"></i> {{ __('Cari Artikel') }}</a>
@@ -146,8 +152,12 @@
                                         class="hover:text-white transition">{{ __('Struktur Pengurus & Staff') }}</a></li>
                                 <li><a href="{{ route('website.collaborations.public') }}"
                                         class="hover:text-white transition">{{ __('Kolaborasi & Penyerahan Alat') }}</a></li>
+                                <li><a href="{{ route('website.visitations.public') }}"
+                                        class="hover:text-white transition">{{ __('Dokumentasi Visitasi Lapangan') }}</a></li>
+                                <li><a href="{{ route('website.donation.public') }}"
+                                        class="hover:text-white transition text-red-400 font-semibold">{{ __('Kanal Donasi & Rekening Resmi') }}</a></li>
                                 <li><a href="{{ route('website.assistance.public') }}"
-                                        class="hover:text-white transition text-red-400 font-semibold">{{ __('Permohonan Bantuan Faskes') }}</a></li>
+                                        class="hover:text-white transition text-slate-300">{{ __('Permohonan Bantuan Faskes') }}</a></li>
                                 <li><a href="{{ route('website.assistance.track') }}"
                                         class="hover:text-white transition text-slate-400">{{ __('Lacak Status Permohonan') }}</a></li>
                                 <li><a href="{{ route('website.journals.index') }}"

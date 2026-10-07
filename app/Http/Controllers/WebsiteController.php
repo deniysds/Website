@@ -13,10 +13,13 @@ use Modules\Issues\Models\Issue;
 use Modules\Journals\Models\Journal;
 use Modules\Website\Mail\AssistanceRequestAdminNotificationMail;
 use Modules\Website\Mail\AssistanceRequestConfirmationMail;
+use Modules\Website\Mail\DonationConfirmationMail;
 use Modules\Website\Models\WebsiteAssistanceRequest;
+use Modules\Website\Models\WebsiteDonation;
 use Modules\Website\Models\WebsiteNews;
 use Modules\Website\Models\WebsiteProgram;
 use Modules\Website\Models\WebsiteSetting;
+use Modules\Website\Models\WebsiteVisitation;
 
 class WebsiteController extends Controller
 {
@@ -606,6 +609,8 @@ class WebsiteController extends Controller
             ->distinct()
             ->pluck('category');
 
+        $visitations = \Modules\Website\Models\WebsiteVisitation::published()->get();
+
         return view('website::public.collaborations', compact(
             'collaborations',
             'categories',
@@ -613,7 +618,8 @@ class WebsiteController extends Controller
             'totalEquipmentUnits',
             'totalEquipmentTypes',
             'search',
-            'category'
+            'category',
+            'visitations'
         ));
     }
 
@@ -861,6 +867,120 @@ class WebsiteController extends Controller
 
         return view('website::public.assistance-track', compact('assistanceRequest', 'ticket', 'contact', 'searched'));
     }
+
+    /**
+     * Public Page: Dokumentasi Visitasi & Kunjungan Lapangan YSDS (/visitasi)
+     */
+    public function visitations(Request $request): View
+    {
+        $query = WebsiteVisitation::published();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('institution_name', 'like', "%{$search}%")
+                  ->orWhere('city', 'like', "%{$search}%")
+                  ->orWhere('province', 'like', "%{$search}%")
+                  ->orWhere('summary', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('province')) {
+            $query->where('province', $request->province);
+        }
+
+        $visitations = $query->paginate(9)->withQueryString();
+        $provinces = WebsiteVisitation::where('is_published', true)->whereNotNull('province')->distinct()->pluck('province');
+
+        return view('website::public.visitations', compact('visitations', 'provinces'));
+    }
+
+    /**
+     * Public Page: Detail Laporan Visitasi (/visitasi/{slug})
+     */
+    public function visitationDetail(string $slug): View
+    {
+        $visitation = WebsiteVisitation::where('slug', $slug)->firstOrFail();
+        $recentVisitations = WebsiteVisitation::published()->where('id', '!=', $visitation->id)->take(3)->get();
+
+        return view('website::public.visitation-detail', compact('visitation', 'recentVisitations'));
+    }
+
+    /**
+     * Public Page: Kanal Donasi & Penggalangan Dana YSDS (/donasi)
+     */
+    public function donation(): View
+    {
+        $recentDonations = WebsiteDonation::verified()
+            ->latest('verified_at')
+            ->take(8)
+            ->get();
+
+        $totalCollected = WebsiteDonation::verified()->sum('amount');
+        $totalDonors = WebsiteDonation::verified()->count();
+
+        return view('website::public.donation', compact('recentDonations', 'totalCollected', 'totalDonors'));
+    }
+
+    /**
+     * Submit Formulir Konfirmasi Donasi
+     */
+    public function submitDonation(Request $request): RedirectResponse
+    {
+        // Anti-spam Honeypot trap: bots fill hidden field website_hp
+        if ($request->filled('website_hp')) {
+            return redirect()->back()->with('success', 'Konfirmasi donasi Anda berhasil diterima. Terima kasih atas kepedulian dan kebaikan Anda.');
+        }
+
+        $validated = $request->validate([
+            'donor_name'     => 'required|string|max:150',
+            'donor_type'     => 'nullable|string|in:individual,institution',
+            'email'          => 'required|email|max:150',
+            'phone'          => 'required|string|max:30',
+            'program_target' => 'required|string|max:100',
+            'amount'         => 'required|numeric|min:10000',
+            'transfer_date'  => 'required|date',
+            'payment_method' => 'nullable|string|max:50',
+            'bank_name'      => 'nullable|string|max:100',
+            'proof'          => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:5120', // max 5MB
+            'is_anonymous'   => 'nullable|boolean',
+            'message'        => 'nullable|string|max:1000',
+        ]);
+
+        $proofPath = null;
+        if ($request->hasFile('proof')) {
+            $proofPath = $request->file('proof')->store('website/donations', 'public');
+        }
+
+        $donation = WebsiteDonation::create([
+            'donor_name'     => strip_tags(trim($validated['donor_name'])),
+            'donor_type'     => $validated['donor_type'] ?? 'individual',
+            'email'          => filter_var(trim($validated['email']), FILTER_SANITIZE_EMAIL),
+            'phone'          => strip_tags(trim($validated['phone'])),
+            'program_target' => strip_tags(trim($validated['program_target'])),
+            'amount'         => (int) $validated['amount'],
+            'transfer_date'  => $validated['transfer_date'],
+            'payment_method' => $validated['payment_method'] ?? 'bank_transfer',
+            'bank_name'      => !empty($validated['bank_name']) ? strip_tags(trim($validated['bank_name'])) : 'BCA',
+            'proof_path'     => $proofPath,
+            'is_anonymous'   => $request->boolean('is_anonymous'),
+            'message'        => !empty($validated['message']) ? strip_tags(trim($validated['message'])) : null,
+            'status'         => 'pending',
+        ]);
+
+        // Send confirmation email to donor
+        try {
+            Mail::to($donation->email)->send(new DonationConfirmationMail($donation));
+        } catch (\Throwable $e) {
+            Log::warning('Gagal mengirim email konfirmasi donasi: ' . $e->getMessage());
+        }
+
+        return redirect()->back()
+            ->with('success', 'Konfirmasi donasi Anda berhasil dikirim dengan kode ' . $donation->donation_code . '. Tim YSDS akan memverifikasi dan mengirimkan bukti tanda terima ke email Anda.')
+            ->with('donation_code', $donation->donation_code);
+    }
 }
+
 
 

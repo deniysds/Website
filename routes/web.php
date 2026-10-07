@@ -32,6 +32,10 @@ Route::name('website.')->group(function () {
     Route::get('/kolaborasi', [WebsiteController::class, 'collaborations'])->name('collaborations.public');
     Route::get('/berita', [WebsiteController::class, 'news'])->name('news.index');
     Route::get('/berita/{slug}', [WebsiteController::class, 'newsDetail'])->name('news.show');
+    Route::get('/visitasi', [WebsiteController::class, 'visitations'])->name('visitations.public');
+    Route::get('/visitasi/{slug}', [WebsiteController::class, 'visitationDetail'])->name('visitations.show');
+    Route::get('/donasi', [WebsiteController::class, 'donation'])->name('donation.public');
+    Route::post('/donasi', [WebsiteController::class, 'submitDonation'])->name('donation.submit')->middleware('throttle:10,1');
     Route::get('/permohonan-bantuan', [WebsiteController::class, 'assistanceRequest'])->name('assistance.public');
     Route::get('/permohonan-bantuan/lacak', [WebsiteController::class, 'trackAssistanceRequest'])->name('assistance.track');
     Route::post('/permohonan-bantuan', [WebsiteController::class, 'submitAssistanceRequest'])->name('assistance.submit')->middleware('throttle:10,1');
@@ -88,6 +92,26 @@ Route::name('website.')->group(function () {
             Route::post('/{id}/convert-collaboration', [\Modules\Website\Http\Controllers\AdminAssistanceRequestController::class, 'convertToCollaboration'])->name('convert_collaboration');
             Route::put('/{id}/status', [\Modules\Website\Http\Controllers\AdminAssistanceRequestController::class, 'updateStatus'])->name('status');
             Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminAssistanceRequestController::class, 'destroy'])->name('destroy');
+        });
+
+        // Field Visitations Management (Dokumentasi Visitasi & Kunjungan Lapangan)
+        Route::prefix('visitations')->name('visitations.admin.')->group(function () {
+            Route::get('/', [\Modules\Website\Http\Controllers\AdminVisitationController::class, 'index'])->name('index');
+            Route::get('/create', [\Modules\Website\Http\Controllers\AdminVisitationController::class, 'create'])->name('create');
+            Route::post('/', [\Modules\Website\Http\Controllers\AdminVisitationController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [\Modules\Website\Http\Controllers\AdminVisitationController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [\Modules\Website\Http\Controllers\AdminVisitationController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminVisitationController::class, 'destroy'])->name('destroy');
+            Route::patch('/{id}/toggle', [\Modules\Website\Http\Controllers\AdminVisitationController::class, 'toggleStatus'])->name('toggle');
+        });
+
+        // Donations Management (Penggalangan Dana & Konfirmasi Donasi)
+        Route::prefix('donations')->name('donations.')->group(function () {
+            Route::get('/', [\Modules\Website\Http\Controllers\AdminDonationController::class, 'index'])->name('index');
+            Route::get('/export/csv', [\Modules\Website\Http\Controllers\AdminDonationController::class, 'exportCsv'])->name('export');
+            Route::get('/{id}', [\Modules\Website\Http\Controllers\AdminDonationController::class, 'show'])->name('show');
+            Route::put('/{id}/status', [\Modules\Website\Http\Controllers\AdminDonationController::class, 'updateStatus'])->name('status');
+            Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminDonationController::class, 'destroy'])->name('destroy');
         });
 
         // Collaborations & Equipments Management (Kolaborasi & Penyerahan Alat ke Instansi)

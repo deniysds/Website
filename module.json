@@ -87,6 +87,28 @@
                             "administrator",
                             "admin"
                         ]
+                    },
+                    {
+                        "title": "Dokumentasi Visitasi",
+                        "path": "website.visitations.admin.index",
+                        "classes": "",
+                        "attributes": [],
+                        "permission": "",
+                        "roles": [
+                            "administrator",
+                            "admin"
+                        ]
+                    },
+                    {
+                        "title": "Penggalangan Donasi",
+                        "path": "website.donations.index",
+                        "classes": "",
+                        "attributes": [],
+                        "permission": "",
+                        "roles": [
+                            "administrator",
+                            "admin"
+                        ]
                     }
                 ]
             }
