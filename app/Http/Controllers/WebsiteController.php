@@ -79,11 +79,16 @@ class WebsiteController extends Controller
 
         $universityPartners = $supportingPartners->filter(function ($p) {
             return $p->category === 'universitas' || empty($p->category);
-        });
+        })->values();
 
-        $companyPartners = $supportingPartners->where('category', 'perusahaan');
-        $hospitalPartners = $supportingPartners->where('category', 'rumah_sakit');
-        $instansiPartners = $supportingPartners->where('category', 'instansi');
+        $companyPartners = $supportingPartners->where('category', 'perusahaan')->values();
+        $hospitalPartners = $supportingPartners->where('category', 'rumah_sakit')->values();
+        $instansiPartners = $supportingPartners->where('category', 'instansi')->values();
+
+        // Gabungan mitra perusahaan, klinik/RS, dan instansi ("perusahaan dan lainnya")
+        $otherPartners = $supportingPartners->reject(function ($p) use ($universityPartners) {
+            return $universityPartners->contains('id', $p->id);
+        })->values();
 
         return view('website::public.home', compact(
             'settings',
@@ -97,7 +102,8 @@ class WebsiteController extends Controller
             'universityPartners',
             'companyPartners',
             'hospitalPartners',
-            'instansiPartners'
+            'instansiPartners',
+            'otherPartners'
         ));
     }
 

@@ -551,101 +551,118 @@
     <!-- Blok Bawah Terpadu: Mitra Kami, Kolaborasi & Kontak (Tanpa Rounded & Tanpa Border Sesuai Lampiran) -->
     <div class="space-y-0 overflow-hidden">
         <!-- 8. Section Mitra Kami (Flat Tanpa Rounded & Tanpa Border Sesuai Lampiran) -->
-        <section class="bg-black text-white px-6 py-14 sm:px-12 sm:py-20 space-y-12 sm:space-y-16 overflow-hidden relative min-w-0 max-w-full">
+        <section class="bg-black text-white px-4 py-10 sm:px-8 sm:py-14 space-y-8 sm:space-y-10 overflow-hidden relative min-w-0 max-w-full">
+            <style>
+                @keyframes marquee-scroll-left {
+                    0% { transform: translateX(0%); }
+                    100% { transform: translateX(-50%); }
+                }
+                @keyframes marquee-scroll-right {
+                    0% { transform: translateX(-50%); }
+                    100% { transform: translateX(0%); }
+                }
+                .marquee-stream {
+                    width: 100%;
+                    max-width: 100%;
+                    overflow: hidden;
+                    position: relative;
+                }
+                .marquee-stream-track-l {
+                    display: flex;
+                    width: max-content;
+                    animation: marquee-scroll-left 45s linear infinite;
+                    will-change: transform;
+                }
+                .marquee-stream-track-r {
+                    display: flex;
+                    width: max-content;
+                    animation: marquee-scroll-right 48s linear infinite;
+                    will-change: transform;
+                }
+                .marquee-stream:hover .marquee-stream-track-l,
+                .marquee-stream:hover .marquee-stream-track-r {
+                    animation-play-state: paused;
+                }
+            </style>
+
             <!-- Header Section Mitra Kami -->
-            <div class="text-center space-y-3 max-w-3xl mx-auto">
+            <div class="text-center space-y-2.5 max-w-3xl mx-auto">
                 <span class="text-xs font-bold text-red-500 uppercase tracking-widest">{{ __($settings['partners_tag'] ?? 'Mitra Kami') }}</span>
-                <h2 class="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight">
                     {{ __($settings['partners_title'] ?? 'Kami Percaya Setiap Mitra Adalah Bagian Berharga dalam Perjalanan Jangka Panjang') }}
                 </h2>
             </div>
 
-            <!-- 1. Row 1: Platform Partners (PaninBank, Ultima Genomics, PacBio, MGI, Oxford Nanopore) -->
-            <div class="max-w-6xl mx-auto">
-                <div class="flex flex-wrap items-center justify-center gap-8 sm:gap-12 lg:gap-16">
+            <!-- 1. Mitra Platform Utama (Tepat 1 Baris Horizontal) -->
+            <div class="max-w-4xl mx-auto w-full pt-1">
+                <div class="grid grid-cols-5 items-center justify-items-center gap-3 sm:gap-6 md:gap-8 w-full">
                     @forelse($mainPartners as $partner)
-                        <div class="flex items-center justify-center transition-transform hover:scale-105 duration-200" title="{{ $partner->name }}">
+                        <div class="flex items-center justify-center w-full transition-transform hover:scale-105 duration-200" title="{{ $partner->name }}">
                             <span class="sr-only">{{ $partner->name }}</span>
                             @if($partner->website_url)
-                                <a href="{{ $partner->website_url }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center" title="{{ $partner->name }}">
+                                <a href="{{ $partner->website_url }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center w-full" title="{{ $partner->name }}">
                             @endif
                             @if($partner->logo_path)
-                                <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="h-8 sm:h-10 lg:h-12 w-auto max-w-[150px] sm:max-w-[190px] object-contain filter brightness-95 hover:brightness-100 transition" />
+                                <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-h-6 sm:max-h-7 md:max-h-8 max-w-[95%] sm:max-w-[130px] md:max-w-[160px] object-contain filter brightness-95 hover:brightness-100 transition" />
                             @else
-                                <span class="font-bold text-white text-base tracking-tight">{{ $partner->name }}</span>
+                                <span class="font-bold text-white text-xs sm:text-sm tracking-tight text-center truncate">{{ $partner->name }}</span>
                             @endif
                             @if($partner->website_url)
                                 </a>
                             @endif
                         </div>
                     @empty
-                        <div class="text-center text-slate-500 text-xs">Belum ada data mitra utama.</div>
+                        <div class="col-span-5 text-center text-slate-500 text-xs">Belum ada data mitra utama.</div>
                     @endforelse
                 </div>
             </div>
 
-            <!-- 2. Group 2: Universitas (Grid / Flex Seals Perguruan Tinggi & Lembaga Riset) -->
-            @if(isset($universityPartners) && $universityPartners->isNotEmpty())
-                <div class="max-w-6xl mx-auto pt-2">
-                    <div class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 lg:gap-4">
-                        @foreach($universityPartners as $partner)
-                            <div class="w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 flex items-center justify-center rounded-full hover:scale-115 transition-transform duration-200 group relative" title="{{ $partner->name }}">
-                                <span class="sr-only">{{ $partner->name }}</span>
-                                @if($partner->website_url)
-                                    <a href="{{ $partner->website_url }}" target="_blank" rel="noopener noreferrer" class="w-full h-full flex items-center justify-center">
-                                @endif
-                                @if($partner->logo_path)
-                                    <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-w-full max-h-full object-contain filter brightness-95 group-hover:brightness-110 transition drop-shadow-xs" loading="lazy" />
-                                @else
-                                    <div class="w-full h-full rounded-full bg-slate-900 border border-slate-800 text-[10px] font-bold text-slate-300 flex items-center justify-center">
-                                        {{ substr($partner->name, 0, 2) }}
-                                    </div>
-                                @endif
-                                @if($partner->website_url)
-                                    </a>
-                                @endif
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
+            @php
+                // Helper duplikasi track agar animasi infinite loop 100% mulus tanpa terputus
+                $prepareTrack = function ($collection, $minItems = 16) {
+                    if (! $collection || $collection->isEmpty()) return collect();
+                    $list = $collection;
+                    while ($list->count() < $minItems) {
+                        $list = $list->concat($collection);
+                    }
+                    return $list->concat($list);
+                };
 
-            <!-- 3. Group 3: Perusahaan, Klinik & Rumah Sakit (Rows 4, 5, 6, 7) -->
-            <div class="max-w-6xl mx-auto space-y-6 sm:space-y-8 pt-2">
-                @php
-                    $cList = $companyPartners ?? collect();
-                    $hList = $hospitalPartners ?? collect();
+                // 2. Perguruan Tinggi: Dibagi tepat 3 baris bergerak
+                $uList = $universityPartners ?? collect();
+                $uTotal = $uList->count();
+                $uChunk = (int) ceil($uTotal / 3);
+                $univRow1 = $prepareTrack($uList->slice(0, $uChunk));
+                $univRow2 = $prepareTrack($uList->slice($uChunk, $uChunk));
+                $univRow3 = $prepareTrack($uList->slice($uChunk * 2));
 
-                    // Row 4: Company Top (8 items)
-                    $row4 = $cList->slice(0, 8);
-                    // Row 5: Biotech & Science (8 items)
-                    $row5 = $cList->slice(8, 8);
-                    // Row 6: Corporate (remaining 2) + RS (first 6) = 8 items
-                    $row6 = $cList->slice(16, 2)->concat($hList->slice(0, 6));
-                    // Row 7: RS remaining (8 items)
-                    $row7 = $hList->slice(6, 8);
+                // 3. Perusahaan & Lainnya: Maksimal 2 baris, bergerak jika > 10
+                $oList = $otherPartners ?? collect();
+                $oTotal = $oList->count();
+                $isOtherMoving = $oTotal > 10;
+                $oChunk = (int) ceil($oTotal / 2);
+                $otherRow1 = $isOtherMoving ? $prepareTrack($oList->slice(0, $oChunk)) : $oList->slice(0, $oChunk);
+                $otherRow2 = $isOtherMoving ? $prepareTrack($oList->slice($oChunk)) : $oList->slice($oChunk);
+            @endphp
 
-                    $gridRows = [
-                        $row4,
-                        $row5,
-                        $row6,
-                        $row7,
-                    ];
-                @endphp
-
-                @foreach($gridRows as $rowItems)
-                    @if($rowItems->isNotEmpty())
-                        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4 sm:gap-6 items-center justify-items-center">
-                            @foreach($rowItems as $partner)
-                                <div class="flex items-center justify-center w-full h-12 px-2 hover:scale-105 transition-transform duration-200 group" title="{{ $partner->name }}">
+            <!-- 2. Perguruan Tinggi (3 Baris Bergerak Mulus) -->
+            @if($uList->isNotEmpty())
+                <div class="space-y-2.5 max-w-6xl mx-auto pt-2">
+                    <!-- Row 1: Bergerak ke Kiri -->
+                    <div class="marquee-stream py-1 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+                        <div class="marquee-stream-track-l flex gap-3.5 sm:gap-4.5 items-center" style="animation-duration: 48s;">
+                            @foreach($univRow1 as $partner)
+                                <div class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex items-center justify-center shrink-0 rounded-full hover:scale-120 transition-transform duration-200 group relative" title="{{ $partner->name }}">
                                     <span class="sr-only">{{ $partner->name }}</span>
                                     @if($partner->website_url)
                                         <a href="{{ $partner->website_url }}" target="_blank" rel="noopener noreferrer" class="w-full h-full flex items-center justify-center">
                                     @endif
                                     @if($partner->logo_path)
-                                        <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-h-9 sm:max-h-11 max-w-full object-contain filter brightness-95 group-hover:brightness-100 transition" loading="lazy" />
+                                        <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-w-full max-h-full object-contain filter brightness-95 group-hover:brightness-110 transition drop-shadow-xs" loading="lazy" />
                                     @else
-                                        <span class="text-xs font-semibold text-slate-300 text-center line-clamp-2">{{ $partner->name }}</span>
+                                        <div class="w-full h-full rounded-full bg-slate-900 border border-slate-800 text-[9px] font-bold text-slate-300 flex items-center justify-center">
+                                            {{ substr($partner->name, 0, 2) }}
+                                        </div>
                                     @endif
                                     @if($partner->website_url)
                                         </a>
@@ -653,56 +670,142 @@
                                 </div>
                             @endforeach
                         </div>
-                    @endif
-                @endforeach
-            </div>
-
-            <!-- 4. Group 4: Instansi & Pemerintah (Row 8) -->
-            @if(isset($instansiPartners) && $instansiPartners->isNotEmpty())
-                <div class="max-w-4xl mx-auto pt-2">
-                    <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-10 lg:gap-12">
-                        @foreach($instansiPartners as $partner)
-                            <div class="flex items-center justify-center hover:scale-105 transition-transform duration-200 group" title="{{ $partner->name }}">
-                                <span class="sr-only">{{ $partner->name }}</span>
-                                @if($partner->website_url)
-                                    <a href="{{ $partner->website_url }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center">
-                                @endif
-                                @if($partner->logo_path)
-                                    @if(str_contains(strtolower($partner->logo_path), 'brin'))
-                                        <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="h-9 sm:h-11 w-auto max-w-[120px] object-contain filter brightness-95 group-hover:brightness-100 transition" loading="lazy" />
-                                    @else
-                                        <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="h-10 sm:h-12 w-auto max-w-[50px] object-contain filter brightness-95 group-hover:brightness-100 transition" loading="lazy" />
-                                    @endif
-                                @else
-                                    <span class="text-xs font-semibold text-slate-300 text-center">{{ $partner->name }}</span>
-                                @endif
-                                @if($partner->website_url)
-                                    </a>
-                                @endif
-                            </div>
-                        @endforeach
                     </div>
+
+                    <!-- Row 2: Bergerak ke Kanan (Arah Berlawanan) -->
+                    @if($univRow2->isNotEmpty())
+                        <div class="marquee-stream py-1 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+                            <div class="marquee-stream-track-r flex gap-3.5 sm:gap-4.5 items-center" style="animation-duration: 52s;">
+                                @foreach($univRow2 as $partner)
+                                    <div class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex items-center justify-center shrink-0 rounded-full hover:scale-120 transition-transform duration-200 group relative" title="{{ $partner->name }}">
+                                        <span class="sr-only">{{ $partner->name }}</span>
+                                        @if($partner->website_url)
+                                            <a href="{{ $partner->website_url }}" target="_blank" rel="noopener noreferrer" class="w-full h-full flex items-center justify-center">
+                                        @endif
+                                        @if($partner->logo_path)
+                                            <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-w-full max-h-full object-contain filter brightness-95 group-hover:brightness-110 transition drop-shadow-xs" loading="lazy" />
+                                        @else
+                                            <div class="w-full h-full rounded-full bg-slate-900 border border-slate-800 text-[9px] font-bold text-slate-300 flex items-center justify-center">
+                                                {{ substr($partner->name, 0, 2) }}
+                                            </div>
+                                        @endif
+                                        @if($partner->website_url)
+                                            </a>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
+                    <!-- Row 3: Bergerak ke Kiri -->
+                    @if($univRow3->isNotEmpty())
+                        <div class="marquee-stream py-1 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+                            <div class="marquee-stream-track-l flex gap-3.5 sm:gap-4.5 items-center" style="animation-duration: 46s;">
+                                @foreach($univRow3 as $partner)
+                                    <div class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex items-center justify-center shrink-0 rounded-full hover:scale-120 transition-transform duration-200 group relative" title="{{ $partner->name }}">
+                                        <span class="sr-only">{{ $partner->name }}</span>
+                                        @if($partner->website_url)
+                                            <a href="{{ $partner->website_url }}" target="_blank" rel="noopener noreferrer" class="w-full h-full flex items-center justify-center">
+                                        @endif
+                                        @if($partner->logo_path)
+                                            <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-w-full max-h-full object-contain filter brightness-95 group-hover:brightness-110 transition drop-shadow-xs" loading="lazy" />
+                                        @else
+                                            <div class="w-full h-full rounded-full bg-slate-900 border border-slate-800 text-[9px] font-bold text-slate-300 flex items-center justify-center">
+                                                {{ substr($partner->name, 0, 2) }}
+                                            </div>
+                                        @endif
+                                        @if($partner->website_url)
+                                            </a>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 </div>
             @endif
 
-            {{-- Fallback: Any other supporting partners not categorized above --}}
-            @php
-                $renderedIds = ($universityPartners ?? collect())->pluck('id')
-                    ->merge(($companyPartners ?? collect())->pluck('id'))
-                    ->merge(($hospitalPartners ?? collect())->pluck('id'))
-                    ->merge(($instansiPartners ?? collect())->pluck('id'));
-                $extraPartners = ($supportingPartners ?? collect())->whereNotIn('id', $renderedIds);
-            @endphp
-            @if($extraPartners->isNotEmpty())
-                <div class="flex flex-wrap items-center justify-center gap-4 max-w-5xl mx-auto pt-4 border-t border-slate-900">
-                    @foreach($extraPartners as $partner)
-                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs text-slate-300" title="{{ $partner->name }}">
-                            @if($partner->logo_path)
-                                <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="w-5 h-5 object-contain" />
-                            @endif
-                            <span>{{ $partner->name }}</span>
+            <!-- 3. Perusahaan & Lainnya (Maksimal 2 Baris, Bergerak jika > 10) -->
+            @if($oList->isNotEmpty())
+                <div class="space-y-3 max-w-6xl mx-auto pt-2">
+                    @if($isOtherMoving)
+                        <!-- Row 1: Bergerak ke Kiri -->
+                        <div class="marquee-stream py-1 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+                            <div class="marquee-stream-track-l flex gap-6 sm:gap-8 md:gap-10 items-center" style="animation-duration: 44s;">
+                                @foreach($otherRow1 as $partner)
+                                    <div class="flex items-center justify-center shrink-0 h-9 sm:h-10 px-2 hover:scale-105 transition-transform duration-200 group" title="{{ $partner->name }}">
+                                        <span class="sr-only">{{ $partner->name }}</span>
+                                        @if($partner->website_url)
+                                            <a href="{{ $partner->website_url }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center">
+                                        @endif
+                                        @if($partner->logo_path)
+                                            <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-h-6 sm:max-h-7 md:max-h-8 max-w-[100px] sm:max-w-[120px] object-contain filter brightness-95 group-hover:brightness-100 transition" loading="lazy" />
+                                        @else
+                                            <span class="text-xs font-semibold text-slate-300 whitespace-nowrap">{{ $partner->name }}</span>
+                                        @endif
+                                        @if($partner->website_url)
+                                            </a>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
-                    @endforeach
+
+                        <!-- Row 2: Bergerak ke Kanan (Arah Berlawanan) -->
+                        @if($otherRow2->isNotEmpty())
+                            <div class="marquee-stream py-1 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+                                <div class="marquee-stream-track-r flex gap-6 sm:gap-8 md:gap-10 items-center" style="animation-duration: 48s;">
+                                    @foreach($otherRow2 as $partner)
+                                        <div class="flex items-center justify-center shrink-0 h-9 sm:h-10 px-2 hover:scale-105 transition-transform duration-200 group" title="{{ $partner->name }}">
+                                            <span class="sr-only">{{ $partner->name }}</span>
+                                            @if($partner->website_url)
+                                                <a href="{{ $partner->website_url }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center">
+                                            @endif
+                                            @if($partner->logo_path)
+                                                <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-h-6 sm:max-h-7 md:max-h-8 max-w-[100px] sm:max-w-[120px] object-contain filter brightness-95 group-hover:brightness-100 transition" loading="lazy" />
+                                            @else
+                                                <span class="text-xs font-semibold text-slate-300 whitespace-nowrap">{{ $partner->name }}</span>
+                                            @endif
+                                            @if($partner->website_url)
+                                                </a>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                    @else
+                        <!-- Tampilan Statis Maksimal 2 Baris jika Jumlah <= 10 -->
+                        <div class="space-y-3">
+                            <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
+                                @foreach($otherRow1 as $partner)
+                                    <div class="flex items-center justify-center h-9 sm:h-10 px-2" title="{{ $partner->name }}">
+                                        <span class="sr-only">{{ $partner->name }}</span>
+                                        @if($partner->logo_path)
+                                            <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-h-7 max-w-[110px] object-contain" />
+                                        @else
+                                            <span class="text-xs font-semibold text-slate-300">{{ $partner->name }}</span>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                            @if($otherRow2->isNotEmpty())
+                                <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
+                                    @foreach($otherRow2 as $partner)
+                                        <div class="flex items-center justify-center h-9 sm:h-10 px-2" title="{{ $partner->name }}">
+                                            <span class="sr-only">{{ $partner->name }}</span>
+                                            @if($partner->logo_path)
+                                                <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-h-7 max-w-[110px] object-contain" />
+                                            @else
+                                                <span class="text-xs font-semibold text-slate-300">{{ $partner->name }}</span>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             @endif
         </section>
