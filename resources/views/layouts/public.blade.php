@@ -397,7 +397,7 @@
             </main>
 
             <!-- Footer -->
-            <footer class="bg-slate-950 text-slate-300 rounded-xl border border-slate-800 mt-12 overflow-hidden">
+            <footer class="bg-slate-950 text-slate-300 border border-slate-800 overflow-hidden">
                 <div class="px-6 sm:px-8 py-10">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         <div class="space-y-4">

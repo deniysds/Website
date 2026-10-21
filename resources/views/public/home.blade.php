@@ -126,7 +126,7 @@
     </section>
 
     <!-- 3. Section Program (Kami Membangun Program untuk Dampak Nyata - 5 Kategori Cards) -->
-    <section class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8 min-w-0 max-w-full">
+    <section class="bg-[#F5F5F5] rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8 min-w-0 max-w-full">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div class="space-y-2">
                 <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Program') }}</span>
@@ -237,47 +237,133 @@
         </div>
     </section>
 
-    <!-- 5. Section Publikasi Jurnal Terbaru -->
-    <section class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8 min-w-0 max-w-full">
+    <!-- 5. Section Publikasi Jurnal Terbaru (Carousel Sesuai Lampiran Kedua) -->
+    <section class="bg-white py-10 px-4 sm:px-8 space-y-8 min-w-0 max-w-full overflow-hidden"
+             x-data="{
+                active: 0,
+                total: {{ count($journals) > 0 ? count($journals) : 1 }},
+                touchStartX: 0,
+                next() {
+                    this.active = (this.active + 1) % this.total;
+                },
+                prev() {
+                    this.active = (this.active - 1 + this.total) % this.total;
+                },
+                goTo(index) {
+                    this.active = index;
+                },
+                getDiff(index) {
+                    let diff = index - this.active;
+                    if (diff < -Math.floor(this.total / 2)) diff += this.total;
+                    if (diff > Math.floor((this.total - 1) / 2)) diff -= this.total;
+                    return diff;
+                }
+             }"
+             @touchstart="touchStartX = $event.changedTouches[0].screenX"
+             @touchend="if ($event.changedTouches[0].screenX - touchStartX < -40) next(); if ($event.changedTouches[0].screenX - touchStartX > 40) prev();"
+    >
+        <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div class="space-y-2">
                 <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Jurnal') }}</span>
-                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">{{ __('Publikasi Jurnal Terbaru') }}</h2>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 leading-tight">{{ __('Publikasi Jurnal Terbaru') }}</h2>
             </div>
-            <a href="{{ route('website.journals.index') }}" class="px-5 py-2.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold text-xs transition inline-flex items-center gap-1 self-start sm:self-auto">
-                {{ __('Lihat Semua Jurnal') }} &rarr;
+            <a href="{{ route('website.journals.index') }}" class="px-5 py-2.5 rounded-xl border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold text-xs transition inline-flex items-center gap-1.5 self-start sm:self-auto shrink-0">
+                <span>{{ __('Jurnal Lainnya') }}</span>
+                <span class="text-sm">↗</span>
             </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            @forelse($journals as $journal)
-                <div class="bg-slate-50/70 rounded-2xl p-6 border border-slate-200/80 hover:bg-white hover:shadow-xl transition duration-300 flex flex-col justify-between space-y-6">
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between text-xs font-bold">
-                            <span class="text-red-600 uppercase font-mono"><i class="ki-filled ki-document mr-1"></i> {{ $journal->short_name ?? $journal->slug }}</span>
-                            <span class="text-slate-400 font-mono">e-ISSN: {{ $journal->issn_e ?? '-' }}</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-slate-900 hover:text-red-600 transition">
-                            <a href="{{ route('website.journals.show', $journal->slug) }}">{{ $journal->name }}</a>
-                        </h3>
-                        <p class="text-xs text-slate-600 line-clamp-3 leading-relaxed">
-                            {{ $journal->description ?? 'Jurnal ilmiah berkala yang mempublikasikan hasil penelitian berkualitas.' }}
-                        </p>
-                    </div>
+        @if(count($journals) > 0)
+            <!-- Carousel Container with Arrows -->
+            <div class="relative w-full flex items-center justify-between gap-2 sm:gap-4 py-2">
+                <!-- Tombol Navigasi Kiri -->
+                <button type="button" @click="prev()" aria-label="Jurnal Sebelumnya" class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-slate-100/90 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition shadow-xs z-30 shrink-0 cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
 
-                    <div class="pt-4 border-t border-slate-200/60 flex items-center justify-between text-xs">
-                        <span class="text-slate-500 font-medium"><i class="ki-filled ki-profile-user mr-1 text-slate-400"></i> {{ $journal->editorial_boards_count }} {{ __('Redaksi') }}</span>
-                        <a href="{{ route('website.journals.show', $journal->slug) }}" class="font-bold text-slate-900 hover:text-red-600 flex items-center gap-1 transition">
-                            <span>{{ __('Selengkapnya') }}</span> &rarr;
-                        </a>
-                    </div>
+                <!-- Stage Kartu Carousel 3D / Coverflow -->
+                <div class="relative grow h-[360px] sm:h-[320px] flex items-center justify-center overflow-hidden">
+                    @foreach($journals as $index => $journal)
+                        <div class="absolute w-[92%] sm:w-[480px] md:w-[540px] max-w-[560px] bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 transition-all duration-500 ease-out flex flex-col justify-between"
+                             :style="(() => {
+                                 const diff = getDiff({{ $index }});
+                                 if (diff === 0) {
+                                     return 'transform: translateX(0%) scale(1.04); z-index: 20; opacity: 1; pointer-events: auto;';
+                                 } else if (diff === -1) {
+                                     return 'transform: translateX(-56%) scale(0.9); z-index: 10; opacity: 0.55; cursor: pointer;';
+                                 } else if (diff === 1) {
+                                     return 'transform: translateX(56%) scale(0.9); z-index: 10; opacity: 0.55; cursor: pointer;';
+                                 } else {
+                                     return 'transform: translateX(' + (diff * 80) + '%) scale(0.7); z-index: 0; opacity: 0; pointer-events: none;';
+                                 }
+                             })()"
+                             :class="getDiff({{ $index }}) === 0 ? 'shadow-2xl' : 'shadow-md'"
+                             @click="if (getDiff({{ $index }}) !== 0) goTo({{ $index }})"
+                        >
+                            <!-- Header Kartu -->
+                            <div class="flex items-center justify-between text-xs font-bold">
+                                <div class="flex items-center gap-1.5 text-red-600">
+                                    <svg class="w-4 h-4 text-red-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                    </svg>
+                                    <span class="font-bold text-red-600 text-xs tracking-wide uppercase">{{ $journal->short_name ?: 'Jurnal' }}</span>
+                                </div>
+                                <span class="text-xs font-bold text-red-600">{{ $journal->created_at ? $journal->created_at->format('Y') : date('Y') }}</span>
+                            </div>
+
+                            <!-- Konten Judul & Ringkasan -->
+                            <div class="space-y-2 py-3 grow flex flex-col justify-center">
+                                <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-snug line-clamp-2 hover:text-red-600 transition">
+                                    <a href="{{ route('website.journals.show', $journal->slug) }}">{{ $journal->name }}</a>
+                                </h3>
+                                <p class="text-xs italic text-red-600 line-clamp-2 leading-relaxed font-normal">
+                                    {{ $journal->description ?? 'Publikasi riset inovasi genomik dan kesehatan presisi terstandarisasi.' }}
+                                </p>
+                            </div>
+
+                            <!-- Footer Badges & Selengkapnya -->
+                            <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                                <div class="flex items-center gap-1.5 flex-wrap">
+                                    <span class="px-2.5 py-1 rounded-md text-[10px] font-bold bg-red-600 text-white uppercase tracking-wider">
+                                        {{ __('Kategori') }}
+                                    </span>
+                                    <span class="px-2.5 py-1 rounded-md text-[10px] font-bold bg-slate-900 text-white uppercase tracking-wider">
+                                        {{ $journal->short_name ?: __('Riset') }}
+                                    </span>
+                                    <span class="px-2.5 py-1 rounded-md text-[10px] font-bold border border-slate-300 text-slate-700 bg-white">
+                                        {{ $journal->issn_e ? 'ISSN: ' . $journal->issn_e : 'DOI' }}
+                                    </span>
+                                </div>
+                                <a href="{{ route('website.journals.show', $journal->slug) }}" class="font-bold text-slate-800 hover:text-red-600 transition inline-flex items-center gap-1">
+                                    <span>{{ __('Selengkapnya') }}</span>
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-            @empty
-                <div class="col-span-3 bg-slate-50 p-12 text-center rounded-2xl border border-slate-200">
-                    <p class="text-slate-500 text-sm">{{ __('Belum ada jurnal aktif yang dipublikasikan.') }}</p>
-                </div>
-            @endforelse
-        </div>
+
+                <!-- Tombol Navigasi Kanan -->
+                <button type="button" @click="next()" aria-label="Jurnal Selanjutnya" class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-slate-100/90 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition shadow-xs z-30 shrink-0 cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+
+            <!-- Indikator Dots -->
+            <div class="flex items-center justify-center gap-2 pt-2">
+                @for($i = 0; $i < count($journals); $i++)
+                    <button type="button"
+                            @click="goTo({{ $i }})"
+                            :class="active === {{ $i }} ? 'w-5 h-1.5 bg-red-600 rounded-full' : 'w-1.5 h-1.5 bg-black rounded-full hover:bg-slate-700'"
+                            class="transition-all duration-300 cursor-pointer"
+                            aria-label="Slide {{ $i + 1 }}"></button>
+                @endfor
+            </div>
+        @else
+            <div class="bg-slate-50 p-12 text-center rounded-2xl border border-slate-200">
+                <p class="text-slate-500 text-sm">{{ __('Belum ada jurnal aktif yang dipublikasikan.') }}</p>
+            </div>
+        @endif
     </section>
 
     <!-- 6. Section Kegiatan Terbaru (Presisi Mockup) -->
