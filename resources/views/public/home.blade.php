@@ -280,146 +280,6 @@
         </div>
     </section>
 
-    <!-- 6. Section Mitra Kami (Presisi Screenshot: Mitra Utama & Logo Berjalan Universitas/Pendukung) -->
-    <section class="bg-black text-white rounded-3xl p-8 sm:p-14 border border-slate-800/80 shadow-2xl space-y-12 overflow-hidden relative min-w-0 max-w-full">
-        <style>
-            @keyframes marquee-scroll {
-                0% { transform: translateX(0%); }
-                100% { transform: translateX(-50%); }
-            }
-            @keyframes marquee-scroll-reverse {
-                0% { transform: translateX(-50%); }
-                100% { transform: translateX(0%); }
-            }
-            .marquee-container {
-                width: 100%;
-                max-width: 100%;
-                min-width: 0;
-                overflow: hidden;
-            }
-            .marquee-track {
-                display: flex;
-                width: max-content;
-                animation: marquee-scroll 40s linear infinite;
-            }
-            .marquee-track-reverse {
-                display: flex;
-                width: max-content;
-                animation: marquee-scroll-reverse 45s linear infinite;
-            }
-            .marquee-container:hover .marquee-track,
-            .marquee-container:hover .marquee-track-reverse {
-                animation-play-state: paused;
-            }
-        </style>
-
-        <!-- Header Section Mitra Kami -->
-        <div class="text-center space-y-3 max-w-3xl mx-auto">
-            <span class="text-xs font-bold text-red-500 uppercase tracking-widest">{{ __($settings['partners_tag'] ?? 'Mitra Kami') }}</span>
-            <h2 class="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
-                {{ __($settings['partners_title'] ?? 'Kami Percaya Setiap Mitra Adalah Bagian Berharga dalam Perjalanan Jangka Panjang') }}
-            </h2>
-        </div>
-
-        <!-- 1. Mitra Utama (Platinum Partners: PaninBank, Ultima Genomics, PacBio, MGI, Oxford Nanopore) -->
-        <div class="pt-2">
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center justify-center">
-                @forelse($mainPartners as $partner)
-                    <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-600 hover:bg-slate-900 transition flex items-center justify-center h-24 group relative" title="{{ $partner->name }}">
-                        <span class="sr-only">{{ $partner->name }}</span>
-                        @if($partner->logo_path)
-                            <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-h-12 max-w-full object-contain filter brightness-90 group-hover:brightness-100 transition" />
-                        @else
-                            <!-- Brand Text-based Logo for Demo / Main Partners matching screenshot -->
-                            @if(str_contains(strtolower($partner->name), 'panin'))
-                                <div class="flex items-center gap-2">
-                                    <div class="w-7 h-7 rounded-sm bg-blue-600 flex items-center justify-center text-white font-bold text-xs shadow-xs">P</div>
-                                    <span class="font-black text-lg tracking-tight text-white"><span class="text-red-500">Panin</span>Bank</span>
-                                </div>
-                            @elseif(str_contains(strtolower($partner->name), 'ultima'))
-                                <div class="text-center">
-                                    <div class="font-black text-base text-white tracking-widest uppercase">ULTIMA</div>
-                                    <div class="text-[9px] font-bold text-slate-400 tracking-widest uppercase">GENOMICS</div>
-                                </div>
-                            @elseif(str_contains(strtolower($partner->name), 'pacbio'))
-                                <div class="font-black text-xl tracking-tight text-pink-500">Pac<span class="text-white">Bio</span></div>
-                            @elseif(str_contains(strtolower($partner->name), 'mgi'))
-                                <div class="flex items-center gap-1">
-                                    <div class="text-cyan-400 font-mono font-black text-2xl tracking-tighter">MGI</div>
-                                    <div class="text-[9px] text-cyan-200 font-bold uppercase tracking-wider">Tech</div>
-                                </div>
-                            @elseif(str_contains(strtolower($partner->name), 'nanopore'))
-                                <div class="flex items-center gap-1.5">
-                                    <div class="w-5 h-5 rounded-full border-2 border-cyan-400 flex items-center justify-center"><div class="w-2 h-2 rounded-full bg-cyan-400"></div></div>
-                                    <div class="text-left leading-none">
-                                        <div class="text-[9px] text-slate-400 uppercase font-mono">Oxford</div>
-                                        <div class="text-xs font-black text-white uppercase tracking-wider">NANOPORE</div>
-                                    </div>
-                                </div>
-                            @else
-                                <span class="font-bold text-white text-sm tracking-tight text-center">{{ $partner->name }}</span>
-                            @endif
-                        @endif
-                    </div>
-                @empty
-                    <div class="col-span-5 text-center text-slate-500 text-xs">Belum ada data mitra utama.</div>
-                @endforelse
-            </div>
-        </div>
-
-        <!-- 2. Mitra Pendukung (Running Marquee Carousel - Logo Berjalan Halus) -->
-        <div class="space-y-4 pt-4 border-t border-slate-900/80">
-            <div class="text-center">
-                <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-widest">{{ __('Mitra Perguruan Tinggi & Institusi Riset Akademik') }}</span>
-            </div>
-
-            <!-- Carousel Row 1 (Kiri ke Kanan) -->
-            <div class="marquee-container overflow-hidden relative w-full py-2 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-                <div class="marquee-track flex gap-4 items-center">
-                    @php
-                        // Gandakan list untuk infinite loop yang mulus
-                        $marqueeList = $supportingPartners->concat($supportingPartners);
-                    @endphp
-                    @foreach($marqueeList as $partner)
-                        <div class="flex items-center gap-3 px-4 py-2.5 rounded-full bg-slate-900/90 border border-slate-800 hover:border-red-500/50 hover:bg-slate-800 transition shrink-0 group">
-                            @if($partner->logo_path)
-                                <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="w-7 h-7 object-contain rounded-full bg-white/10 p-0.5" />
-                            @else
-                                <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-red-600 via-slate-800 to-blue-600 text-white font-black flex items-center justify-center text-[10px] shrink-0 shadow-xs border border-white/20">
-                                    {{ substr($partner->name, 0, 2) }}
-                                </div>
-                            @endif
-                            <span class="text-xs font-semibold text-slate-300 group-hover:text-white transition whitespace-nowrap">{{ $partner->name }}</span>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-
-            <!-- Carousel Row 2 (Kanan ke Kiri) -->
-            @if($supportingPartners->count() > 6)
-                <div class="marquee-container overflow-hidden relative w-full py-2 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-                    <div class="marquee-track-reverse flex gap-4 items-center">
-                        @php
-                            $reverseList = $supportingPartners->reverse()->concat($supportingPartners->reverse());
-                        @endphp
-                        @foreach($reverseList as $partner)
-                            <div class="flex items-center gap-3 px-4 py-2.5 rounded-full bg-slate-900/90 border border-slate-800 hover:border-red-500/50 hover:bg-slate-800 transition shrink-0 group">
-                                @if($partner->logo_path)
-                                    <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="w-7 h-7 object-contain rounded-full bg-white/10 p-0.5" />
-                                @else
-                                    <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-600 via-slate-800 to-amber-500 text-white font-black flex items-center justify-center text-[10px] shrink-0 shadow-xs border border-white/20">
-                                        {{ substr($partner->name, 0, 2) }}
-                                    </div>
-                                @endif
-                                <span class="text-xs font-semibold text-slate-300 group-hover:text-white transition whitespace-nowrap">{{ $partner->name }}</span>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-        </div>
-    </section>
-
     <!-- 6. Section Kegiatan Terbaru (Presisi Mockup) -->
     <section class="bg-[#F5F5F5] rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs min-w-0 max-w-full">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -457,7 +317,7 @@
                 </div>
 
                 @if(isset($featuredEvent) && $featuredEvent->summary)
-                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-light sm:font-normal">
                         {{ $featuredEvent->summary }}
                     </p>
                 @endif
@@ -498,7 +358,7 @@
                         <h4 class="text-xl sm:text-2xl font-black text-white tracking-tight leading-snug">
                             {{ $featuredEvent->title ?? 'BioAI and Genomics Symposium - Indonesia' }}
                         </h4>
-                        <p class="text-xs text-slate-200 leading-relaxed line-clamp-3">
+                        <p class="text-xs text-slate-200 leading-relaxed line-clamp-3 font-light">
                             {{ $featuredEvent->summary ?? __('Menghubungkan lebih dari 150+ peneliti, institusi laboratorium, dan praktisi genomik nasional dalam forum ilmiah terstandarisasi.') }}
                         </p>
                     </div>
@@ -511,12 +371,12 @@
         </div>
     </section>
 
-    <!-- 7. Section Berita Terbaru (Presisi Mockup) -->
-    <section class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8 min-w-0 max-w-full">
+    <!-- 7. Section Berita Terbaru (Background Putih Tanpa Border & Tanpa Rounded Sesuai Instruksi) -->
+    <section class="bg-white p-6 sm:p-12 space-y-8 min-w-0 max-w-full">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div class="space-y-2">
                 <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Berita Terbaru') }}</span>
-                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">{{ __('Temukan informasi, kegiatan, dan pembaruan terbaru dari kami.') }}</h2>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 leading-tight">{{ __('Temukan informasi, kegiatan, dan pembaruan terbaru dari kami.') }}</h2>
             </div>
             <a href="{{ route('website.news.index') }}" class="px-5 py-2.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold text-xs transition inline-flex items-center gap-1.5 self-start sm:self-auto shrink-0">
                 <span>{{ __('Artikel Lainnya') }}</span>
@@ -555,7 +415,7 @@
                             <a href="{{ route('website.news.show', $item->slug ?: $item->id) }}">{{ $item->title }}</a>
                         </h4>
 
-                        <p class="text-xs text-slate-500 leading-relaxed line-clamp-2">{{ $item->summary }}</p>
+                        <p class="text-xs text-slate-500 leading-relaxed line-clamp-2 font-light sm:font-normal">{{ $item->summary }}</p>
                     </div>
 
                     <!-- Garis Pemisah Tipis -->
@@ -583,87 +443,255 @@
         </div>
     </section>
 
-    <!-- 8. Section Butuh Informasi Lebih Lanjut? Sampaikan Pertanyaan Anda kepada Kami (Presisi Screenshot) -->
-    <section class="rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-r from-red-950 via-red-800 to-red-600 text-white p-8 sm:p-14 border border-red-700/50 min-w-0 max-w-full">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <!-- Kolom Kiri: Headline & Deskripsi -->
-            <div class="space-y-6">
-                <div class="space-y-3">
-                    <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight tracking-tight">
-                        {{ __('Butuh Informasi Lebih Lanjut?') }}<br>
-                        {{ __('Sampaikan Pertanyaan Anda kepada Kami') }}
-                    </h2>
-                </div>
-                <p class="text-sm sm:text-base text-red-100/90 leading-relaxed font-normal max-w-lg">
-                    {{ __('Sampaikan pertanyaan, kebutuhan, atau informasi yang ingin Anda ketahui melalui formulir di samping. Tim kami akan menghubungi Anda untuk memberikan informasi dan solusi yang sesuai dengan kebutuhan Anda.') }}
-                </p>
+    <!-- Blok Bawah Terpadu: Mitra Kami, Kolaborasi & Kontak (Tanpa Rounded & Tanpa Border Sesuai Lampiran) -->
+    <div class="space-y-0 overflow-hidden">
+        <!-- 8. Section Mitra Kami (Flat Tanpa Rounded & Tanpa Border) -->
+        <section class="bg-black text-white p-8 sm:p-14 space-y-12 overflow-hidden relative min-w-0 max-w-full">
+            <style>
+                @keyframes marquee-scroll {
+                    0% { transform: translateX(0%); }
+                    100% { transform: translateX(-50%); }
+                }
+                @keyframes marquee-scroll-reverse {
+                    0% { transform: translateX(-50%); }
+                    100% { transform: translateX(0%); }
+                }
+                .marquee-container {
+                    width: 100%;
+                    max-width: 100%;
+                    min-width: 0;
+                    overflow: hidden;
+                }
+                .marquee-track {
+                    display: flex;
+                    width: max-content;
+                    animation: marquee-scroll 40s linear infinite;
+                }
+                .marquee-track-reverse {
+                    display: flex;
+                    width: max-content;
+                    animation: marquee-scroll-reverse 45s linear infinite;
+                }
+                .marquee-container:hover .marquee-track,
+                .marquee-container:hover .marquee-track-reverse {
+                    animation-play-state: paused;
+                }
+            </style>
 
-                @if(session('success'))
-                    <div class="p-4 rounded-xl bg-white/20 backdrop-blur-md border border-white/40 text-white text-xs font-bold flex items-center gap-2">
-                        <i class="ki-filled ki-check-circle text-white text-lg"></i>
-                        <span>{{ session('success') }}</span>
+            <!-- Header Section Mitra Kami -->
+            <div class="text-center space-y-3 max-w-3xl mx-auto">
+                <span class="text-xs font-bold text-red-500 uppercase tracking-widest">{{ __($settings['partners_tag'] ?? 'Mitra Kami') }}</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
+                    {{ __($settings['partners_title'] ?? 'Kami Percaya Setiap Mitra Adalah Bagian Berharga dalam Perjalanan Jangka Panjang') }}
+                </h2>
+            </div>
+
+            <!-- 1. Mitra Utama (Platinum Partners: PaninBank, Ultima Genomics, PacBio, MGI, Oxford Nanopore) -->
+            <div class="pt-2">
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center justify-center">
+                    @forelse($mainPartners as $partner)
+                        <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-600 hover:bg-slate-900 transition flex items-center justify-center h-24 group relative" title="{{ $partner->name }}">
+                            <span class="sr-only">{{ $partner->name }}</span>
+                            @if($partner->logo_path)
+                                <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-h-12 max-w-full object-contain filter brightness-90 group-hover:brightness-100 transition" />
+                            @else
+                                <!-- Brand Text-based Logo for Demo / Main Partners matching screenshot -->
+                                @if(str_contains(strtolower($partner->name), 'panin'))
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-7 h-7 rounded-sm bg-blue-600 flex items-center justify-center text-white font-bold text-xs shadow-xs">P</div>
+                                        <span class="font-black text-lg tracking-tight text-white"><span class="text-red-500">Panin</span>Bank</span>
+                                    </div>
+                                @elseif(str_contains(strtolower($partner->name), 'ultima'))
+                                    <div class="text-center">
+                                        <div class="font-black text-base text-white tracking-widest uppercase">ULTIMA</div>
+                                        <div class="text-[9px] font-bold text-slate-400 tracking-widest uppercase">GENOMICS</div>
+                                    </div>
+                                @elseif(str_contains(strtolower($partner->name), 'pacbio'))
+                                    <div class="font-black text-xl tracking-tight text-pink-500">Pac<span class="text-white">Bio</span></div>
+                                @elseif(str_contains(strtolower($partner->name), 'mgi'))
+                                    <div class="flex items-center gap-1">
+                                        <div class="text-cyan-400 font-mono font-black text-2xl tracking-tighter">MGI</div>
+                                        <div class="text-[9px] text-cyan-200 font-bold uppercase tracking-wider">Tech</div>
+                                    </div>
+                                @elseif(str_contains(strtolower($partner->name), 'nanopore'))
+                                    <div class="flex items-center gap-1.5">
+                                        <div class="w-5 h-5 rounded-full border-2 border-cyan-400 flex items-center justify-center"><div class="w-2 h-2 rounded-full bg-cyan-400"></div></div>
+                                        <div class="text-left leading-none">
+                                            <div class="text-[9px] text-slate-400 uppercase font-mono">Oxford</div>
+                                            <div class="text-xs font-black text-white uppercase tracking-wider">NANOPORE</div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <span class="font-bold text-white text-sm tracking-tight text-center">{{ $partner->name }}</span>
+                                @endif
+                            @endif
+                        </div>
+                    @empty
+                        <div class="col-span-5 text-center text-slate-500 text-xs">Belum ada data mitra utama.</div>
+                    @endforelse
+                </div>
+            </div>
+
+            <!-- 2. Mitra Pendukung (Running Marquee Carousel - Logo Berjalan Halus) -->
+            <div class="space-y-4 pt-4 border-t border-slate-900/80">
+                <div class="text-center">
+                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-widest">{{ __('Mitra Perguruan Tinggi & Institusi Riset Akademik') }}</span>
+                </div>
+
+                <!-- Carousel Row 1 (Kiri ke Kanan) -->
+                <div class="marquee-container overflow-hidden relative w-full py-2 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+                    <div class="marquee-track flex gap-4 items-center">
+                        @php
+                            // Gandakan list untuk infinite loop yang mulus
+                            $marqueeList = $supportingPartners->concat($supportingPartners);
+                        @endphp
+                        @foreach($marqueeList as $partner)
+                            <div class="flex items-center gap-3 px-4 py-2.5 rounded-full bg-slate-900/90 border border-slate-800 hover:border-red-500/50 hover:bg-slate-800 transition shrink-0 group">
+                                @if($partner->logo_path)
+                                    <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="w-7 h-7 object-contain rounded-full bg-white/10 p-0.5" />
+                                @else
+                                    <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-red-600 via-slate-800 to-blue-600 text-white font-black flex items-center justify-center text-[10px] shrink-0 shadow-xs border border-white/20">
+                                        {{ substr($partner->name, 0, 2) }}
+                                    </div>
+                                @endif
+                                <span class="text-xs font-semibold text-slate-300 group-hover:text-white transition whitespace-nowrap">{{ $partner->name }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Carousel Row 2 (Kanan ke Kiri) -->
+                @if($supportingPartners->count() > 6)
+                    <div class="marquee-container overflow-hidden relative w-full py-2 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+                        <div class="marquee-track-reverse flex gap-4 items-center">
+                            @php
+                                $reverseList = $supportingPartners->reverse()->concat($supportingPartners->reverse());
+                            @endphp
+                            @foreach($reverseList as $partner)
+                                <div class="flex items-center gap-3 px-4 py-2.5 rounded-full bg-slate-900/90 border border-slate-800 hover:border-red-500/50 hover:bg-slate-800 transition shrink-0 group">
+                                    @if($partner->logo_path)
+                                        <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="w-7 h-7 object-contain rounded-full bg-white/10 p-0.5" />
+                                    @else
+                                        <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-600 via-slate-800 to-amber-500 text-white font-black flex items-center justify-center text-[10px] shrink-0 shadow-xs border border-white/20">
+                                            {{ substr($partner->name, 0, 2) }}
+                                        </div>
+                                    @endif
+                                    <span class="text-xs font-semibold text-slate-300 group-hover:text-white transition whitespace-nowrap">{{ $partner->name }}</span>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 @endif
             </div>
+        </section>
 
-            <!-- Kolom Kanan: Card Formulir Putih Modern -->
-            <div class="w-full">
-                <div class="bg-white rounded-3xl p-6 sm:p-8 text-slate-900 shadow-2xl border border-white/80">
-                    <form action="{{ route('website.contact.submit') }}" method="POST" class="space-y-4">
-                        @csrf
-                        {{-- Honeypot bot protection field --}}
-                        <div class="hidden" style="display:none !important;" aria-hidden="true">
-                            <input type="text" name="website_hp" value="" tabindex="-1" autocomplete="off" />
-                        </div>
-                        <div>
-                            <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-                                {{ __('FIRST NAME') }} <span class="text-red-600">*</span>
-                            </label>
-                            <input type="text" name="first_name" required placeholder="{{ __('FIRST NAME') }}" value="{{ old('first_name') }}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-red-600 focus:ring-2 focus:ring-red-500/20 text-xs font-medium focus:outline-none transition" />
-                            @error('first_name')
-                                <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
+        <!-- 9. Section Kolaborasi (Presisi Mockup Gambar Lampiran: Background Putih Tanpa Border & Tanpa Rounded) -->
+        <section class="bg-white py-16 px-6 sm:px-12 text-center space-y-6 min-w-0 max-w-full">
+            <div class="space-y-3 max-w-4xl mx-auto">
+                <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Kolaborasi') }}</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
+                    {{ __('Bangun Kolaborasi Bersama Kami untuk') }}<br class="hidden sm:inline">
+                    {{ __('Menciptakan Inovasi dan Peluang yang Lebih Besar') }}
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl mx-auto pt-1 font-light sm:font-normal">
+                    {{ __('Mari jelajahi peluang untuk bekerja sama dalam mendukung pengembangan genomik dan sequencing. Hubungi kami untuk mendiskusikan peluang kolaborasi, kemitraan, maupun solusi yang dapat disesuaikan dengan kebutuhan Anda.') }}
+                </p>
+            </div>
 
-                        <div>
-                            <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-                                {{ __('PHONE') }} <span class="text-red-600">*</span>
-                            </label>
-                            <input type="text" name="phone" required placeholder="{{ __('PHONE') }}" value="{{ old('phone') }}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-red-600 focus:ring-2 focus:ring-red-500/20 text-xs font-medium focus:outline-none transition" />
-                            @error('phone')
-                                <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
+            <div class="flex flex-wrap items-center justify-center gap-3.5 pt-2">
+                <a href="{{ route('website.assistance.public') }}" class="px-6 py-2.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-sm transition inline-flex items-center gap-1.5">
+                    <span>{{ __('Formulir Riset') }}</span>
+                    <span class="text-sm font-normal">↗</span>
+                </a>
+                <a href="{{ route('website.contact') }}" class="px-6 py-2.5 rounded-lg border border-red-500 text-red-600 hover:bg-red-50 font-bold text-xs transition inline-flex items-center gap-1.5 bg-white">
+                    <span>{{ __('Hubungi Kami') }}</span>
+                    <span class="text-sm font-normal">↗</span>
+                </a>
+            </div>
+        </section>
 
-                        <div>
-                            <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-                                {{ __('EMAIL') }} <span class="text-red-600">*</span>
-                            </label>
-                            <input type="email" name="email" required placeholder="{{ __('EMAIL') }}" value="{{ old('email') }}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-red-600 focus:ring-2 focus:ring-red-500/20 text-xs font-medium focus:outline-none transition" />
-                            @error('email')
-                                <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
+        <!-- 10. Section Butuh Informasi Lebih Lanjut? (Flat Edge Menyesuaikan Alur) -->
+        <section class="overflow-hidden bg-gradient-to-r from-red-950 via-red-800 to-red-600 text-white p-8 sm:p-14 min-w-0 max-w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <!-- Kolom Kiri: Headline & Deskripsi -->
+                <div class="space-y-6">
+                    <div class="space-y-3">
+                        <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight tracking-tight">
+                            {{ __('Butuh Informasi Lebih Lanjut?') }}<br>
+                            {{ __('Sampaikan Pertanyaan Anda kepada Kami') }}
+                        </h2>
+                    </div>
+                    <p class="text-sm sm:text-base text-red-100/90 leading-relaxed font-light sm:font-normal max-w-lg">
+                        {{ __('Sampaikan pertanyaan, kebutuhan, atau informasi yang ingin Anda ketahui melalui formulir di samping. Tim kami akan menghubungi Anda untuk memberikan informasi dan solusi yang sesuai dengan kebutuhan Anda.') }}
+                    </p>
 
-                        <div>
-                            <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
-                                {{ __('MESSAGE') }} <span class="text-red-600">*</span>
-                            </label>
-                            <textarea name="message" rows="3" required placeholder="{{ __('MESSAGE') }}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-red-600 focus:ring-2 focus:ring-red-500/20 text-xs font-medium focus:outline-none transition">{{ old('message') }}</textarea>
-                            @error('message')
-                                <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
-                            @enderror
+                    @if(session('success'))
+                        <div class="p-4 rounded-xl bg-white/20 backdrop-blur-md border border-white/40 text-white text-xs font-bold flex items-center gap-2">
+                            <i class="ki-filled ki-check-circle text-white text-lg"></i>
+                            <span>{{ session('success') }}</span>
                         </div>
+                    @endif
+                </div>
 
-                        <div class="pt-2">
-                            <button type="submit" class="w-auto px-8 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs tracking-wide transition shadow-lg hover:shadow-xl flex items-center justify-center gap-2 cursor-pointer">
-                                <span>{{ __('Kirim') }}</span>
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                            </button>
-                        </div>
-                    </form>
+                <!-- Kolom Kanan: Card Formulir Putih Modern -->
+                <div class="w-full">
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 text-slate-900 shadow-2xl border border-white/80">
+                        <form action="{{ route('website.contact.submit') }}" method="POST" class="space-y-4">
+                            @csrf
+                            {{-- Honeypot bot protection field --}}
+                            <div class="hidden" style="display:none !important;" aria-hidden="true">
+                                <input type="text" name="website_hp" value="" tabindex="-1" autocomplete="off" />
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
+                                    {{ __('FIRST NAME') }} <span class="text-red-600">*</span>
+                                </label>
+                                <input type="text" name="first_name" required placeholder="{{ __('FIRST NAME') }}" value="{{ old('first_name') }}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-red-600 focus:ring-2 focus:ring-red-500/20 text-xs font-medium focus:outline-none transition" />
+                                @error('first_name')
+                                    <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
+                                    {{ __('PHONE') }} <span class="text-red-600">*</span>
+                                </label>
+                                <input type="text" name="phone" required placeholder="{{ __('PHONE') }}" value="{{ old('phone') }}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-red-600 focus:ring-2 focus:ring-red-500/20 text-xs font-medium focus:outline-none transition" />
+                                @error('phone')
+                                    <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
+                                    {{ __('EMAIL') }} <span class="text-red-600">*</span>
+                                </label>
+                                <input type="email" name="email" required placeholder="{{ __('EMAIL') }}" value="{{ old('email') }}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-red-600 focus:ring-2 focus:ring-red-500/20 text-xs font-medium focus:outline-none transition" />
+                                @error('email')
+                                    <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1">
+                                    {{ __('MESSAGE') }} <span class="text-red-600">*</span>
+                                </label>
+                                <textarea name="message" rows="3" required placeholder="{{ __('MESSAGE') }}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-red-600 focus:ring-2 focus:ring-red-500/20 text-xs font-medium focus:outline-none transition">{{ old('message') }}</textarea>
+                                @error('message')
+                                    <p class="text-[10px] text-red-600 mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="pt-2">
+                                <button type="submit" class="w-auto px-8 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs tracking-wide transition shadow-lg hover:shadow-xl flex items-center justify-center gap-2 cursor-pointer">
+                                    <span>{{ __('Kirim') }}</span>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 @endsection
