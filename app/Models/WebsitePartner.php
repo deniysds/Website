@@ -12,6 +12,7 @@ class WebsitePartner extends Model
         'name',
         'logo_path',
         'type',
+        'category',
         'website_url',
         'order_no',
         'is_active',
@@ -35,5 +36,10 @@ class WebsitePartner extends Model
     public function scopeSupporting($query)
     {
         return $query->where('type', 'supporting');
+    }
+
+    public function scopeCategory($query, string $category)
+    {
+        return $query->where('category', $category);
     }
 }

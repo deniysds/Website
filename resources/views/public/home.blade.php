@@ -144,14 +144,9 @@
                     <!-- Red Icon Badge protruding top-left -->
                     <div class="absolute -top-5 left-6 w-11 h-11 rounded-xl bg-red-600 text-white flex items-center justify-center shadow-md shadow-red-600/30">
                         @if($prog->icon === 'dna')
-                            <!-- Logo IGNITE (DNA Double Helix Presisi Lampiran) -->
-                            <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M3.5 16.3c1.5-1 3.5-1.5 5-4.5 1.5-3 1.5-5 4.5-6.5 1.5-.7 3.5-.5 4.5.5"/>
-                                <path d="M7.4 20.3c.8-1.8.9-3.3.9-4.6 2.7-.2 4.7-.7 5.7-1.7 1.2-1 1.5-2.5 1.8-5.5 1.7 0 3-.1 3.7-.7-.5-1-1.5-1.8-2.4-2"/>
-                                <path d="M5.0 15.9l2.0 2.3"/>
-                                <path d="M8.1 13.1l3.3 2.3"/>
-                                <path d="M10.0 10.0l3.3 3.3"/>
-                                <path d="M15.9 8.5l2.9-.1"/>
+                            <!-- Logo IGNITE (Master Vector CorelDRAW) -->
+                            <svg class="w-6 h-6 text-white" viewBox="0 0 513.89 512.41" fill="currentColor">
+                                <path fill="currentColor" fill-rule="nonzero" d="M115.82 496.61c16.08,-21.9 23.85,-41.68 27.08,-62.84 2.24,-14.62 2.4,-30.2 1.65,-47.69l8.78 0.45 0 -0.05c5.71,0.41 11.56,0.59 17.29,0.88l0.53 0.02c0.7,18.07 0.42,34.48 -2.02,50.43 -3.88,25.36 -13.04,48.86 -31.93,74.59l-21.38 -15.79zm-46.9 -123.72l59.4 59.4 -5.01 23.84 -76.66 -76.66c-10.51,4.1 -20.72,9.65 -30.56,17.11l-16.09 -21.08c49.36,-37.43 102.43,-34.69 155.59,-31.95 6,0.31 12,0.62 16.82,0.83 21.05,0.9 41.94,1.07 61.99,-2.26l-52.97 -52.97 5 -23.85 71.12 71.11c14.12,-4.75 27.91,-11.99 41.25,-22.85l-99.68 -99.67c-17.99,19.58 -26.37,41.02 -29.83,63.81 -2.41,15.85 -2.49,32.61 -1.73,49.96l-10.21 -0.52c-0.58,-0.06 -1.16,-0.09 -1.76,-0.09 -4.88,-0.25 -9.75,-0.5 -14.63,-0.72 -0.72,-17.93 -0.51,-35.48 2.1,-52.67 4.3,-28.35 15.02,-55.1 38.41,-79.69 24.96,-26.25 51.67,-39.99 79.32,-46.87 21.97,-5.47 44.11,-6.51 66.29,-6.09 0.31,5.24 0.67,10.62 1.06,16.17 0.25,3.49 0.49,6.96 0.72,10.42 -16.87,-0.4 -33.55,0.02 -49.68,2.74l54.11 54.11 -5.01 23.84 -72.21 -72.21c-14.44,4.9 -28.55,12.41 -42.17,23.74l99.82 99.82c18.71,-19.89 27.35,-41.71 30.88,-64.93 3.72,-24.46 1.9,-51.11 -0.04,-78.72 -2.19,-31.17 -3.56,-56.83 0.2,-81.4 3.88,-25.35 13.04,-48.86 31.93,-74.59l21.37 15.8c-16.07,21.9 -23.84,41.68 -27.08,62.83 -3.35,21.93 -2.04,46.04 0.02,75.45 2.05,29.19 3.97,57.37 -0.17,84.67 -4.31,28.35 -15.02,55.09 -38.41,79.69 -24.96,26.25 -51.67,39.99 -79.32,46.87 -27.09,6.74 -54.43,6.76 -81.79,5.59 -6.48,-0.28 -11.8,-0.55 -17.11,-0.83 -28.93,-1.49 -57.83,-2.98 -85.28,2.82zm373.73 -232.9l-57.36 -57.36 5.01 -23.84 74.92 74.92c11.21,-4.17 22.11,-9.95 32.58,-17.89l16.09 21.09c-39.99,30.31 -82.39,34.28 -125.31,33.23 -0.36,-5.72 -0.76,-11.46 -1.16,-17.25 -0.23,-3.19 -0.44,-6.31 -0.64,-9.38 18.96,0.52 37.72,0.04 55.87,-3.52z"/>
                             </svg>
                         @elseif($prog->icon === 'leaf' || $prog->icon === 'feather')
                             <!-- Logo Pendidikan (Feather / Pena Bulu Presisi Lampiran) -->
@@ -197,43 +192,64 @@
         </div>
     </section>
 
-    <!-- 4. Section Metode / Pendekatan Terarah (Dark Banner Card 1, 2, 3 Steps) -->
-    <section class="bg-slate-950 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-xl relative overflow-hidden min-w-0 max-w-full">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <!-- Left Title & Description -->
-            <div class="space-y-6">
-                <span class="text-xs font-bold text-red-500 uppercase tracking-widest">{{ __($settings['method_tag'] ?? 'Metode') }}</span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
-                    {{ __($settings['method_title'] ?? 'Pendekatan terarah untuk mencapai hasil yang optimal') }}
-                </h2>
-                <p class="text-sm text-slate-300 leading-relaxed">
-                    {{ __($settings['method_desc'] ?? 'Kami menerjemahkan komitmen menjadi dampak berkesinambungan melalui aliansi strategis bersama mitra riset terpercaya di seluruh Indonesia.') }}
-                </p>
+    <!-- 4. Section Metode / Alur Kerja (Pendekatan Terarah - Presisi Mockup Baru) -->
+    <section class="relative rounded-3xl p-8 sm:p-12 lg:p-14 text-white overflow-hidden shadow-2xl min-w-0 max-w-full bg-[#050102]"
+             style="background-image: url('{{ asset('assets/media/banners/workflow-bg-ysds.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative z-10">
+            <!-- Left Column: Title at Top, Description at Bottom -->
+            <div class="lg:col-span-6 flex flex-col justify-between space-y-10 lg:space-y-0 py-2">
+                <div class="space-y-3 sm:space-y-4">
+                    <span class="text-xs sm:text-sm font-semibold text-white tracking-wide uppercase">{{ __($settings['method_tag'] ?? 'Alur Kerja') }}</span>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight tracking-tight">
+                        {{ __($settings['method_title'] ?? 'Pendekatan terarah untuk mencapai hasil yang berdampak') }}
+                    </h2>
+                </div>
+
+                <div class="pt-6 lg:pt-0">
+                    <p class="text-xs sm:text-[13px] text-slate-300 font-light leading-relaxed max-w-md">
+                        {{ __($settings['method_desc'] ?? 'Kami mengembangkan setiap program melalui proses yang terarah, kolaboratif, dan berbasis kebutuhan. Setiap tahapan dirancang untuk memastikan program berjalan tepat sasaran dan memberikan manfaat yang nyata.') }}
+                    </p>
+                </div>
             </div>
 
-            <!-- Right 3 Steps List (Red Active Box 1, Dark Gray 2 & 3) -->
-            <div class="space-y-4">
-                <div class="p-6 rounded-2xl bg-red-600 text-white shadow-xl flex items-start gap-5 border border-red-500">
-                    <span class="text-2xl font-black text-white shrink-0">1</span>
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-base text-white">{{ __($settings['method_step_1_title'] ?? 'Mengkaji Riset & Kebutuhan') }}</h4>
-                        <p class="text-xs text-red-100 leading-relaxed">{{ __($settings['method_step_1_desc'] ?? 'Pemetaan isu strategis sains & kesehatan berbasis fakta ilmiah untuk pemangku kepentingan nasional.') }}</p>
+            <!-- Right Column: 3 Step Cards with Vertical Dividers -->
+            <div class="lg:col-span-6 flex flex-col justify-center space-y-4 sm:space-y-5">
+                <!-- Card 1 (Red Active Step) -->
+                <div class="p-5 sm:p-6 rounded-2xl bg-[#d80504] text-white shadow-xl flex items-center gap-5 sm:gap-6 border border-red-500/30 transition duration-300 hover:brightness-105">
+                    <div class="w-12 sm:w-14 shrink-0 flex items-center justify-center">
+                        <span class="text-3xl sm:text-4xl font-extrabold text-white">1</span>
+                    </div>
+                    <div class="w-[1.5px] self-stretch bg-white/25 shrink-0"></div>
+                    <div class="space-y-1 grow min-w-0">
+                        <h4 class="font-bold text-sm sm:text-base text-white leading-snug">{{ __($settings['method_step_1_title'] ?? 'Mengidentifikasi Kebutuhan yang Berdampak') }}</h4>
+                        <p class="text-xs sm:text-[13px] font-medium text-white/95 leading-normal">{{ __($settings['method_step_1_subtitle'] ?? 'Memahami tantangan, kebutuhan, dan potensi') }}</p>
+                        <p class="text-[11px] sm:text-xs text-red-100 font-light leading-relaxed pt-0.5">{{ __($settings['method_step_1_desc'] ?? 'Kami mempelajari kebutuhan, permasalahan, serta potensi melalui riset, pengumpulan data, dan komunikasi dengan pihak terkait.') }}</p>
                     </div>
                 </div>
 
-                <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 text-white flex items-start gap-5 hover:border-slate-700 transition">
-                    <span class="text-2xl font-black text-slate-400 shrink-0">2</span>
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-base text-white">{{ __($settings['method_step_2_title'] ?? 'Merancang dan Menjalankan Program') }}</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed">{{ __($settings['method_step_2_desc'] ?? 'Eksekusi program publikasi & fasilitas riset secara transparan dengan standar akuntabilitas tinggi.') }}</p>
+                <!-- Card 2 (Dark Slate Gray Step) -->
+                <div class="p-5 sm:p-6 rounded-2xl bg-[#2f3035] text-white shadow-lg flex items-center gap-5 sm:gap-6 border border-slate-700/40 transition duration-300 hover:brightness-105">
+                    <div class="w-12 sm:w-14 shrink-0 flex items-center justify-center">
+                        <span class="text-3xl sm:text-4xl font-extrabold text-white">2</span>
+                    </div>
+                    <div class="w-[1.5px] self-stretch bg-white/15 shrink-0"></div>
+                    <div class="space-y-1 grow min-w-0">
+                        <h4 class="font-bold text-sm sm:text-base text-white leading-snug">{{ __($settings['method_step_2_title'] ?? 'Merancang dan Menjalankan Program') }}</h4>
+                        <p class="text-xs sm:text-[13px] font-medium text-white/95 leading-normal">{{ __($settings['method_step_2_subtitle'] ?? 'Mewujudkan solusi yang tepat sasaran') }}</p>
+                        <p class="text-[11px] sm:text-xs text-slate-300 font-light leading-relaxed pt-0.5">{{ __($settings['method_step_2_desc'] ?? 'Berdasarkan identifikasi, kami menyusun strategi dan melaksanakan program bersama mitra, ahli, komunitas, serta pemangku kepentingan.') }}</p>
                     </div>
                 </div>
 
-                <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 text-white flex items-start gap-5 hover:border-slate-700 transition">
-                    <span class="text-2xl font-black text-slate-400 shrink-0">3</span>
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-base text-white">{{ __($settings['method_step_3_title'] ?? 'Menevaluasi dan Mengembangkan') }}</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed">{{ __($settings['method_step_3_desc'] ?? 'Pemeriksaan berkala untuk memastikan efektivitas dampak program ilmiah yang kontinyu bagi masyarakat.') }}</p>
+                <!-- Card 3 (Medium Slate Gray Step) -->
+                <div class="p-5 sm:p-6 rounded-2xl bg-[#484a52] text-white shadow-lg flex items-center gap-5 sm:gap-6 border border-slate-600/40 transition duration-300 hover:brightness-105">
+                    <div class="w-12 sm:w-14 shrink-0 flex items-center justify-center">
+                        <span class="text-3xl sm:text-4xl font-extrabold text-white">3</span>
+                    </div>
+                    <div class="w-[1.5px] self-stretch bg-white/15 shrink-0"></div>
+                    <div class="space-y-1 grow min-w-0">
+                        <h4 class="font-bold text-sm sm:text-base text-white leading-snug">{{ __($settings['method_step_3_title'] ?? 'Mengevaluasi dan Mengembangkan') }}</h4>
+                        <p class="text-xs sm:text-[13px] font-medium text-white/95 leading-normal">{{ __($settings['method_step_3_subtitle'] ?? 'Mengukur hasil untuk perbaikan berkelanjutan') }}</p>
+                        <p class="text-[11px] sm:text-xs text-slate-200 font-light leading-relaxed pt-0.5">{{ __($settings['method_step_3_desc'] ?? 'Kami memantau pelaksanaan, mengukur hasil, dan mengevaluasi program sebagai dasar untuk meningkatkan kualitas serta efektivitasnya.') }}</p>
                     </div>
                 </div>
             </div>
@@ -534,39 +550,8 @@
 
     <!-- Blok Bawah Terpadu: Mitra Kami, Kolaborasi & Kontak (Tanpa Rounded & Tanpa Border Sesuai Lampiran) -->
     <div class="space-y-0 overflow-hidden">
-        <!-- 8. Section Mitra Kami (Flat Tanpa Rounded & Tanpa Border) -->
-        <section class="bg-black text-white p-8 sm:p-14 space-y-12 overflow-hidden relative min-w-0 max-w-full">
-            <style>
-                @keyframes marquee-scroll {
-                    0% { transform: translateX(0%); }
-                    100% { transform: translateX(-50%); }
-                }
-                @keyframes marquee-scroll-reverse {
-                    0% { transform: translateX(-50%); }
-                    100% { transform: translateX(0%); }
-                }
-                .marquee-container {
-                    width: 100%;
-                    max-width: 100%;
-                    min-width: 0;
-                    overflow: hidden;
-                }
-                .marquee-track {
-                    display: flex;
-                    width: max-content;
-                    animation: marquee-scroll 40s linear infinite;
-                }
-                .marquee-track-reverse {
-                    display: flex;
-                    width: max-content;
-                    animation: marquee-scroll-reverse 45s linear infinite;
-                }
-                .marquee-container:hover .marquee-track,
-                .marquee-container:hover .marquee-track-reverse {
-                    animation-play-state: paused;
-                }
-            </style>
-
+        <!-- 8. Section Mitra Kami (Flat Tanpa Rounded & Tanpa Border Sesuai Lampiran) -->
+        <section class="bg-black text-white px-6 py-14 sm:px-12 sm:py-20 space-y-12 sm:space-y-16 overflow-hidden relative min-w-0 max-w-full">
             <!-- Header Section Mitra Kami -->
             <div class="text-center space-y-3 max-w-3xl mx-auto">
                 <span class="text-xs font-bold text-red-500 uppercase tracking-widest">{{ __($settings['partners_tag'] ?? 'Mitra Kami') }}</span>
@@ -575,103 +560,151 @@
                 </h2>
             </div>
 
-            <!-- 1. Mitra Utama (Platinum Partners: PaninBank, Ultima Genomics, PacBio, MGI, Oxford Nanopore) -->
-            <div class="pt-2">
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center justify-center">
+            <!-- 1. Row 1: Platform Partners (PaninBank, Ultima Genomics, PacBio, MGI, Oxford Nanopore) -->
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-wrap items-center justify-center gap-8 sm:gap-12 lg:gap-16">
                     @forelse($mainPartners as $partner)
-                        <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-600 hover:bg-slate-900 transition flex items-center justify-center h-24 group relative" title="{{ $partner->name }}">
+                        <div class="flex items-center justify-center transition-transform hover:scale-105 duration-200" title="{{ $partner->name }}">
                             <span class="sr-only">{{ $partner->name }}</span>
+                            @if($partner->website_url)
+                                <a href="{{ $partner->website_url }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center" title="{{ $partner->name }}">
+                            @endif
                             @if($partner->logo_path)
-                                <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-h-12 max-w-full object-contain filter brightness-90 group-hover:brightness-100 transition" />
+                                <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="h-8 sm:h-10 lg:h-12 w-auto max-w-[150px] sm:max-w-[190px] object-contain filter brightness-95 hover:brightness-100 transition" />
                             @else
-                                <!-- Brand Text-based Logo for Demo / Main Partners matching screenshot -->
-                                @if(str_contains(strtolower($partner->name), 'panin'))
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-7 h-7 rounded-sm bg-blue-600 flex items-center justify-center text-white font-bold text-xs shadow-xs">P</div>
-                                        <span class="font-black text-lg tracking-tight text-white"><span class="text-red-500">Panin</span>Bank</span>
-                                    </div>
-                                @elseif(str_contains(strtolower($partner->name), 'ultima'))
-                                    <div class="text-center">
-                                        <div class="font-black text-base text-white tracking-widest uppercase">ULTIMA</div>
-                                        <div class="text-[9px] font-bold text-slate-400 tracking-widest uppercase">GENOMICS</div>
-                                    </div>
-                                @elseif(str_contains(strtolower($partner->name), 'pacbio'))
-                                    <div class="font-black text-xl tracking-tight text-pink-500">Pac<span class="text-white">Bio</span></div>
-                                @elseif(str_contains(strtolower($partner->name), 'mgi'))
-                                    <div class="flex items-center gap-1">
-                                        <div class="text-cyan-400 font-mono font-black text-2xl tracking-tighter">MGI</div>
-                                        <div class="text-[9px] text-cyan-200 font-bold uppercase tracking-wider">Tech</div>
-                                    </div>
-                                @elseif(str_contains(strtolower($partner->name), 'nanopore'))
-                                    <div class="flex items-center gap-1.5">
-                                        <div class="w-5 h-5 rounded-full border-2 border-cyan-400 flex items-center justify-center"><div class="w-2 h-2 rounded-full bg-cyan-400"></div></div>
-                                        <div class="text-left leading-none">
-                                            <div class="text-[9px] text-slate-400 uppercase font-mono">Oxford</div>
-                                            <div class="text-xs font-black text-white uppercase tracking-wider">NANOPORE</div>
-                                        </div>
-                                    </div>
-                                @else
-                                    <span class="font-bold text-white text-sm tracking-tight text-center">{{ $partner->name }}</span>
-                                @endif
+                                <span class="font-bold text-white text-base tracking-tight">{{ $partner->name }}</span>
+                            @endif
+                            @if($partner->website_url)
+                                </a>
                             @endif
                         </div>
                     @empty
-                        <div class="col-span-5 text-center text-slate-500 text-xs">Belum ada data mitra utama.</div>
+                        <div class="text-center text-slate-500 text-xs">Belum ada data mitra utama.</div>
                     @endforelse
                 </div>
             </div>
 
-            <!-- 2. Mitra Pendukung (Running Marquee Carousel - Logo Berjalan Halus) -->
-            <div class="space-y-4 pt-4 border-t border-slate-900/80">
-                <div class="text-center">
-                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-widest">{{ __('Mitra Perguruan Tinggi & Institusi Riset Akademik') }}</span>
-                </div>
-
-                <!-- Carousel Row 1 (Kiri ke Kanan) -->
-                <div class="marquee-container overflow-hidden relative w-full py-2 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-                    <div class="marquee-track flex gap-4 items-center">
-                        @php
-                            // Gandakan list untuk infinite loop yang mulus
-                            $marqueeList = $supportingPartners->concat($supportingPartners);
-                        @endphp
-                        @foreach($marqueeList as $partner)
-                            <div class="flex items-center gap-3 px-4 py-2.5 rounded-full bg-slate-900/90 border border-slate-800 hover:border-red-500/50 hover:bg-slate-800 transition shrink-0 group">
+            <!-- 2. Group 2: Universitas (Grid / Flex Seals Perguruan Tinggi & Lembaga Riset) -->
+            @if(isset($universityPartners) && $universityPartners->isNotEmpty())
+                <div class="max-w-6xl mx-auto pt-2">
+                    <div class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 lg:gap-4">
+                        @foreach($universityPartners as $partner)
+                            <div class="w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 flex items-center justify-center rounded-full hover:scale-115 transition-transform duration-200 group relative" title="{{ $partner->name }}">
+                                <span class="sr-only">{{ $partner->name }}</span>
+                                @if($partner->website_url)
+                                    <a href="{{ $partner->website_url }}" target="_blank" rel="noopener noreferrer" class="w-full h-full flex items-center justify-center">
+                                @endif
                                 @if($partner->logo_path)
-                                    <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="w-7 h-7 object-contain rounded-full bg-white/10 p-0.5" />
+                                    <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-w-full max-h-full object-contain filter brightness-95 group-hover:brightness-110 transition drop-shadow-xs" loading="lazy" />
                                 @else
-                                    <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-red-600 via-slate-800 to-blue-600 text-white font-black flex items-center justify-center text-[10px] shrink-0 shadow-xs border border-white/20">
+                                    <div class="w-full h-full rounded-full bg-slate-900 border border-slate-800 text-[10px] font-bold text-slate-300 flex items-center justify-center">
                                         {{ substr($partner->name, 0, 2) }}
                                     </div>
                                 @endif
-                                <span class="text-xs font-semibold text-slate-300 group-hover:text-white transition whitespace-nowrap">{{ $partner->name }}</span>
+                                @if($partner->website_url)
+                                    </a>
+                                @endif
                             </div>
                         @endforeach
                     </div>
                 </div>
+            @endif
 
-                <!-- Carousel Row 2 (Kanan ke Kiri) -->
-                @if($supportingPartners->count() > 6)
-                    <div class="marquee-container overflow-hidden relative w-full py-2 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-                        <div class="marquee-track-reverse flex gap-4 items-center">
-                            @php
-                                $reverseList = $supportingPartners->reverse()->concat($supportingPartners->reverse());
-                            @endphp
-                            @foreach($reverseList as $partner)
-                                <div class="flex items-center gap-3 px-4 py-2.5 rounded-full bg-slate-900/90 border border-slate-800 hover:border-red-500/50 hover:bg-slate-800 transition shrink-0 group">
-                                    @if($partner->logo_path)
-                                        <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="w-7 h-7 object-contain rounded-full bg-white/10 p-0.5" />
-                                    @else
-                                        <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-600 via-slate-800 to-amber-500 text-white font-black flex items-center justify-center text-[10px] shrink-0 shadow-xs border border-white/20">
-                                            {{ substr($partner->name, 0, 2) }}
-                                        </div>
+            <!-- 3. Group 3: Perusahaan, Klinik & Rumah Sakit (Rows 4, 5, 6, 7) -->
+            <div class="max-w-6xl mx-auto space-y-6 sm:space-y-8 pt-2">
+                @php
+                    $cList = $companyPartners ?? collect();
+                    $hList = $hospitalPartners ?? collect();
+
+                    // Row 4: Company Top (8 items)
+                    $row4 = $cList->slice(0, 8);
+                    // Row 5: Biotech & Science (8 items)
+                    $row5 = $cList->slice(8, 8);
+                    // Row 6: Corporate (remaining 2) + RS (first 6) = 8 items
+                    $row6 = $cList->slice(16, 2)->concat($hList->slice(0, 6));
+                    // Row 7: RS remaining (8 items)
+                    $row7 = $hList->slice(6, 8);
+
+                    $gridRows = [
+                        $row4,
+                        $row5,
+                        $row6,
+                        $row7,
+                    ];
+                @endphp
+
+                @foreach($gridRows as $rowItems)
+                    @if($rowItems->isNotEmpty())
+                        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4 sm:gap-6 items-center justify-items-center">
+                            @foreach($rowItems as $partner)
+                                <div class="flex items-center justify-center w-full h-12 px-2 hover:scale-105 transition-transform duration-200 group" title="{{ $partner->name }}">
+                                    <span class="sr-only">{{ $partner->name }}</span>
+                                    @if($partner->website_url)
+                                        <a href="{{ $partner->website_url }}" target="_blank" rel="noopener noreferrer" class="w-full h-full flex items-center justify-center">
                                     @endif
-                                    <span class="text-xs font-semibold text-slate-300 group-hover:text-white transition whitespace-nowrap">{{ $partner->name }}</span>
+                                    @if($partner->logo_path)
+                                        <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="max-h-9 sm:max-h-11 max-w-full object-contain filter brightness-95 group-hover:brightness-100 transition" loading="lazy" />
+                                    @else
+                                        <span class="text-xs font-semibold text-slate-300 text-center line-clamp-2">{{ $partner->name }}</span>
+                                    @endif
+                                    @if($partner->website_url)
+                                        </a>
+                                    @endif
                                 </div>
                             @endforeach
                         </div>
-                    </div>
-                @endif
+                    @endif
+                @endforeach
             </div>
+
+            <!-- 4. Group 4: Instansi & Pemerintah (Row 8) -->
+            @if(isset($instansiPartners) && $instansiPartners->isNotEmpty())
+                <div class="max-w-4xl mx-auto pt-2">
+                    <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-10 lg:gap-12">
+                        @foreach($instansiPartners as $partner)
+                            <div class="flex items-center justify-center hover:scale-105 transition-transform duration-200 group" title="{{ $partner->name }}">
+                                <span class="sr-only">{{ $partner->name }}</span>
+                                @if($partner->website_url)
+                                    <a href="{{ $partner->website_url }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center">
+                                @endif
+                                @if($partner->logo_path)
+                                    @if(str_contains(strtolower($partner->logo_path), 'brin'))
+                                        <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="h-9 sm:h-11 w-auto max-w-[120px] object-contain filter brightness-95 group-hover:brightness-100 transition" loading="lazy" />
+                                    @else
+                                        <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="h-10 sm:h-12 w-auto max-w-[50px] object-contain filter brightness-95 group-hover:brightness-100 transition" loading="lazy" />
+                                    @endif
+                                @else
+                                    <span class="text-xs font-semibold text-slate-300 text-center">{{ $partner->name }}</span>
+                                @endif
+                                @if($partner->website_url)
+                                    </a>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
+            {{-- Fallback: Any other supporting partners not categorized above --}}
+            @php
+                $renderedIds = ($universityPartners ?? collect())->pluck('id')
+                    ->merge(($companyPartners ?? collect())->pluck('id'))
+                    ->merge(($hospitalPartners ?? collect())->pluck('id'))
+                    ->merge(($instansiPartners ?? collect())->pluck('id'));
+                $extraPartners = ($supportingPartners ?? collect())->whereNotIn('id', $renderedIds);
+            @endphp
+            @if($extraPartners->isNotEmpty())
+                <div class="flex flex-wrap items-center justify-center gap-4 max-w-5xl mx-auto pt-4 border-t border-slate-900">
+                    @foreach($extraPartners as $partner)
+                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs text-slate-300" title="{{ $partner->name }}">
+                            @if($partner->logo_path)
+                                <img src="{{ Storage::url($partner->logo_path) }}" alt="{{ $partner->name }}" class="w-5 h-5 object-contain" />
+                            @endif
+                            <span>{{ $partner->name }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
         </section>
 
         <!-- 9. Section Kolaborasi (Presisi Mockup Gambar Lampiran: Background Putih Tanpa Border & Tanpa Rounded) -->

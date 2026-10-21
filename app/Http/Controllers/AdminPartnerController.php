@@ -27,6 +27,10 @@ class AdminPartnerController extends Controller
             $query->where('type', $request->type);
         }
 
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
         $partners = $query->orderBy('type', 'asc')
             ->orderBy('order_no', 'asc')
             ->paginate(20)
@@ -46,6 +50,7 @@ class AdminPartnerController extends Controller
         $validated = $request->validate([
             'name'        => 'required|string|max:255',
             'type'        => 'required|in:main,supporting',
+            'category'    => 'nullable|string|max:50',
             'website_url' => 'nullable|url|max:255',
             'order_no'    => 'nullable|integer|min:0',
             'is_active'   => 'nullable|boolean',
@@ -60,6 +65,7 @@ class AdminPartnerController extends Controller
         WebsitePartner::create([
             'name'        => $validated['name'],
             'type'        => $validated['type'],
+            'category'    => $validated['category'] ?? ($validated['type'] === 'main' ? 'platform' : 'universitas'),
             'website_url' => $validated['website_url'] ?? null,
             'order_no'    => $validated['order_no'] ?? 0,
             'is_active'   => $request->boolean('is_active', true),
@@ -80,6 +86,7 @@ class AdminPartnerController extends Controller
         $validated = $request->validate([
             'name'        => 'required|string|max:255',
             'type'        => 'required|in:main,supporting',
+            'category'    => 'nullable|string|max:50',
             'website_url' => 'nullable|url|max:255',
             'order_no'    => 'nullable|integer|min:0',
             'is_active'   => 'nullable|boolean',
@@ -97,6 +104,7 @@ class AdminPartnerController extends Controller
         $partner->update([
             'name'        => $validated['name'],
             'type'        => $validated['type'],
+            'category'    => $validated['category'] ?? $partner->category,
             'website_url' => $validated['website_url'] ?? null,
             'order_no'    => $validated['order_no'] ?? 0,
             'is_active'   => $request->boolean('is_active', true),

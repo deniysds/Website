@@ -51,16 +51,19 @@ class WebsiteDatabaseSeeder extends Seeder
             'profile_box_3_title' => 'Lingkungan Hidup yang Terpelihara',
             'profile_box_3_desc' => 'Pelestarian keanekaragaman hayati dan penerapan riset sains ramah lingkungan.',
 
-            // Method Section
-            'method_tag' => 'Metode',
-            'method_title' => 'Pendekatan terarah untuk mencapai hasil yang optimal',
-            'method_desc' => 'Kami menerjemahkan komitmen menjadi dampak berkesinambungan melalui aliansi strategis bersama mitra riset terpercaya di seluruh Indonesia.',
-            'method_step_1_title' => 'Mengkaji Riset & Kebutuhan',
-            'method_step_1_desc' => 'Pemetaan isu strategis sains & kesehatan berbasis fakta ilmiah untuk pemangku kepentingan nasional.',
+            // Method / Alur Kerja Section
+            'method_tag' => 'Alur Kerja',
+            'method_title' => 'Pendekatan terarah untuk mencapai hasil yang berdampak',
+            'method_desc' => 'Kami mengembangkan setiap program melalui proses yang terarah, kolaboratif, dan berbasis kebutuhan. Setiap tahapan dirancang untuk memastikan program berjalan tepat sasaran dan memberikan manfaat yang nyata.',
+            'method_step_1_title' => 'Mengidentifikasi Kebutuhan yang Berdampak',
+            'method_step_1_subtitle' => 'Memahami tantangan, kebutuhan, dan potensi',
+            'method_step_1_desc' => 'Kami mempelajari kebutuhan, permasalahan, serta potensi melalui riset, pengumpulan data, dan komunikasi dengan pihak terkait.',
             'method_step_2_title' => 'Merancang dan Menjalankan Program',
-            'method_step_2_desc' => 'Eksekusi program publikasi & fasilitas riset secara transparan dengan standar akuntabilitas tinggi.',
-            'method_step_3_title' => 'Mengevaluasi Capaian',
-            'method_step_3_desc' => 'Monitoring dampak ilmiah berkelanjutan terhadap kemajuan sains dan derajat kesehatan masyarakat.',
+            'method_step_2_subtitle' => 'Mewujudkan solusi yang tepat sasaran',
+            'method_step_2_desc' => 'Berdasarkan identifikasi, kami menyusun strategi dan melaksanakan program bersama mitra, ahli, komunitas, serta pemangku kepentingan.',
+            'method_step_3_title' => 'Mengevaluasi dan Mengembangkan',
+            'method_step_3_subtitle' => 'Mengukur hasil untuk perbaikan berkelanjutan',
+            'method_step_3_desc' => 'Kami memantau pelaksanaan, mengukur hasil, dan mengevaluasi program sebagai dasar untuk meningkatkan kualitas serta efektivitasnya.',
 
             // Partners Section
             'partners_tag' => 'Mitra Kami',
@@ -195,95 +198,121 @@ class WebsiteDatabaseSeeder extends Seeder
             WebsiteNews::updateOrCreate(['title' => $news['title']], $news);
         }
 
-        // Default Main Partners (Platinum Partners)
-        $mainPartners = [
-            [
-                'name' => 'PaninBank',
-                'type' => 'main',
-                'website_url' => 'https://www.panin.co.id',
-                'order_no' => 1,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Ultima Genomics',
-                'type' => 'main',
-                'website_url' => 'https://www.ultimagenomics.com',
-                'order_no' => 2,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'PacBio',
-                'type' => 'main',
-                'website_url' => 'https://www.pacb.com',
-                'order_no' => 3,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'MGI Tech',
-                'type' => 'main',
-                'website_url' => 'https://en.mgi-tech.com',
-                'order_no' => 4,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Oxford Nanopore Technologies',
-                'type' => 'main',
-                'website_url' => 'https://nanoporetech.com',
-                'order_no' => 5,
-                'is_active' => true,
-            ],
+        // Default Partners (Platform, Universitas, Perusahaan, Klinik & RS, Instansi)
+        $allPartners = [
+            // 1. Platform (Main Partners)
+            ['name' => 'PaninBank', 'logo_path' => 'mitra/1. Panin & Platform/1. panin.png', 'type' => 'main', 'category' => 'platform', 'order_no' => 1, 'website_url' => 'https://www.panin.co.id'],
+            ['name' => 'Ultima Genomics', 'logo_path' => 'mitra/1. Panin & Platform/2. Ultima Genomics.png', 'type' => 'main', 'category' => 'platform', 'order_no' => 2, 'website_url' => 'https://www.ultimagenomics.com'],
+            ['name' => 'PacBio', 'logo_path' => 'mitra/1. Panin & Platform/3. Pacbio.png', 'type' => 'main', 'category' => 'platform', 'order_no' => 3, 'website_url' => 'https://www.pacb.com'],
+            ['name' => 'MGI Tech', 'logo_path' => 'mitra/1. Panin & Platform/4. MGI.png', 'type' => 'main', 'category' => 'platform', 'order_no' => 4, 'website_url' => 'https://en.mgi-tech.com'],
+            ['name' => 'Oxford Nanopore Technologies', 'logo_path' => 'mitra/1. Panin & Platform/5. Oxford Nanophore.png', 'type' => 'main', 'category' => 'platform', 'order_no' => 5, 'website_url' => 'https://nanoporetech.com'],
+
+            // 2. Universitas (Supporting Partners - Perguruan Tinggi & Riset Akademik)
+            ['name' => 'Chinese Academy of Sciences', 'logo_path' => 'mitra/2. Universitas/01. Chinese Academy.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 1],
+            ['name' => 'IMPLAD', 'logo_path' => 'mitra/2. Universitas/02. Implad.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 2],
+            ['name' => 'Zhejiang University', 'logo_path' => 'mitra/2. Universitas/03. Zhejiang_University_Logo.svg.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 3],
+            ['name' => 'Universitas Syiah Kuala', 'logo_path' => 'mitra/2. Universitas/3. Universtitas Syiah Kuala.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 4],
+            ['name' => 'Universitas Sumatera Utara', 'logo_path' => 'mitra/2. Universitas/4. Universitas Sumatera Utara.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 5],
+            ['name' => 'Institut Teknologi Del', 'logo_path' => 'mitra/2. Universitas/3. IT DEL.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 6],
+            ['name' => 'Universitas HKBP Nommensen', 'logo_path' => 'mitra/2. Universitas/4. Universitas HKBP Nommensen.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 7],
+            ['name' => 'SMA Santo Thomas 1 Medan', 'logo_path' => 'mitra/2. Universitas/5. SMA Santho Medan 1.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 8],
+            ['name' => 'Universitas Negeri Padang', 'logo_path' => 'mitra/2. Universitas/6. Universitas Negeri Padang.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 9],
+            ['name' => 'Universitas Riau', 'logo_path' => 'mitra/2. Universitas/7. Universitas Negeri Riau.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 10],
+            ['name' => 'Universitas Internasional Batam', 'logo_path' => 'mitra/2. Universitas/8. Universtias Internasional Batam.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 11],
+            ['name' => 'Universitas Merangin', 'logo_path' => 'mitra/2. Universitas/9. Universitas Merangin.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 12],
+            ['name' => 'Universitas Jambi', 'logo_path' => 'mitra/2. Universitas/10. Universitas Jambi.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 13],
+            ['name' => 'Universitas Bengkulu', 'logo_path' => 'mitra/2. Universitas/11. Universitas Bengkulu.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 14],
+            ['name' => 'Universitas Muhammadiyah Palembang', 'logo_path' => 'mitra/2. Universitas/12. Universitas Muhammadiyah Palembang.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 15],
+            ['name' => 'Universitas Lampung', 'logo_path' => 'mitra/2. Universitas/13. Umiversitas Lampung.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 16],
+            ['name' => 'Universitas Negeri Jakarta', 'logo_path' => 'mitra/2. Universitas/14. Universitas Negeri Jakarta.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 17],
+            ['name' => 'Universitas Pamulang', 'logo_path' => 'mitra/2. Universitas/16. Universitas Pamulang.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 18],
+            ['name' => 'UIN Maulana Malik Ibrahim Malang', 'logo_path' => 'mitra/2. Universitas/29. UIN Malang.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 19],
+            ['name' => 'Universitas YARSI', 'logo_path' => 'mitra/2. Universitas/15. Universitas YARSI.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 20],
+            ['name' => 'Institut Pertanian Bogor', 'logo_path' => 'mitra/2. Universitas/17. Institut Pertanian Bogor.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 21],
+            ['name' => 'Universitas Kristen Maranatha', 'logo_path' => 'mitra/2. Universitas/18. Universitas Kristen Maranatha.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 22],
+            ['name' => 'Universitas Swadaya Gunung Jati', 'logo_path' => 'mitra/2. Universitas/19. Universitas Swadaya Gunung Jati.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 23],
+            ['name' => 'Universitas Indonesia', 'logo_path' => 'mitra/2. Universitas/20. Universitas Indonesia.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 24],
+            ['name' => 'SMK Maarif Magelang', 'logo_path' => 'mitra/2. Universitas/21. SMK Maarif Magelang.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 25],
+            ['name' => 'Universitas Diponegoro', 'logo_path' => 'mitra/2. Universitas/22. Universitas Diponegoro.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 26],
+            ['name' => 'Universitas Kristen Satya Wacana', 'logo_path' => 'mitra/2. Universitas/23. Universitas Kristen Satya Wacana.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 27],
+            ['name' => 'Universitas Sebelas Maret', 'logo_path' => 'mitra/2. Universitas/24. Universitas Sebelas Maret.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 28],
+            ['name' => 'Universitas Katolik Soegijapranata', 'logo_path' => 'mitra/2. Universitas/25. Universitas Katolik Soegjapranata.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 29],
+            ['name' => 'Universitas Gadjah Mada', 'logo_path' => 'mitra/2. Universitas/26. Universitas Gadjah Mada.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 30],
+            ['name' => 'Universitas Airlangga', 'logo_path' => 'mitra/2. Universitas/27. Universitas Airlangga.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 31],
+            ['name' => 'Universitas Brawijaya', 'logo_path' => 'mitra/2. Universitas/28. Universitas Brawijaya.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 32],
+            ['name' => 'Universitas Muhammadiyah Gorontalo', 'logo_path' => 'mitra/2. Universitas/51. Muhammadiyah Gorontalo.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 33],
+            ['name' => 'Universitas Negeri Jember', 'logo_path' => 'mitra/2. Universitas/30. Universitas Negeri Jember.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 34],
+            ['name' => 'Universitas Palangka Raya', 'logo_path' => 'mitra/2. Universitas/36. Universitas Palangkaraya.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 35],
+            ['name' => 'Universitas Kristen Wira Wacana Sumba', 'logo_path' => 'mitra/2. Universitas/31. Universitas Kristen Wira Wacanan Sumba.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 36],
+            ['name' => 'Universitas Mataram', 'logo_path' => 'mitra/2. Universitas/32. Universitas Mataram.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 37],
+            ['name' => 'Universitas Nusa Cendana', 'logo_path' => 'mitra/2. Universitas/33. Universitas Nusa Cendana.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 38],
+            ['name' => 'Universitas Teknologi Sumbawa', 'logo_path' => 'mitra/2. Universitas/34. Universitas Teknologi Sumbawa.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 39],
+            ['name' => 'Universitas Tanjungpura', 'logo_path' => 'mitra/2. Universitas/35. Universitas Tanjungpura Pontianak.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 40],
+            ['name' => 'Universitas Muhammadiyah Palangkaraya', 'logo_path' => 'mitra/2. Universitas/50. niversitas_Palangka_Raya.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 41],
+            ['name' => 'Universitas Lambung Mangkurat', 'logo_path' => 'mitra/2. Universitas/37. Universitas Lambung Mangkurat.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 42],
+            ['name' => 'Universitas Mulawarman', 'logo_path' => 'mitra/2. Universitas/38. Universitas Mulawarman.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 43],
+            ['name' => 'Universitas Borneo Tarakan', 'logo_path' => 'mitra/2. Universitas/39. Universitas Borneo Tarakan.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 44],
+            ['name' => 'Universitas Sam Ratulangi', 'logo_path' => 'mitra/2. Universitas/40. Universitas Sam Ratulangi Manado.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 45],
+            ['name' => 'Universitas Tadulako', 'logo_path' => 'mitra/2. Universitas/41. Universitas Tadulako.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 46],
+            ['name' => 'Universitas Negeri Makassar', 'logo_path' => 'mitra/2. Universitas/42. Universitas Negeri Makassar.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 47],
+            ['name' => 'Universitas Sulawesi Barat', 'logo_path' => 'mitra/2. Universitas/43 Universitas Sulawesi Barat.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 48],
+            ['name' => 'Universitas Muhammadiyah Kendari', 'logo_path' => 'mitra/2. Universitas/44. Universitas Muhammdiyah Kendari.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 49],
+            ['name' => 'Universitas Pattimura', 'logo_path' => 'mitra/2. Universitas/45. Universitas Pattiomura.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 50],
+            ['name' => 'Universitas Khairun', 'logo_path' => 'mitra/2. Universitas/46. Universitas_Khairun.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 51],
+            ['name' => 'Institut Teknologi Sepuluh Nopember', 'logo_path' => 'mitra/2. Universitas/55. ITS.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 52],
+            ['name' => 'Universitas Cenderawasih', 'logo_path' => 'mitra/2. Universitas/47. Universitas Cendrawasih.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 53],
+            ['name' => 'Universitas Papua', 'logo_path' => 'mitra/2. Universitas/48. Universitas Papua.webp', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 54],
+            ['name' => 'Universitas Warmadewa', 'logo_path' => 'mitra/2. Universitas/49. WARMADEWA.png', 'type' => 'supporting', 'category' => 'universitas', 'order_no' => 55],
+
+            // 3. Perusahaan (Supporting Partners - Industri & Korporasi)
+            ['name' => 'Budi Trikora Abadi', 'logo_path' => 'mitra/3. Perusahaan/0. Logo BTA.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 1],
+            ['name' => 'PT Equilab International', 'logo_path' => 'mitra/3. Perusahaan/1. PT Equilab.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 2],
+            ['name' => 'Westerindo', 'logo_path' => 'mitra/3. Perusahaan/2. Westerindo.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 3],
+            ['name' => 'CareNow', 'logo_path' => 'mitra/3. Perusahaan/4. Care Now.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 4],
+            ['name' => 'Pertamedika Bina Medika', 'logo_path' => 'mitra/3. Perusahaan/5. Pertamnida Medika.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 5],
+            ['name' => 'Genomik Solidaritas Indonesia (GSI Lab)', 'logo_path' => 'mitra/3. Perusahaan/6. Genomik Solidaritas Indonesia.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 6],
+            ['name' => 'Ikatan Dokter Indonesia (IDI)', 'logo_path' => 'mitra/3. Perusahaan/7. IDI Logo.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 7],
+            ['name' => 'Tana Lab', 'logo_path' => 'mitra/3. Perusahaan/9. Tana Lab.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 8],
+            ['name' => 'Datahelix', 'logo_path' => 'mitra/3. Perusahaan/18 Datahelix.webp', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 9],
+            ['name' => 'Konsorsium Bioteknologi Indonesia', 'logo_path' => 'mitra/3. Perusahaan/10. Konsorsium Bioteknologi Indonesia.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 10],
+            ['name' => 'Perhimpunan Periset Indonesia', 'logo_path' => 'mitra/3. Perusahaan/20 Perhimpunan Periset.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 11],
+            ['name' => 'Bhumi Foundation', 'logo_path' => 'mitra/3. Perusahaan/20. Bhumi.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 12],
+            ['name' => 'PathGen Diagnostik Teknologi', 'logo_path' => 'mitra/3. Perusahaan/11. Pathgen.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 13],
+            ['name' => 'Widya Herbal', 'logo_path' => 'mitra/3. Perusahaan/16. Widya Herbal.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 14],
+            ['name' => 'Widya Genomics', 'logo_path' => 'mitra/3. Perusahaan/17. Widya Genomic.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 15],
+            ['name' => 'Widya Life Science', 'logo_path' => 'mitra/3. Perusahaan/15. Widya Hayati.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 16],
+            ['name' => 'Saraswanti Genomics', 'logo_path' => 'mitra/3. Perusahaan/13. Saraswati.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 17],
+            ['name' => 'SIROS', 'logo_path' => 'mitra/3. Perusahaan/14. Siros.png', 'type' => 'supporting', 'category' => 'perusahaan', 'order_no' => 18],
+
+            // 4. Klinik & Rumah Sakit (Supporting Partners - Fasyankes & RS)
+            ['name' => 'Klinik Satriabudi Dharma Medika', 'logo_path' => 'mitra/4. Klinik & Rumah Sakit/1. Klinik Satriabudi.png', 'type' => 'supporting', 'category' => 'rumah_sakit', 'order_no' => 1],
+            ['name' => 'Primaya Hospital', 'logo_path' => 'mitra/4. Klinik & Rumah Sakit/2. RS Primaya.png', 'type' => 'supporting', 'category' => 'rumah_sakit', 'order_no' => 2],
+            ['name' => 'Kemenkes RSK Dharmais', 'logo_path' => 'mitra/4. Klinik & Rumah Sakit/3. RS Dharmais.png', 'type' => 'supporting', 'category' => 'rumah_sakit', 'order_no' => 3],
+            ['name' => 'Kemenkes RSAB Harapan Kita', 'logo_path' => 'mitra/4. Klinik & Rumah Sakit/6. RSAB Harapan Kita.png', 'type' => 'supporting', 'category' => 'rumah_sakit', 'order_no' => 4],
+            ['name' => 'Kemenkes RSPON Mahar Mardjono', 'logo_path' => 'mitra/4. Klinik & Rumah Sakit/4. RS PON.png', 'type' => 'supporting', 'category' => 'rumah_sakit', 'order_no' => 5],
+            ['name' => 'RS Medistra', 'logo_path' => 'mitra/4. Klinik & Rumah Sakit/5. RS Medistra.png', 'type' => 'supporting', 'category' => 'rumah_sakit', 'order_no' => 6],
+            ['name' => 'RS Panti Nugroho', 'logo_path' => 'mitra/4. Klinik & Rumah Sakit/9. RS Pantio Nugroho.png', 'type' => 'supporting', 'category' => 'rumah_sakit', 'order_no' => 7],
+            ['name' => 'Yayasan Panti Rapih RS Panti Rahayu', 'logo_path' => 'mitra/4. Klinik & Rumah Sakit/9. RS Panti Rahayu.png', 'type' => 'supporting', 'category' => 'rumah_sakit', 'order_no' => 8],
+            ['name' => 'Yayasan Panti Rapih RS Panti Rini', 'logo_path' => 'mitra/4. Klinik & Rumah Sakit/8 RS Panti Rini.png', 'type' => 'supporting', 'category' => 'rumah_sakit', 'order_no' => 9],
+            ['name' => 'Rumah Sakit Panti Rapih Yogyakarta', 'logo_path' => 'mitra/4. Klinik & Rumah Sakit/7. RS Panti Rapih 2.png', 'type' => 'supporting', 'category' => 'rumah_sakit', 'order_no' => 10],
+            ['name' => 'Yayasan Panti Rapih RS Santa Elisabeth', 'logo_path' => 'mitra/4. Klinik & Rumah Sakit/9. RS Santa Elizabeth.png', 'type' => 'supporting', 'category' => 'rumah_sakit', 'order_no' => 11],
+            ['name' => 'RSKB Dharma Usadha Sidhi Bali', 'logo_path' => 'mitra/4. Klinik & Rumah Sakit/12. RSKB Dharma Sidhi Bali.png', 'type' => 'supporting', 'category' => 'rumah_sakit', 'order_no' => 12],
+            ['name' => 'RSUD Labuang Baji', 'logo_path' => 'mitra/4. Klinik & Rumah Sakit/14. RS Labuang Baji.png', 'type' => 'supporting', 'category' => 'rumah_sakit', 'order_no' => 13],
+            ['name' => 'RSUD Tamiyang Layang', 'logo_path' => 'mitra/4. Klinik & Rumah Sakit/13. RS Tamiyang Layang.png', 'type' => 'supporting', 'category' => 'rumah_sakit', 'order_no' => 14],
+
+            // 5. Instansi (Supporting Partners - Pemerintah & Lembaga Negara)
+            ['name' => 'Badan Riset dan Inovasi Nasional (BRIN)', 'logo_path' => 'mitra/5. Instansi/logo-brin.png', 'type' => 'supporting', 'category' => 'instansi', 'order_no' => 1],
+            ['name' => 'Pemerintah Kabupaten Kulon Progo', 'logo_path' => 'mitra/5. Instansi/1. Pemkab Kulon Porogo.png', 'type' => 'supporting', 'category' => 'instansi', 'order_no' => 2],
+            ['name' => 'Pemerintah Provinsi NTT', 'logo_path' => 'mitra/5. Instansi/2. Pemprov NTT.png', 'type' => 'supporting', 'category' => 'instansi', 'order_no' => 3],
+            ['name' => 'Pemerintah Kabupaten Sumba Timur', 'logo_path' => 'mitra/5. Instansi/3. Pemkab Sumba Timur NTT.png', 'type' => 'supporting', 'category' => 'instansi', 'order_no' => 4],
+            ['name' => 'Pemerintah Provinsi Kalimantan Barat', 'logo_path' => 'mitra/5. Instansi/4. Pemprov Kalbar.png', 'type' => 'supporting', 'category' => 'instansi', 'order_no' => 5],
+            ['name' => 'Pemerintah Kabupaten Melawi', 'logo_path' => 'mitra/5. Instansi/5. Pemkab Melawi.png', 'type' => 'supporting', 'category' => 'instansi', 'order_no' => 6],
+            ['name' => 'Pemerintah Kabupaten Kapuas Hulu', 'logo_path' => 'mitra/5. Instansi/6. Pemkab Kapuas Hulu.png', 'type' => 'supporting', 'category' => 'instansi', 'order_no' => 7],
         ];
 
-        foreach ($mainPartners as $partner) {
-            WebsitePartner::updateOrCreate(['name' => $partner['name']], $partner);
-        }
-
-        // Default Supporting Partners (Universities & Academic Institutions)
-        $supportingPartners = [
-            'Universitas Indonesia',
-            'Institut Pertanian Bogor',
-            'Universitas Gadjah Mada',
-            'Universitas Airlangga',
-            'Universitas Padjadjaran',
-            'Institut Teknologi Del',
-            'Universitas Diponegoro',
-            'Universitas Brawijaya',
-            'Universitas Hasanuddin',
-            'Universitas Sumatera Utara',
-            'Universitas Udayana',
-            'Universitas Jember',
-            'Universitas Sebelas Maret',
-            'Universitas Andalas',
-            'Universitas Lampung',
-            'Universitas Sam Ratulangi',
-            'Universitas Pattimura',
-            'Universitas Cenderawasih',
-            'Universitas Negeri Padang',
-            'Universitas Negeri Makassar',
-            'Universitas Mataram',
-            'Universitas Lambung Mangkurat',
-            'Universitas Borneo Tarakan',
-            'Universitas Kristen Satya Wacana',
-            'Universitas Kristen Maranatha',
-            'Universitas Internasional Batam',
-            'Universitas Muhammadiyah Palembang',
-            'Universitas Muhammadiyah Kendari',
-            'Universitas Muhammadiyah Palangkaraya',
-            'Universitas Teknologi Sumbawa',
-            'Universitas Tanjungpura',
-            'Universitas Jambi',
-        ];
-
-        foreach ($supportingPartners as $index => $name) {
-            WebsitePartner::updateOrCreate(
-                ['name' => $name],
-                [
-                    'name' => $name,
-                    'type' => 'supporting',
-                    'order_no' => $index + 1,
-                    'is_active' => true,
-                ]
-            );
+        foreach ($allPartners as $p) {
+            $p['is_active'] = true;
+            WebsitePartner::updateOrCreate(['name' => $p['name']], $p);
         }
 
         // Clean up legacy placeholder names if present

@@ -77,7 +77,28 @@ class WebsiteController extends Controller
             ->orderBy('order_no', 'asc')
             ->get();
 
-        return view('website::public.home', compact('settings', 'programs', 'journals', 'latestIssues', 'news', 'featuredEvent', 'mainPartners', 'supportingPartners'));
+        $universityPartners = $supportingPartners->filter(function ($p) {
+            return $p->category === 'universitas' || empty($p->category);
+        });
+
+        $companyPartners = $supportingPartners->where('category', 'perusahaan');
+        $hospitalPartners = $supportingPartners->where('category', 'rumah_sakit');
+        $instansiPartners = $supportingPartners->where('category', 'instansi');
+
+        return view('website::public.home', compact(
+            'settings',
+            'programs',
+            'journals',
+            'latestIssues',
+            'news',
+            'featuredEvent',
+            'mainPartners',
+            'supportingPartners',
+            'universityPartners',
+            'companyPartners',
+            'hospitalPartners',
+            'instansiPartners'
+        ));
     }
 
     /**

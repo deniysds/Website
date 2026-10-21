@@ -276,6 +276,52 @@
                             </div>
                         </div>
 
+                        <!-- Section: Alur Kerja (Pendekatan Terarah - 3 Tahapan) -->
+                        <div class="space-y-4">
+                            <h4 class="text-sm font-bold text-gray-900 border-b border-gray-100 pb-2">Section Alur Kerja (Pendekatan Terarah)</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="kt-label font-bold text-xs text-gray-700">Tag Alur Kerja</label>
+                                    <input type="text" name="method_tag" value="{{ $settings['method_tag'] ?? 'Alur Kerja' }}" class="kt-input w-full text-xs" />
+                                </div>
+                                <div>
+                                    <label class="kt-label font-bold text-xs text-gray-700">Judul Besar Alur Kerja</label>
+                                    <input type="text" name="method_title" value="{{ $settings['method_title'] ?? 'Pendekatan terarah untuk mencapai hasil yang berdampak' }}" class="kt-input w-full text-xs" />
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="kt-label font-bold text-xs text-gray-700">Deskripsi Ringkasan Alur Kerja</label>
+                                    <textarea name="method_desc" rows="2" class="kt-input w-full text-xs p-3">{{ $settings['method_desc'] ?? 'Kami mengembangkan setiap program melalui proses yang terarah, kolaboratif, dan berbasis kebutuhan. Setiap tahapan dirancang untuk memastikan program berjalan tepat sasaran dan memberikan manfaat yang nyata.' }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                                <div class="p-3 bg-gray-50 rounded-xl border border-gray-200 space-y-2">
+                                    <label class="font-bold text-xs text-red-600 flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-red-600"></span> Langkah 1 (Merah Aktif)
+                                    </label>
+                                    <input type="text" name="method_step_1_title" value="{{ $settings['method_step_1_title'] ?? 'Mengidentifikasi Kebutuhan yang Berdampak' }}" class="kt-input w-full text-xs font-semibold" placeholder="Judul Langkah 1" />
+                                    <input type="text" name="method_step_1_subtitle" value="{{ $settings['method_step_1_subtitle'] ?? 'Memahami tantangan, kebutuhan, dan potensi' }}" class="kt-input w-full text-xs" placeholder="Sub-judul Langkah 1" />
+                                    <textarea name="method_step_1_desc" rows="3" class="kt-input w-full text-xs p-2" placeholder="Deskripsi Langkah 1">{{ $settings['method_step_1_desc'] ?? 'Kami mempelajari kebutuhan, permasalahan, serta potensi melalui riset, pengumpulan data, dan komunikasi dengan pihak terkait.' }}</textarea>
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-xl border border-gray-200 space-y-2">
+                                    <label class="font-bold text-xs text-slate-700 flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-slate-700"></span> Langkah 2 (Gelap)
+                                    </label>
+                                    <input type="text" name="method_step_2_title" value="{{ $settings['method_step_2_title'] ?? 'Merancang dan Menjalankan Program' }}" class="kt-input w-full text-xs font-semibold" placeholder="Judul Langkah 2" />
+                                    <input type="text" name="method_step_2_subtitle" value="{{ $settings['method_step_2_subtitle'] ?? 'Mewujudkan solusi yang tepat sasaran' }}" class="kt-input w-full text-xs" placeholder="Sub-judul Langkah 2" />
+                                    <textarea name="method_step_2_desc" rows="3" class="kt-input w-full text-xs p-2" placeholder="Deskripsi Langkah 2">{{ $settings['method_step_2_desc'] ?? 'Berdasarkan identifikasi, kami menyusun strategi dan melaksanakan program bersama mitra, ahli, komunitas, serta pemangku kepentingan.' }}</textarea>
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-xl border border-gray-200 space-y-2">
+                                    <label class="font-bold text-xs text-slate-600 flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-slate-500"></span> Langkah 3 (Abu Sedang)
+                                    </label>
+                                    <input type="text" name="method_step_3_title" value="{{ $settings['method_step_3_title'] ?? 'Mengevaluasi dan Mengembangkan' }}" class="kt-input w-full text-xs font-semibold" placeholder="Judul Langkah 3" />
+                                    <input type="text" name="method_step_3_subtitle" value="{{ $settings['method_step_3_subtitle'] ?? 'Mengukur hasil untuk perbaikan berkelanjutan' }}" class="kt-input w-full text-xs" placeholder="Sub-judul Langkah 3" />
+                                    <textarea name="method_step_3_desc" rows="3" class="kt-input w-full text-xs p-2" placeholder="Deskripsi Langkah 3">{{ $settings['method_step_3_desc'] ?? 'Kami memantau pelaksanaan, mengukur hasil, dan mengevaluasi program sebagai dasar untuk meningkatkan kualitas serta efektivitasnya.' }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Section: Agenda / Simposium Proyek -->
                         <div class="space-y-4">
                             <h4 class="text-sm font-bold text-gray-900 border-b border-gray-100 pb-2">Agenda Proyek / Simposium Terkini</h4>
