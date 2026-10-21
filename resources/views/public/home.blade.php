@@ -13,7 +13,7 @@
             <!-- Content Centered -->
             <div class="max-w-4xl mx-auto px-6 relative z-10 text-center space-y-4 sm:space-y-6">
                 <!-- Title: 2 Baris Presisi Gambar 2 -->
-                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black font-extrabold tracking-tight text-white leading-tight mx-auto">
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white leading-tight mx-auto">
                     @if(($settings['hero_title'] ?? 'Yayasan Satriabudi Dharma Setia') === 'Yayasan Satriabudi Dharma Setia')
                         <span class="block">Yayasan Satriabudi</span>
                         <span class="block">Dharma Setia</span>
