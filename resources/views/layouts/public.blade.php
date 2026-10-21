@@ -397,7 +397,7 @@
             </main>
 
             <!-- Footer: Edge-to-Edge di Mobile, Rounded Card di Desktop -->
-            <footer class="bg-slate-950 text-slate-300 border-t sm:border border-slate-800 overflow-hidden rounded-none sm:rounded-3xl mt-0 sm:mt-6 sm:mb-6">
+            <footer class="bg-slate-950 text-slate-300 border-t sm:border border-slate-800 overflow-hidden rounded-none mt-0 sm:mb-6">
                 <div class="px-5 sm:px-8 py-8 sm:py-10">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         <div class="space-y-4">

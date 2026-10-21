@@ -64,7 +64,7 @@
     </div>
 
     <!-- 2. Section Profil (Menciptakan generasi muda unggul...) -->
-    <section id="profil" class="bg-white rounded-none sm:rounded-3xl p-5 sm:p-8 lg:p-10 border-y sm:border border-slate-200/80 shadow-xs space-y-6 sm:space-y-8 min-w-0 max-w-full">
+    <section id="profil" class="bg-white rounded-none p-5 sm:p-8 lg:p-10 space-y-6 sm:space-y-8 min-w-0 max-w-full">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-start">
             <div class="space-y-4 sm:space-y-5">
                 <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __($settings['profile_tag'] ?? 'Profil') }}</span>
@@ -257,7 +257,7 @@
     </section>
 
     <!-- 5. Section Publikasi Jurnal Terbaru (Carousel Sesuai Lampiran Kedua) -->
-    <section class="bg-white rounded-none sm:rounded-3xl border-y sm:border border-slate-200/80 py-8 sm:py-10 px-4 sm:px-8 min-w-0 max-w-full overflow-hidden space-y-6 sm:space-y-8 shadow-xs"
+    <section class="bg-white rounded-none  py-8 sm:py-10 px-4 sm:px-8 min-w-0 max-w-full overflow-hidden space-y-6 sm:space-y-8"
              x-data="{
                 active: 0,
                 total: {{ count($journals) > 0 ? count($journals) : 1 }},
@@ -477,7 +477,7 @@
     </section>
 
     <!-- 7. Section Berita Terbaru -->
-    <section class="bg-white rounded-none sm:rounded-3xl p-5 sm:p-8 lg:p-10 border-y sm:border border-slate-200/80 shadow-xs min-w-0 max-w-full space-y-6 sm:space-y-8">
+    <section class="bg-white rounded-none p-5 sm:p-8 lg:p-10 min-w-0 max-w-full space-y-6 sm:space-y-8">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div class="space-y-1.5">
                 <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Berita Terbaru') }}</span>
@@ -549,7 +549,7 @@
     </section>
 
     <!-- Blok Bawah Terpadu: Mitra Kami, Kolaborasi & Kontak -->
-    <div class="space-y-0 overflow-hidden rounded-none sm:rounded-3xl border-y sm:border border-slate-800 shadow-xl min-w-0 max-w-full">
+    <div class="space-y-0 overflow-hidden rounded-none min-w-0 max-w-full">
         <!-- 8. Section Mitra Kami -->
         <section class="bg-black text-white px-3 py-8 sm:px-8 sm:py-12 space-y-6 overflow-hidden relative min-w-0 max-w-full border-b border-slate-900">
             <style>
