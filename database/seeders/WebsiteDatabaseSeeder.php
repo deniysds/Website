@@ -44,11 +44,11 @@ class WebsiteDatabaseSeeder extends Seeder
             'profile_title' => 'Menciptakan generasi muda unggul melalui pendidikan bermutu, kesehatan prima, dan lingkungan hidup yang terpelihara.',
             'profile_desc' => 'Berkontribusi bagi kemajuan bangsa dengan membangun masa depan yang lebih cerah bagi generasi muda Indonesia melalui program pendidikan, kesehatan, dan lingkungan yang berdampak serta berkelanjutan.',
             'profile_button_text' => 'Selengkapnya',
-            'profile_box_1_title' => 'Pendidikan',
+            'profile_box_1_title' => 'Pendidikan yang Berkualitas',
             'profile_box_1_desc' => 'Penguatan kapabilitas SDM riset dan beasiswa tingkat tinggi secara berkesinambungan.',
-            'profile_box_2_title' => 'Kesehatan',
+            'profile_box_2_title' => 'Kesehatan yang Prima',
             'profile_box_2_desc' => 'Dukungan fasilitas kesehatan, diagnostik molekuler, dan pencegahan penyakit tropis.',
-            'profile_box_3_title' => 'Lingkungan',
+            'profile_box_3_title' => 'Lingkungan Hidup yang Terpelihara',
             'profile_box_3_desc' => 'Pelestarian keanekaragaman hayati dan penerapan riset sains ramah lingkungan.',
 
             // Method Section

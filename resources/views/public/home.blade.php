@@ -13,7 +13,7 @@
             <!-- Content Centered -->
             <div class="max-w-4xl mx-auto px-6 relative z-10 text-center space-y-4 sm:space-y-6">
                 <!-- Title: 2 Baris Presisi Gambar 2 -->
-                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight max-w-xl mx-auto">
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight mx-auto">
                     @if(($settings['hero_title'] ?? 'Yayasan Satriabudi Dharma Setia') === 'Yayasan Satriabudi Dharma Setia')
                         <span class="block">Yayasan Satriabudi</span>
                         <span class="block">Dharma Setia</span>
@@ -83,32 +83,41 @@
 
             <!-- 3 Box Sisi Kanan (Pendidikan, Kesehatan, Lingkungan) -->
             <div class="space-y-4">
-                <div class="p-6 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:bg-white hover:shadow-md transition flex items-start gap-4">
-                    <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center font-bold shrink-0">
-                        <i class="ki-filled ki-teacher text-lg"></i>
+                <div class="p-6 sm:p-7 rounded-2xl bg-[#F5F5F5] border border-gray-200/80 hover:bg-white hover:border-red-200 hover:shadow-md transition duration-200 flex items-center gap-5 sm:gap-6">
+                    <div class="shrink-0 flex items-center justify-center text-red-600">
+                        <svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/>
+                            <path d="M22 10v6"/>
+                            <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>
+                        </svg>
                     </div>
                     <div class="space-y-1">
-                        <h4 class="font-bold text-slate-900 text-base">{{ __($settings['profile_box_1_title'] ?? 'Pendidikan') }}</h4>
+                        <h4 class="font-bold text-slate-900 text-base sm:text-lg leading-snug">{{ __($settings['profile_box_1_title'] ?? 'Pendidikan yang Berkualitas') }}</h4>
                         <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ __($settings['profile_box_1_desc'] ?? 'Penguatan kapabilitas SDM riset dan beasiswa tingkat tinggi secara berkesinambungan.') }}</p>
                     </div>
                 </div>
 
-                <div class="p-6 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:bg-white hover:shadow-md transition flex items-start gap-4">
-                    <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center font-bold shrink-0">
-                        <i class="ki-filled ki-heart text-lg"></i>
+                <div class="p-6 sm:p-7 rounded-2xl bg-[#F5F5F5] border border-gray-200/80 hover:bg-white hover:border-red-200 hover:shadow-md transition duration-200 flex items-center gap-5 sm:gap-6">
+                    <div class="shrink-0 flex items-center justify-center text-red-600">
+                        <svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"/>
+                        </svg>
                     </div>
                     <div class="space-y-1">
-                        <h4 class="font-bold text-slate-900 text-base">{{ __($settings['profile_box_2_title'] ?? 'Kesehatan') }}</h4>
+                        <h4 class="font-bold text-slate-900 text-base sm:text-lg leading-snug">{{ __($settings['profile_box_2_title'] ?? 'Kesehatan yang Prima') }}</h4>
                         <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ __($settings['profile_box_2_desc'] ?? 'Dukungan fasilitas kesehatan, diagnostik molekuler, dan pencegahan penyakit tropis.') }}</p>
                     </div>
                 </div>
 
-                <div class="p-6 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:bg-white hover:shadow-md transition flex items-start gap-4">
-                    <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center font-bold shrink-0">
-                        <i class="ki-filled ki-element-11 text-lg"></i>
+                <div class="p-6 sm:p-7 rounded-2xl bg-[#F5F5F5] border border-gray-200/80 hover:bg-white hover:border-red-200 hover:shadow-md transition duration-200 flex items-center gap-5 sm:gap-6">
+                    <div class="shrink-0 flex items-center justify-center text-red-600">
+                        <svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                        </svg>
                     </div>
                     <div class="space-y-1">
-                        <h4 class="font-bold text-slate-900 text-base">{{ __($settings['profile_box_3_title'] ?? 'Lingkungan') }}</h4>
+                        <h4 class="font-bold text-slate-900 text-base sm:text-lg leading-snug">{{ __($settings['profile_box_3_title'] ?? 'Lingkungan Hidup yang Terpelihara') }}</h4>
                         <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ __($settings['profile_box_3_desc'] ?? 'Pelestarian keanekaragaman hayati dan penerapan riset sains ramah lingkungan.') }}</p>
                     </div>
                 </div>

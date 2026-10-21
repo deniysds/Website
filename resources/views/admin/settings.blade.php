@@ -207,6 +207,53 @@
                             </div>
                         </div>
 
+                        <!-- Section: Profil & 3 Pilar Unggulan -->
+                        <div class="space-y-4">
+                            <h4 class="text-sm font-bold text-gray-900 border-b border-gray-100 pb-2">Bagian Profil & 3 Pilar Utama</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="kt-label font-bold text-xs text-gray-700">Tag Profil</label>
+                                    <input type="text" name="profile_tag" value="{{ $settings['profile_tag'] ?? 'Profil' }}" class="kt-input w-full text-xs" />
+                                </div>
+                                <div>
+                                    <label class="kt-label font-bold text-xs text-gray-700">Teks Tombol Profil</label>
+                                    <input type="text" name="profile_button_text" value="{{ $settings['profile_button_text'] ?? 'Selengkapnya' }}" class="kt-input w-full text-xs" />
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="kt-label font-bold text-xs text-gray-700">Judul Besar Profil (Headline)</label>
+                                    <textarea name="profile_title" rows="2" class="kt-input w-full text-xs p-3">{{ $settings['profile_title'] ?? 'Menciptakan generasi muda unggul melalui pendidikan bermutu, kesehatan prima, dan lingkungan hidup yang terpelihara.' }}</textarea>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="kt-label font-bold text-xs text-gray-700">Deskripsi Paragraf Profil</label>
+                                    <textarea name="profile_desc" rows="3" class="kt-input w-full text-xs p-3">{{ $settings['profile_desc'] ?? 'Berkontribusi bagi kemajuan bangsa dengan membangun masa depan yang lebih cerah bagi generasi muda Indonesia melalui program pendidikan, kesehatan, dan lingkungan yang berdampak serta berkelanjutan.' }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                                <div class="p-3 bg-gray-50 rounded-xl border border-gray-200 space-y-2">
+                                    <label class="font-bold text-xs text-gray-700 flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-red-600"></span> Pilar 1 (Pendidikan)
+                                    </label>
+                                    <input type="text" name="profile_box_1_title" value="{{ $settings['profile_box_1_title'] ?? 'Pendidikan yang Berkualitas' }}" class="kt-input w-full text-xs" placeholder="Judul Pilar 1" />
+                                    <textarea name="profile_box_1_desc" rows="3" class="kt-input w-full text-xs p-2" placeholder="Deskripsi Pilar 1">{{ $settings['profile_box_1_desc'] ?? 'Penguatan kapabilitas SDM riset dan beasiswa tingkat tinggi secara berkesinambungan.' }}</textarea>
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-xl border border-gray-200 space-y-2">
+                                    <label class="font-bold text-xs text-gray-700 flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-red-600"></span> Pilar 2 (Kesehatan)
+                                    </label>
+                                    <input type="text" name="profile_box_2_title" value="{{ $settings['profile_box_2_title'] ?? 'Kesehatan yang Prima' }}" class="kt-input w-full text-xs" placeholder="Judul Pilar 2" />
+                                    <textarea name="profile_box_2_desc" rows="3" class="kt-input w-full text-xs p-2" placeholder="Deskripsi Pilar 2">{{ $settings['profile_box_2_desc'] ?? 'Dukungan fasilitas kesehatan, diagnostik molekuler, dan pencegahan penyakit tropis.' }}</textarea>
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-xl border border-gray-200 space-y-2">
+                                    <label class="font-bold text-xs text-gray-700 flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-red-600"></span> Pilar 3 (Lingkungan)
+                                    </label>
+                                    <input type="text" name="profile_box_3_title" value="{{ $settings['profile_box_3_title'] ?? 'Lingkungan Hidup yang Terpelihara' }}" class="kt-input w-full text-xs" placeholder="Judul Pilar 3" />
+                                    <textarea name="profile_box_3_desc" rows="3" class="kt-input w-full text-xs p-2" placeholder="Deskripsi Pilar 3">{{ $settings['profile_box_3_desc'] ?? 'Pelestarian keanekaragaman hayati dan penerapan riset sains ramah lingkungan.' }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Section: Counter Stats -->
                         <div class="space-y-4">
                             <h4 class="text-sm font-bold text-gray-900 border-b border-gray-100 pb-2">Stat Counter Overlay (Banner Merah)</h4>
