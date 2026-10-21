@@ -8,9 +8,9 @@
             <header x-data="{ mobileMenuOpen: false }"
                 class="bg-white rounded-2xl shadow-xs mb-6 px-3 sm:px-5 py-3 sm:py-3.5 sticky top-4 z-50 border border-slate-200/80 transition-all">
                 <div class="flex items-center justify-between gap-2.5 2xl:gap-4">
-                    <!-- Logo Yayasan Satriabudi Dharma Setia Resmi (Hanya Logo tanpa teks agar navbar lega) -->
-                    <a href="{{ route('website.home') }}" class="flex items-center group shrink-0" title="Yayasan Satriabudi Dharma Setia">
-                        <img src="{{ asset('assets/media/app/logo-ysds.png') }}" alt="Logo Yayasan Satriabudi Dharma Setia" class="h-9 sm:h-10 w-auto object-contain shrink-0 transition group-hover:scale-105" />
+                    <!-- Logo IGNITE Resmi -->
+                    <a href="{{ route('website.home') }}" class="flex items-center group shrink-0" title="IGNITE - Indonesia Genomic Network for Innovation, Technology, and Education">
+                        <img src="{{ asset('assets/media/app/logo-ignite.png') }}" alt="Logo IGNITE" class="h-9 sm:h-10 w-auto object-contain shrink-0 transition group-hover:scale-105" />
                     </a>
 
                     <!-- Navigation Links (Desktop) -->
@@ -392,7 +392,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         <div class="space-y-4">
                             <div class="flex items-center gap-3">
-                                <img src="{{ asset('assets/media/app/logo-ysds.png') }}" alt="Logo Yayasan Satriabudi Dharma Setia" class="h-10 w-auto object-contain rounded bg-white/95 p-1 shrink-0 shadow-xs" />
+                                <img src="{{ asset('assets/media/app/logo-ignite.png') }}" alt="Logo IGNITE" class="h-10 w-auto object-contain rounded bg-white/95 p-1 shrink-0 shadow-xs" />
                                 <span class="text-base font-bold text-white tracking-tight">Yayasan Satriabudi Dharma Setia</span>
                             </div>
                             <p class="text-xs text-slate-400 max-w-sm leading-relaxed">
