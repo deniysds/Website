@@ -2,9 +2,9 @@
 
 @section('public_content')
     <!-- 1. Hero Section Banner Presisi (Sesuai Desain Gambar 2) -->
-    <div class="relative min-w-0 max-w-full pb-8 sm:pb-16">
+    <div class="relative min-w-0 max-w-full w-full pb-8 sm:pb-16 bg-[#070102]">
         <!-- Hero Dark Card -->
-        <section class="relative bg-[#070102] text-white rounded-none sm:rounded-[36px] overflow-hidden pt-12 sm:pt-24 lg:pt-28 pb-16 sm:pb-32 lg:pb-36 shadow-2xl border-b sm:border border-red-950/30 min-w-0 max-w-full min-h-[420px] sm:min-h-[520px] flex flex-col justify-center"
+        <section class="relative bg-[#070102] text-white rounded-none overflow-hidden pt-12 sm:pt-24 lg:pt-28 pb-16 sm:pb-32 lg:pb-36 border-b border-red-950/30 min-w-0 max-w-full w-full min-h-[420px] sm:min-h-[520px] flex flex-col justify-center"
                  style="background-color: #070102;">
             <!-- Dynamic Background Asset Sesuai Gambar 2 (Gelombang & Halftone Merah) -->
             <div class="absolute inset-0 z-0 bg-cover bg-center pointer-events-none"
@@ -45,7 +45,7 @@
 
         <!-- Floating Red Stat Counter Overlay Presisi Desain Gambar 2 -->
         <div class="relative -mt-8 sm:-mt-16 z-20 max-w-4xl 2xl:max-w-5xl mx-auto px-3 sm:px-6">
-            <div class="rounded-xl sm:rounded-3xl p-3.5 sm:py-6 sm:px-8 shadow-2xl border border-red-500/40 grid grid-cols-3 gap-0 text-center divide-x divide-white/25"
+            <div class="rounded-xl sm:rounded-2xl p-3.5 sm:py-6 sm:px-8 shadow-2xl border border-red-500/40 grid grid-cols-3 gap-0 text-center divide-x divide-white/25"
                  style="background: linear-gradient(135deg, #ba0a0a 0%, #ba0a0a 100%); background-color: #ba0a0a;">
                 <div class="px-1 sm:px-4 flex flex-col items-center justify-center">
                     <div class="text-xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_1_number'] ?? '150+' }}</div>
@@ -64,61 +64,63 @@
     </div>
 
     <!-- 2. Section Profil (Menciptakan generasi muda unggul...) -->
-    <section id="profil" class="bg-white rounded-none sm:rounded-3xl p-5 sm:p-12 border-y sm:border border-slate-200/80 shadow-xs space-y-6 sm:space-y-8 min-w-0 max-w-full">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-            <div class="space-y-6">
-                <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __($settings['profile_tag'] ?? 'Profil') }}</span>
-                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
-                    {{ __($settings['profile_title'] ?? 'Menciptakan generasi muda unggul melalui pendidikan bermutu, kesehatan prima, dan lingkungan hidup yang terpelihara.') }}
-                </h2>
-                <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-                    {{ __($settings['profile_desc'] ?? 'Berkontribusi bagi kemajuan bangsa dengan membangun masa depan yang lebih cerah bagi generasi muda Indonesia melalui program pendidikan, kesehatan, dan lingkungan yang berdampak serta berkelanjutan.') }}
-                </p>
-                <div class="pt-2">
-                    <a href="{{ route('website.about') }}" class="inline-flex items-center justify-center px-6 py-2.5 rounded-xl border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-semibold text-sm transition shadow-2xs">
-                        {{ __($settings['profile_button_text'] ?? 'Selengkapnya') }} &nearr;
-                    </a>
-                </div>
-            </div>
-
-            <!-- 3 Box Sisi Kanan (Pendidikan, Kesehatan, Lingkungan) -->
-            <div class="space-y-3 sm:space-y-4">
-                <div class="p-4 sm:p-7 rounded-xl sm:rounded-2xl bg-[#F5F5F5] border border-gray-200/80 hover:bg-white hover:border-red-200 hover:shadow-md transition duration-200 flex items-center gap-4 sm:gap-6">
-                    <div class="shrink-0 flex items-center justify-center text-red-600">
-                        <svg class="w-8 h-8 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/>
-                            <path d="M22 10v6"/>
-                            <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>
-                        </svg>
-                    </div>
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-slate-900 text-base sm:text-lg leading-snug">{{ __($settings['profile_box_1_title'] ?? 'Pendidikan yang Berkualitas') }}</h4>
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ __($settings['profile_box_1_desc'] ?? 'Penguatan kapabilitas SDM riset dan beasiswa tingkat tinggi secara berkesinambungan.') }}</p>
+    <section id="profil" class="bg-white rounded-none p-5 sm:p-12 lg:p-16 border-b border-slate-200/80 shadow-xs min-w-0 max-w-full w-full">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+                <div class="space-y-6">
+                    <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __($settings['profile_tag'] ?? 'Profil') }}</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
+                        {{ __($settings['profile_title'] ?? 'Menciptakan generasi muda unggul melalui pendidikan bermutu, kesehatan prima, dan lingkungan hidup yang terpelihara.') }}
+                    </h2>
+                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                        {{ __($settings['profile_desc'] ?? 'Berkontribusi bagi kemajuan bangsa dengan membangun masa depan yang lebih cerah bagi generasi muda Indonesia melalui program pendidikan, kesehatan, dan lingkungan yang berdampak serta berkelanjutan.') }}
+                    </p>
+                    <div class="pt-2">
+                        <a href="{{ route('website.about') }}" class="inline-flex items-center justify-center px-6 py-2.5 rounded-xl border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-semibold text-sm transition shadow-2xs">
+                            {{ __($settings['profile_button_text'] ?? 'Selengkapnya') }} &nearr;
+                        </a>
                     </div>
                 </div>
 
-                <div class="p-4 sm:p-7 rounded-xl sm:rounded-2xl bg-[#F5F5F5] border border-gray-200/80 hover:bg-white hover:border-red-200 hover:shadow-md transition duration-200 flex items-center gap-4 sm:gap-6">
-                    <div class="shrink-0 flex items-center justify-center text-red-600">
-                        <svg class="w-8 h-8 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"/>
-                        </svg>
+                <!-- 3 Box Sisi Kanan (Pendidikan, Kesehatan, Lingkungan) -->
+                <div class="space-y-3 sm:space-y-4">
+                    <div class="p-4 sm:p-7 rounded-xl sm:rounded-2xl bg-[#F5F5F5] border border-gray-200/80 hover:bg-white hover:border-red-200 hover:shadow-md transition duration-200 flex items-center gap-4 sm:gap-6">
+                        <div class="shrink-0 flex items-center justify-center text-red-600">
+                            <svg class="w-8 h-8 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/>
+                                <path d="M22 10v6"/>
+                                <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>
+                            </svg>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-slate-900 text-base sm:text-lg leading-snug">{{ __($settings['profile_box_1_title'] ?? 'Pendidikan yang Berkualitas') }}</h4>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ __($settings['profile_box_1_desc'] ?? 'Penguatan kapabilitas SDM riset dan beasiswa tingkat tinggi secara berkesinambungan.') }}</p>
+                        </div>
                     </div>
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-slate-900 text-base sm:text-lg leading-snug">{{ __($settings['profile_box_2_title'] ?? 'Kesehatan yang Prima') }}</h4>
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ __($settings['profile_box_2_desc'] ?? 'Dukungan fasilitas kesehatan, diagnostik molekuler, dan pencegahan penyakit tropis.') }}</p>
-                    </div>
-                </div>
 
-                <div class="p-4 sm:p-7 rounded-xl sm:rounded-2xl bg-[#F5F5F5] border border-gray-200/80 hover:bg-white hover:border-red-200 hover:shadow-md transition duration-200 flex items-center gap-4 sm:gap-6">
-                    <div class="shrink-0 flex items-center justify-center text-red-600">
-                        <svg class="w-8 h-8 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
-                            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
-                        </svg>
+                    <div class="p-4 sm:p-7 rounded-xl sm:rounded-2xl bg-[#F5F5F5] border border-gray-200/80 hover:bg-white hover:border-red-200 hover:shadow-md transition duration-200 flex items-center gap-4 sm:gap-6">
+                        <div class="shrink-0 flex items-center justify-center text-red-600">
+                            <svg class="w-8 h-8 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"/>
+                            </svg>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-slate-900 text-base sm:text-lg leading-snug">{{ __($settings['profile_box_2_title'] ?? 'Kesehatan yang Prima') }}</h4>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ __($settings['profile_box_2_desc'] ?? 'Dukungan fasilitas kesehatan, diagnostik molekuler, dan pencegahan penyakit tropis.') }}</p>
+                        </div>
                     </div>
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-slate-900 text-base sm:text-lg leading-snug">{{ __($settings['profile_box_3_title'] ?? 'Lingkungan Hidup yang Terpelihara') }}</h4>
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ __($settings['profile_box_3_desc'] ?? 'Pelestarian keanekaragaman hayati dan penerapan riset sains ramah lingkungan.') }}</p>
+
+                    <div class="p-4 sm:p-7 rounded-xl sm:rounded-2xl bg-[#F5F5F5] border border-gray-200/80 hover:bg-white hover:border-red-200 hover:shadow-md transition duration-200 flex items-center gap-4 sm:gap-6">
+                        <div class="shrink-0 flex items-center justify-center text-red-600">
+                            <svg class="w-8 h-8 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                                <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                            </svg>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-slate-900 text-base sm:text-lg leading-snug">{{ __($settings['profile_box_3_title'] ?? 'Lingkungan Hidup yang Terpelihara') }}</h4>
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ __($settings['profile_box_3_desc'] ?? 'Pelestarian keanekaragaman hayati dan penerapan riset sains ramah lingkungan.') }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -126,19 +128,20 @@
     </section>
 
     <!-- 3. Section Program (Kami Membangun Program untuk Dampak Nyata - 5 Kategori Cards) -->
-    <section class="bg-[#F5F5F5] rounded-none sm:rounded-3xl p-5 sm:p-12 border-y sm:border border-slate-200/80 shadow-xs space-y-6 sm:space-y-8 min-w-0 max-w-full">
-        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div class="space-y-2">
-                <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Program') }}</span>
-                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">{{ __('Kami Membangun Program untuk Dampak Nyata') }}</h2>
+    <section class="bg-[#F5F5F5] rounded-none p-5 sm:p-12 lg:p-16 border-b border-slate-200/80 shadow-xs min-w-0 max-w-full w-full">
+        <div class="max-w-7xl mx-auto space-y-8">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div class="space-y-2">
+                    <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Program') }}</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">{{ __('Kami Membangun Program untuk Dampak Nyata') }}</h2>
+                </div>
+                <a href="{{ route('website.about') }}" class="px-5 py-2.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold text-xs transition inline-flex items-center gap-1 self-start sm:self-auto">
+                    {{ __('Hubungi kami') }} &nearr;
+                </a>
             </div>
-            <a href="{{ route('website.about') }}" class="px-5 py-2.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold text-xs transition inline-flex items-center gap-1 self-start sm:self-auto">
-                {{ __('Hubungi kami') }} &nearr;
-            </a>
-        </div>
 
-        <!-- 5 Kategori Cards (IGNITE, Pendidikan, ISA Kuliah, Katalis, DASH) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 pt-6">
+            <!-- 5 Kategori Cards (IGNITE, Pendidikan, ISA Kuliah, Katalis, DASH) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 pt-6">
             @foreach($programs as $prog)
                 <div class="relative bg-white rounded-tl-3xl rounded-tr-lg rounded-bl-lg rounded-br-3xl sm:rounded-tl-4xl sm:rounded-tr-xl sm:rounded-bl-xl sm:rounded-br-4xl p-5 pt-8 sm:p-6 sm:pt-9 border border-slate-200/80 shadow-xs hover:shadow-xl transition duration-300 flex flex-col justify-between space-y-6">
                     <!-- Red Icon Badge protruding top-left -->
@@ -190,11 +193,13 @@
                 </div>
             @endforeach
         </div>
+        </div>
     </section>
 
     <!-- 4. Section Metode / Alur Kerja (Pendekatan Terarah - Presisi Mockup Baru) -->
-    <section class="relative rounded-none sm:rounded-3xl p-5 sm:p-12 lg:p-14 text-white overflow-hidden shadow-2xl min-w-0 max-w-full bg-[#050102]"
+    <section class="relative rounded-none p-5 sm:p-12 lg:p-16 text-white overflow-hidden shadow-2xl min-w-0 max-w-full w-full bg-[#050102] border-b border-slate-900"
              style="background-image: url('{{ asset('assets/media/banners/workflow-bg-ysds.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative z-10">
             <!-- Left Column: Title at Top, Description at Bottom -->
             <div class="lg:col-span-6 flex flex-col justify-between space-y-10 lg:space-y-0 py-2">
@@ -254,10 +259,11 @@
                 </div>
             </div>
         </div>
+        </div>
     </section>
 
     <!-- 5. Section Publikasi Jurnal Terbaru (Carousel Sesuai Lampiran Kedua) -->
-    <section class="bg-white rounded-none sm:rounded-3xl border-y sm:border border-slate-200/80 py-8 sm:py-10 px-4 sm:px-8 space-y-6 sm:space-y-8 min-w-0 max-w-full overflow-hidden"
+    <section class="bg-white rounded-none border-b border-slate-200/80 py-10 sm:py-16 px-4 sm:px-8 lg:px-12 min-w-0 max-w-full w-full overflow-hidden"
              x-data="{
                 active: 0,
                 total: {{ count($journals) > 0 ? count($journals) : 1 }},
@@ -281,6 +287,7 @@
              @touchstart="touchStartX = $event.changedTouches[0].screenX"
              @touchend="if ($event.changedTouches[0].screenX - touchStartX < -40) next(); if ($event.changedTouches[0].screenX - touchStartX > 40) prev();"
     >
+        <div class="max-w-7xl mx-auto space-y-8">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div class="space-y-2">
@@ -383,10 +390,12 @@
                 <p class="text-slate-500 text-sm">{{ __('Belum ada jurnal aktif yang dipublikasikan.') }}</p>
             </div>
         @endif
+        </div>
     </section>
 
     <!-- 6. Section Kegiatan Terbaru (Presisi Mockup) -->
-    <section class="bg-[#F5F5F5] rounded-none sm:rounded-3xl p-5 sm:p-12 border-y sm:border border-slate-200/80 shadow-xs min-w-0 max-w-full">
+    <section class="bg-[#F5F5F5] rounded-none p-5 sm:p-12 lg:p-16 border-b border-slate-200/80 shadow-xs min-w-0 max-w-full w-full">
+        <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <!-- Kolom Kiri: Metadata & Judul Kegiatan -->
             <div class="lg:col-span-7 space-y-6">
@@ -474,10 +483,12 @@
                 </div>
             </div>
         </div>
+        </div>
     </section>
 
     <!-- 7. Section Berita Terbaru (Background Putih Tanpa Border & Tanpa Rounded Sesuai Instruksi) -->
-    <section class="bg-white p-5 sm:p-12 border-b sm:border-b-0 border-slate-200/80 space-y-6 sm:space-y-8 min-w-0 max-w-full">
+    <section class="bg-white p-5 sm:p-12 lg:p-16 border-b border-slate-200/80 min-w-0 max-w-full w-full">
+        <div class="max-w-7xl mx-auto space-y-8">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div class="space-y-2">
                 <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Berita Terbaru') }}</span>
@@ -546,12 +557,13 @@
                 </div>
             @endforelse
         </div>
+        </div>
     </section>
 
     <!-- Blok Bawah Terpadu: Mitra Kami, Kolaborasi & Kontak (Tanpa Rounded & Tanpa Border Sesuai Lampiran) -->
-    <div class="space-y-0 overflow-hidden">
+    <div class="space-y-0 overflow-hidden w-full">
         <!-- 8. Section Mitra Kami (Flat Tanpa Rounded & Tanpa Border Sesuai Lampiran) -->
-        <section class="bg-black text-white px-3 py-8 sm:px-8 sm:py-14 space-y-6 sm:space-y-8 overflow-hidden relative min-w-0 max-w-full">
+        <section class="bg-black text-white px-3 py-10 sm:px-8 sm:py-16 space-y-6 sm:space-y-8 overflow-hidden relative min-w-0 max-w-full w-full border-b border-slate-900">
             <style>
                 @keyframes marquee-scroll-left {
                     0% { transform: translateX(0%); }
@@ -985,7 +997,7 @@
         </section>
 
         <!-- 9. Section Kolaborasi (Presisi Mockup Gambar Lampiran: Background Putih Tanpa Border & Tanpa Rounded) -->
-        <section class="bg-white py-10 sm:py-16 px-4 sm:px-12 text-center space-y-6 min-w-0 max-w-full border-b sm:border-b-0 border-slate-100">
+        <section class="bg-white py-12 sm:py-16 px-4 sm:px-12 text-center space-y-6 min-w-0 max-w-full w-full border-b border-slate-100">
             <div class="space-y-3 max-w-4xl mx-auto">
                 <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Kolaborasi') }}</span>
                 <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
@@ -1010,7 +1022,8 @@
         </section>
 
         <!-- 10. Section Butuh Informasi Lebih Lanjut? (Flat Edge Menyesuaikan Alur) -->
-        <section class="overflow-hidden bg-gradient-to-r from-red-950 via-red-800 to-red-600 text-white p-5 sm:p-14 min-w-0 max-w-full">
+        <section class="overflow-hidden bg-gradient-to-r from-red-950 via-red-800 to-red-600 text-white p-5 sm:p-14 lg:p-16 min-w-0 max-w-full w-full">
+            <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 <!-- Kolom Kiri: Headline & Deskripsi -->
                 <div class="space-y-6">
@@ -1090,6 +1103,7 @@
                         </form>
                     </div>
                 </div>
+            </div>
             </div>
         </section>
     </div>
