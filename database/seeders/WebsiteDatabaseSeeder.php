@@ -28,8 +28,8 @@ class WebsiteDatabaseSeeder extends Seeder
             // Hero Section
             'hero_title' => 'Yayasan Satriabudi Dharma Setia',
             'hero_subtitle' => 'Membangun Akses Kesehatan dan Pendidikan untuk Indonesia.',
-            'hero_button_text' => 'Baca Selengkapnya',
-            'hero_button_url' => '#profil',
+            'hero_button_text' => 'Donasi',
+            'hero_button_url' => '/donasi',
 
             // Red Overlay Stat Counters
             'stat_1_number' => '150+',

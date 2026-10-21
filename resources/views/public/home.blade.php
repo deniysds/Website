@@ -1,44 +1,67 @@
 @extends('website::layouts.public')
 
 @section('public_content')
-    <!-- 1. Hero Section Banner Presisi Gambar 2 (Kartu Melengkung Terpusat dengan Banner Merah Overlay) -->
-    <section class="relative bg-slate-900 text-white rounded-3xl overflow-hidden py-16 sm:py-24 shadow-xl border border-slate-800 min-w-0 max-w-full">
-        <!-- Overlay Background Pattern & Gradient Gedung Satriabudi -->
-        <div class="absolute inset-0 z-0 bg-cover bg-center opacity-30 mix-blend-luminosity filter brightness-75" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop');"></div>
-        <div class="absolute inset-0 z-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent"></div>
+    <!-- 1. Hero Section Banner Presisi (Sesuai Desain Gambar 2) -->
+    <div class="relative min-w-0 max-w-full pb-10 sm:pb-16">
+        <!-- Hero Dark Card -->
+        <section class="relative bg-[#070102] text-white rounded-3xl sm:rounded-[36px] overflow-hidden pt-16 sm:pt-24 lg:pt-28 pb-24 sm:pb-32 lg:pb-36 shadow-2xl border border-red-950/30 min-w-0 max-w-full min-h-[460px] sm:min-h-[520px] flex flex-col justify-center"
+                 style="background-color: #070102;">
+            <!-- Dynamic Background Asset Sesuai Gambar 2 (Gelombang & Halftone Merah) -->
+            <div class="absolute inset-0 z-0 bg-cover bg-center pointer-events-none"
+                 style="background-image: url('{{ asset('assets/media/banners/hero-banner-ysds.png') }}'); background-color: #070102; background-size: cover; background-position: center;"></div>
 
-        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center space-y-6">
-            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
-                {{ __($settings['hero_title'] ?? 'Yayasan Satriabudi Dharma Setia') }}
-            </h1>
-            <p class="text-base sm:text-xl text-slate-200 font-light max-w-2xl mx-auto leading-relaxed">
-                {{ __($settings['hero_subtitle'] ?? 'Membangun Akses Kesehatan dan Pendidikan untuk Indonesia.') }}
-            </p>
-            <div class="pt-2">
-                <a href="{{ $settings['hero_button_url'] ?? '#profil' }}" class="inline-flex items-center justify-center px-7 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-xl shadow-red-600/40 transition duration-200">
-                    {{ __($settings['hero_button_text'] ?? 'Baca Selengkapnya') }} &nearr;
-                </a>
+            <!-- Content Centered -->
+            <div class="max-w-4xl mx-auto px-6 relative z-10 text-center space-y-4 sm:space-y-6">
+                <!-- Title: 2 Baris Presisi Gambar 2 -->
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight max-w-xl mx-auto">
+                    @if(($settings['hero_title'] ?? 'Yayasan Satriabudi Dharma Setia') === 'Yayasan Satriabudi Dharma Setia')
+                        <span class="block">Yayasan Satriabudi</span>
+                        <span class="block">Dharma Setia</span>
+                    @else
+                        {{ __($settings['hero_title'] ?? 'Yayasan Satriabudi Dharma Setia') }}
+                    @endif
+                </h1>
+
+                <!-- Subtitle: Presisi Gambar 2 -->
+                <p class="text-sm sm:text-lg lg:text-xl text-white/90 font-light sm:font-normal max-w-xl mx-auto leading-relaxed">
+                    @if(($settings['hero_subtitle'] ?? 'Membangun Akses Kesehatan dan Pendidikan untuk Indonesia.') === 'Membangun Akses Kesehatan dan Pendidikan untuk Indonesia.')
+                        <span class="block sm:inline">{{ __('Membangun Akses Kesehatan dan') }}</span>
+                        <span class="block sm:inline">{{ __('Pendidikan untuk Indonesia.') }}</span>
+                    @else
+                        {{ __($settings['hero_subtitle'] ?? 'Membangun Akses Kesehatan dan Pendidikan untuk Indonesia.') }}
+                    @endif
+                </p>
+
+                <!-- Tombol Donasi Presisi Gambar 2 -->
+                <div class="pt-2 sm:pt-3">
+                    <a href="{{ $settings['hero_button_url'] ?? route('website.donation.public') }}"
+                       class="inline-flex items-center justify-center px-8 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-xl shadow-red-600/40 transition duration-200"
+                       style="background-color: #dc2626;">
+                        {{ __($settings['hero_button_text'] ?? 'Donasi') }} &nearr;
+                    </a>
+                </div>
             </div>
+        </section>
 
-            <!-- Floating Red Stat Counter Overlay Presisi Desain Gambar 2 -->
-            <div class="pt-10 max-w-3xl mx-auto">
-                <div class="bg-gradient-to-r from-red-700 via-red-600 to-red-700 rounded-2xl p-6 sm:p-8 shadow-2xl border border-red-500/40 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center divide-y sm:divide-y-0 sm:divide-x divide-red-500/40">
-                    <div class="pt-4 sm:pt-0">
-                        <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_1_number'] ?? '150+' }}</div>
-                        <div class="text-xs font-semibold text-red-100 mt-1 uppercase tracking-wider">{{ __($settings['stat_1_label'] ?? 'Kerjasama Sukses') }}</div>
-                    </div>
-                    <div class="pt-4 sm:pt-0 sm:pl-6">
-                        <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_2_number'] ?? '125 T' }}</div>
-                        <div class="text-xs font-semibold text-red-100 mt-1 uppercase tracking-wider">{{ __($settings['stat_2_label'] ?? 'Dana Terkumpul') }}</div>
-                    </div>
-                    <div class="pt-4 sm:pt-0 sm:pl-6">
-                        <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_3_number'] ?? '79+' }}</div>
-                        <div class="text-xs font-semibold text-red-100 mt-1 uppercase tracking-wider">{{ __($settings['stat_3_label'] ?? 'Mitra Jejaring') }}</div>
-                    </div>
+        <!-- Floating Red Stat Counter Overlay Presisi Desain Gambar 2 -->
+        <div class="relative -mt-14 sm:-mt-16 z-20 max-w-4xl 2xl:max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="rounded-2xl sm:rounded-3xl p-5 sm:py-6 sm:px-8 shadow-2xl border border-red-500/40 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-0 text-center divide-y sm:divide-y-0 sm:divide-x divide-white/30"
+                 style="background: linear-gradient(135deg, #ba0a0a 0%, #ba0a0a 100%); background-color: #ba0a0a;">
+                <div class="pt-2 sm:pt-0 sm:px-4 flex flex-col items-center justify-center">
+                    <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_1_number'] ?? '150+' }}</div>
+                    <div class="text-xs sm:text-sm font-semibold text-white mt-1">{{ __($settings['stat_1_label'] ?? 'Kerjasama Sukses') }}</div>
+                </div>
+                <div class="pt-4 sm:pt-0 sm:px-4 flex flex-col items-center justify-center">
+                    <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_2_number'] ?? '125 T' }}</div>
+                    <div class="text-xs sm:text-sm font-semibold text-white mt-1">{{ __($settings['stat_2_label'] ?? 'Dana Terkumpul') }}</div>
+                </div>
+                <div class="pt-4 sm:pt-0 sm:px-4 flex flex-col items-center justify-center">
+                    <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_3_number'] ?? '79+' }}</div>
+                    <div class="text-xs sm:text-sm font-semibold text-white mt-1">{{ __($settings['stat_3_label'] ?? 'Mitra Jejaring') }}</div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- 2. Section Profil (Menciptakan generasi muda unggul...) -->
     <section id="profil" class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8 min-w-0 max-w-full">

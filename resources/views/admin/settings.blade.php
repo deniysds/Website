@@ -198,11 +198,11 @@
                                 </div>
                                 <div>
                                     <label class="kt-label font-bold text-xs text-gray-700">Label Tombol Hero</label>
-                                    <input type="text" name="hero_button_text" value="{{ $settings['hero_button_text'] ?? 'Baca Selengkapnya' }}" class="kt-input w-full text-xs" />
+                                    <input type="text" name="hero_button_text" value="{{ $settings['hero_button_text'] ?? 'Donasi' }}" class="kt-input w-full text-xs" />
                                 </div>
                                 <div>
                                     <label class="kt-label font-bold text-xs text-gray-700">Link Tombol Hero</label>
-                                    <input type="text" name="hero_button_url" value="{{ $settings['hero_button_url'] ?? '#profil' }}" class="kt-input w-full text-xs" />
+                                    <input type="text" name="hero_button_url" value="{{ $settings['hero_button_url'] ?? '/donasi' }}" class="kt-input w-full text-xs" />
                                 </div>
                             </div>
                         </div>
@@ -214,17 +214,17 @@
                                 <div class="p-3 bg-gray-50 rounded-xl border border-gray-200 space-y-2">
                                     <label class="font-bold text-xs text-gray-600">Statistik 1</label>
                                     <input type="text" name="stat_1_number" value="{{ $settings['stat_1_number'] ?? '150+' }}" class="kt-input w-full text-xs" placeholder="150+" />
-                                    <input type="text" name="stat_1_label" value="{{ $settings['stat_1_label'] ?? 'Kerjasama Global' }}" class="kt-input w-full text-xs" placeholder="Kerjasama Global" />
+                                    <input type="text" name="stat_1_label" value="{{ $settings['stat_1_label'] ?? 'Kerjasama Sukses' }}" class="kt-input w-full text-xs" placeholder="Kerjasama Sukses" />
                                 </div>
                                 <div class="p-3 bg-gray-50 rounded-xl border border-gray-200 space-y-2">
                                     <label class="font-bold text-xs text-gray-600">Statistik 2</label>
                                     <input type="text" name="stat_2_number" value="{{ $settings['stat_2_number'] ?? '125 T' }}" class="kt-input w-full text-xs" placeholder="125 T" />
-                                    <input type="text" name="stat_2_label" value="{{ $settings['stat_2_label'] ?? 'Riset & Hibah Terbuka' }}" class="kt-input w-full text-xs" placeholder="Riset & Hibah Terbuka" />
+                                    <input type="text" name="stat_2_label" value="{{ $settings['stat_2_label'] ?? 'Dana Terkumpul' }}" class="kt-input w-full text-xs" placeholder="Dana Terkumpul" />
                                 </div>
                                 <div class="p-3 bg-gray-50 rounded-xl border border-gray-200 space-y-2">
                                     <label class="font-bold text-xs text-gray-600">Statistik 3</label>
                                     <input type="text" name="stat_3_number" value="{{ $settings['stat_3_number'] ?? '79+' }}" class="kt-input w-full text-xs" placeholder="79+" />
-                                    <input type="text" name="stat_3_label" value="{{ $settings['stat_3_label'] ?? 'Publikasi Ilmiah' }}" class="kt-input w-full text-xs" placeholder="Publikasi Ilmiah" />
+                                    <input type="text" name="stat_3_label" value="{{ $settings['stat_3_label'] ?? 'Mitra Jejaring' }}" class="kt-input w-full text-xs" placeholder="Mitra Jejaring" />
                                 </div>
                             </div>
                         </div>

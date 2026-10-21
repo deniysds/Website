@@ -14,35 +14,237 @@
                     </a>
 
                     <!-- Navigation Links (Desktop) -->
-                    <nav class="hidden xl:flex items-center gap-2 2xl:gap-5 text-xs 2xl:text-sm font-semibold shrink-0">
+                    <nav class="hidden xl:flex items-center gap-1 2xl:gap-2 text-xs 2xl:text-sm font-semibold shrink-0">
+                        <!-- Beranda -->
                         <a href="{{ route('website.home') }}"
-                            class="{{ request()->routeIs('website.home') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Beranda') }}</a>
-                        <a href="{{ route('website.about') }}"
-                            class="{{ request()->routeIs('website.about') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Profil') }}</a>
-                        <a href="{{ route('website.officers.public') }}"
-                            class="{{ request()->routeIs('website.officers.public') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Pengurus') }}</a>
-                        <a href="{{ route('website.collaborations.public') }}"
-                            class="{{ request()->routeIs('website.collaborations*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Kolaborasi') }}</a>
-                        <a href="{{ route('website.visitations.public') }}"
-                            class="{{ request()->routeIs('website.visitations*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Visitasi') }}</a>
-                        <a href="{{ route('website.assistance.public') }}"
-                            class="{{ request()->routeIs('website.assistance*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap flex items-center gap-1"><i class="ki-filled ki-shield-tick text-[11px] text-red-500"></i> {{ __('Bantuan') }}</a>
-                        <a href="{{ route('website.donation.public') }}"
-                            class="{{ request()->routeIs('website.donation*') ? 'text-red-600 font-bold' : 'text-red-600 hover:text-red-700 font-bold' }} transition whitespace-nowrap flex items-center gap-1"><i class="ki-filled ki-heart text-[11px] text-red-500"></i> {{ __('Donasi') }}</a>
-                        <a href="{{ route('website.journals.index') }}"
-                            class="{{ request()->routeIs('website.journals*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Program & Jurnal') }}</a>
-                        <a href="{{ route('website.issues.archive') }}"
-                            class="{{ request()->routeIs('website.issues*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Publikasi') }}</a>
-                        <a href="{{ route('website.articles.index') }}"
-                            class="{{ request()->routeIs('website.articles*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition flex items-center gap-1 whitespace-nowrap"><i class="ki-filled ki-magnifier text-[11px]"></i> {{ __('Cari Artikel') }}</a>
-                        <a href="{{ route('website.guidelines') }}"
-                            class="{{ request()->routeIs('website.guidelines') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Panduan') }}</a>
-                        <a href="{{ route('website.announcements') }}"
-                            class="{{ request()->routeIs('website.announcements') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Pengumuman') }}</a>
-                        <a href="{{ route('website.news.index') }}"
-                            class="{{ request()->routeIs('website.news*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap">{{ __('Berita & Warta') }}</a>
-                        <a href="{{ route('website.documents.public') }}"
-                            class="{{ request()->routeIs('website.documents*') ? 'text-red-600 font-bold' : 'text-slate-700 hover:text-red-600' }} transition whitespace-nowrap flex items-center gap-1"><i class="ki-filled ki-file-down text-[11px] text-red-500"></i> {{ __('Dokumen') }}</a>
+                            class="px-3 py-2 rounded-xl transition whitespace-nowrap {{ request()->routeIs('website.home') ? 'text-red-600 font-bold bg-red-50/70' : 'text-slate-700 hover:text-red-600 hover:bg-slate-50' }}">
+                            {{ __('Beranda') }}
+                        </a>
+
+                        <!-- Dropdown 1: Tentang Kami -->
+                        @php
+                            $isAboutActive = request()->routeIs('website.about') || request()->routeIs('website.officers.public') || request()->routeIs('website.collaborations*') || request()->routeIs('website.visitations*');
+                        @endphp
+                        <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @click.outside="open = false">
+                            <button type="button" @click="open = !open"
+                                class="flex items-center gap-1.5 px-3 py-2 rounded-xl transition whitespace-nowrap {{ $isAboutActive ? 'text-red-600 font-bold bg-red-50/70' : 'text-slate-700 hover:text-red-600 hover:bg-slate-50' }}">
+                                <span>{{ __('Tentang Kami') }}</span>
+                                <svg class="w-3.5 h-3.5 transition-transform duration-200 text-slate-400 group-hover:text-red-600" :class="{ 'rotate-180 text-red-600': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+
+                            <div x-show="open"
+                                 x-transition:enter="transition ease-out duration-150"
+                                 x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                                 x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                                 x-transition:leave="transition ease-in duration-100"
+                                 x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                                 x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+                                 x-cloak
+                                 class="absolute left-0 top-full pt-1.5 z-50 w-64 origin-top-left">
+                                <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/70 border border-slate-100 p-2 space-y-1">
+                                    <a href="{{ route('website.about') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition {{ request()->routeIs('website.about') ? 'bg-red-50 text-red-600 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-red-600' }}">
+                                        <div class="w-7 h-7 rounded-lg bg-red-50 text-red-600 flex items-center justify-center shrink-0">
+                                            <i class="ki-filled ki-badge text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold leading-tight">{{ __('Profil Yayasan') }}</div>
+                                            <div class="text-[10px] text-slate-400 font-normal">{{ __('Visi, misi, dan latar belakang') }}</div>
+                                        </div>
+                                    </a>
+                                    <a href="{{ route('website.officers.public') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition {{ request()->routeIs('website.officers.public') ? 'bg-red-50 text-red-600 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-red-600' }}">
+                                        <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                                            <i class="ki-filled ki-people text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold leading-tight">{{ __('Struktur Pengurus') }}</div>
+                                            <div class="text-[10px] text-slate-400 font-normal">{{ __('Pembina, pengawas & pengurus') }}</div>
+                                        </div>
+                                    </a>
+                                    <a href="{{ route('website.collaborations.public') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition {{ request()->routeIs('website.collaborations*') ? 'bg-red-50 text-red-600 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-red-600' }}">
+                                        <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                                            <i class="ki-filled ki-briefcase text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold leading-tight">{{ __('Mitra & Kolaborasi') }}</div>
+                                            <div class="text-[10px] text-slate-400 font-normal">{{ __('Jejaring institusi & kerja sama') }}</div>
+                                        </div>
+                                    </a>
+                                    <a href="{{ route('website.visitations.public') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition {{ request()->routeIs('website.visitations*') ? 'bg-red-50 text-red-600 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-red-600' }}">
+                                        <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                                            <i class="ki-filled ki-geolocation text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold leading-tight">{{ __('Visitasi Lapangan') }}</div>
+                                            <div class="text-[10px] text-slate-400 font-normal">{{ __('Monitoring & kegiatan lapangan') }}</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown 2: Program & Layanan -->
+                        @php
+                            $isServicesActive = request()->routeIs('website.journals*') || request()->routeIs('website.assistance*') || request()->routeIs('website.donation*');
+                        @endphp
+                        <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @click.outside="open = false">
+                            <button type="button" @click="open = !open"
+                                class="flex items-center gap-1.5 px-3 py-2 rounded-xl transition whitespace-nowrap {{ $isServicesActive ? 'text-red-600 font-bold bg-red-50/70' : 'text-slate-700 hover:text-red-600 hover:bg-slate-50' }}">
+                                <span>{{ __('Program & Layanan') }}</span>
+                                <svg class="w-3.5 h-3.5 transition-transform duration-200 text-slate-400 group-hover:text-red-600" :class="{ 'rotate-180 text-red-600': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+
+                            <div x-show="open"
+                                 x-transition:enter="transition ease-out duration-150"
+                                 x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                                 x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                                 x-transition:leave="transition ease-in duration-100"
+                                 x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                                 x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+                                 x-cloak
+                                 class="absolute left-0 top-full pt-1.5 z-50 w-72 origin-top-left">
+                                <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/70 border border-slate-100 p-2 space-y-1">
+                                    <a href="{{ route('website.journals.index') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition {{ request()->routeIs('website.journals*') ? 'bg-red-50 text-red-600 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-red-600' }}">
+                                        <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                                            <i class="ki-filled ki-book-open text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold leading-tight">{{ __('Program & Jurnal') }}</div>
+                                            <div class="text-[10px] text-slate-400 font-normal">{{ __('Katalog riset dan publikasi berkala') }}</div>
+                                        </div>
+                                    </a>
+                                    <a href="{{ route('website.assistance.public') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition {{ request()->routeIs('website.assistance*') ? 'bg-red-50 text-red-600 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-red-600' }}">
+                                        <div class="w-7 h-7 rounded-lg bg-red-50 text-red-600 flex items-center justify-center shrink-0">
+                                            <i class="ki-filled ki-shield-tick text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold leading-tight">{{ __('Permohonan Bantuan') }}</div>
+                                            <div class="text-[10px] text-slate-400 font-normal">{{ __('Pengajuan fasilitas & bantuan riset') }}</div>
+                                        </div>
+                                    </a>
+                                    <a href="{{ route('website.donation.public') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition {{ request()->routeIs('website.donation*') ? 'bg-red-50 text-red-600 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-red-600' }}">
+                                        <div class="w-7 h-7 rounded-lg bg-red-100 text-red-600 flex items-center justify-center shrink-0">
+                                            <i class="ki-filled ki-heart text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold leading-tight text-red-600">{{ __('Donasi & Rekening') }}</div>
+                                            <div class="text-[10px] text-slate-400 font-normal">{{ __('Partisipasi dukungan program kesehatan') }}</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown 3: Publikasi -->
+                        @php
+                            $isPubActive = request()->routeIs('website.issues*') || request()->routeIs('website.articles*') || request()->routeIs('website.guidelines') || request()->routeIs('website.announcements') || request()->routeIs('website.ethics') || request()->routeIs('website.indexing');
+                        @endphp
+                        <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @click.outside="open = false">
+                            <button type="button" @click="open = !open"
+                                class="flex items-center gap-1.5 px-3 py-2 rounded-xl transition whitespace-nowrap {{ $isPubActive ? 'text-red-600 font-bold bg-red-50/70' : 'text-slate-700 hover:text-red-600 hover:bg-slate-50' }}">
+                                <span>{{ __('Publikasi') }}</span>
+                                <svg class="w-3.5 h-3.5 transition-transform duration-200 text-slate-400 group-hover:text-red-600" :class="{ 'rotate-180 text-red-600': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+
+                            <div x-show="open"
+                                 x-transition:enter="transition ease-out duration-150"
+                                 x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                                 x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                                 x-transition:leave="transition ease-in duration-100"
+                                 x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                                 x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+                                 x-cloak
+                                 class="absolute left-0 top-full pt-1.5 z-50 w-72 origin-top-left">
+                                <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/70 border border-slate-100 p-2 space-y-1">
+                                    <a href="{{ route('website.issues.archive') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition {{ request()->routeIs('website.issues*') ? 'bg-red-50 text-red-600 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-red-600' }}">
+                                        <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                                            <i class="ki-filled ki-archive text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold leading-tight">{{ __('Arsip Publikasi') }}</div>
+                                            <div class="text-[10px] text-slate-400 font-normal">{{ __('Volume & edisi terbitan jurnal') }}</div>
+                                        </div>
+                                    </a>
+                                    <a href="{{ route('website.articles.index') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition {{ request()->routeIs('website.articles*') ? 'bg-red-50 text-red-600 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-red-600' }}">
+                                        <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                                            <i class="ki-filled ki-magnifier text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold leading-tight">{{ __('Cari Artikel') }}</div>
+                                            <div class="text-[10px] text-slate-400 font-normal">{{ __('Telusuri manuskrip riset & DOI') }}</div>
+                                        </div>
+                                    </a>
+                                    <a href="{{ route('website.guidelines') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition {{ request()->routeIs('website.guidelines') ? 'bg-red-50 text-red-600 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-red-600' }}">
+                                        <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                                            <i class="ki-filled ki-document text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold leading-tight">{{ __('Panduan Penulis') }}</div>
+                                            <div class="text-[10px] text-slate-400 font-normal">{{ __('Author guidelines & format penulisan') }}</div>
+                                        </div>
+                                    </a>
+                                    <a href="{{ route('website.announcements') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition {{ request()->routeIs('website.announcements') ? 'bg-red-50 text-red-600 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-red-600' }}">
+                                        <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                                            <i class="ki-filled ki-notification-status text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold leading-tight">{{ __('Pengumuman Redaksi') }}</div>
+                                            <div class="text-[10px] text-slate-400 font-normal">{{ __('Call for papers & warta redaksi') }}</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown 4: Informasi -->
+                        @php
+                            $isInfoActive = request()->routeIs('website.news*') || request()->routeIs('website.documents*');
+                        @endphp
+                        <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @click.outside="open = false">
+                            <button type="button" @click="open = !open"
+                                class="flex items-center gap-1.5 px-3 py-2 rounded-xl transition whitespace-nowrap {{ $isInfoActive ? 'text-red-600 font-bold bg-red-50/70' : 'text-slate-700 hover:text-red-600 hover:bg-slate-50' }}">
+                                <span>{{ __('Informasi') }}</span>
+                                <svg class="w-3.5 h-3.5 transition-transform duration-200 text-slate-400 group-hover:text-red-600" :class="{ 'rotate-180 text-red-600': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+
+                            <div x-show="open"
+                                 x-transition:enter="transition ease-out duration-150"
+                                 x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                                 x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                                 x-transition:leave="transition ease-in duration-100"
+                                 x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                                 x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+                                 x-cloak
+                                 class="absolute left-0 top-full pt-1.5 z-50 w-64 origin-top-left">
+                                <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/70 border border-slate-100 p-2 space-y-1">
+                                    <a href="{{ route('website.news.index') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition {{ request()->routeIs('website.news*') ? 'bg-red-50 text-red-600 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-red-600' }}">
+                                        <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                                            <i class="ki-filled ki-newspaper text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold leading-tight">{{ __('Berita & Warta') }}</div>
+                                            <div class="text-[10px] text-slate-400 font-normal">{{ __('Kabar terkini dan rilis kegiatan') }}</div>
+                                        </div>
+                                    </a>
+                                    <a href="{{ route('website.documents.public') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition {{ request()->routeIs('website.documents*') ? 'bg-red-50 text-red-600 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-red-600' }}">
+                                        <div class="w-7 h-7 rounded-lg bg-red-50 text-red-600 flex items-center justify-center shrink-0">
+                                            <i class="ki-filled ki-file-down text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold leading-tight">{{ __('Pusat Dokumen') }}</div>
+                                            <div class="text-[10px] text-slate-400 font-normal">{{ __('Unduhan formulir & regulasi resmi') }}</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </nav>
 
                     <!-- Action Button Kontak, Submit Article & Locale Switcher (Desktop) -->
@@ -58,7 +260,7 @@
                         </div>
 
                         <a href="{{ route('submissions.create.step1') }}"
-                            class="px-2.5 2xl:px-3.5 py-1.5 2xl:py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-md transition flex items-center gap-1 whitespace-nowrap">
+                            class="px-2.5 2xl:px-3.5 py-1.5 2xl:py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5 whitespace-nowrap">
                             <i class="ki-filled ki-cloud-change text-red-500"></i> {{ __('Submit Article') }}
                         </a>
                         <a href="{{ route('website.contact') }}"
@@ -88,6 +290,7 @@
 
                 <!-- Mobile & Tablet Navigation Drawer/Dropdown -->
                 <div x-show="mobileMenuOpen"
+                     x-data="{ mobileGroup: null }"
                      x-transition:enter="transition ease-out duration-200"
                      x-transition:enter-start="opacity-0 -translate-y-2"
                      x-transition:enter-end="opacity-100 translate-y-0"
@@ -95,22 +298,77 @@
                      x-transition:leave-start="opacity-100 translate-y-0"
                      x-transition:leave-end="opacity-0 -translate-y-2"
                      x-cloak
-                     class="xl:hidden pt-4 mt-4 border-t border-slate-200/80 space-y-3">
+                     class="xl:hidden pt-4 mt-4 border-t border-slate-200/80 space-y-2">
                     <nav class="flex flex-col space-y-1 text-sm font-semibold text-slate-700">
-                        <a href="{{ route('website.home') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.home') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Beranda') }}</a>
-                        <a href="{{ route('website.about') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.about') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Profil') }}</a>
-                        <a href="{{ route('website.officers.public') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.officers.public') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Pengurus') }}</a>
-                        <a href="{{ route('website.collaborations.public') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.collaborations*') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Kolaborasi') }}</a>
-                        <a href="{{ route('website.visitations.public') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.visitations*') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Visitasi Lapangan') }}</a>
-                        <a href="{{ route('website.assistance.public') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.assistance*') ? 'text-red-600 font-bold bg-red-50/50' : '' }} flex items-center gap-1.5"><i class="ki-filled ki-shield-tick text-xs text-red-600"></i> {{ __('Permohonan Bantuan') }}</a>
-                        <a href="{{ route('website.donation.public') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.donation*') ? 'text-red-600 font-bold bg-red-50/50' : 'text-red-600 font-bold' }} flex items-center gap-1.5"><i class="ki-filled ki-heart text-xs text-red-600"></i> {{ __('Donasi & Rekening') }}</a>
-                        <a href="{{ route('website.journals.index') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.journals*') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Program & Jurnal') }}</a>
-                        <a href="{{ route('website.issues.archive') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.issues*') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Publikasi') }}</a>
-                        <a href="{{ route('website.articles.index') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.articles*') ? 'text-red-600 font-bold bg-red-50/50' : '' }} flex items-center gap-1.5"><i class="ki-filled ki-magnifier text-xs"></i> {{ __('Cari Artikel') }}</a>
-                        <a href="{{ route('website.guidelines') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.guidelines') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Panduan') }}</a>
-                        <a href="{{ route('website.announcements') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.announcements') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Pengumuman') }}</a>
-                        <a href="{{ route('website.news.index') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.news*') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">{{ __('Berita & Warta') }}</a>
-                        <a href="{{ route('website.documents.public') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.documents*') ? 'text-red-600 font-bold bg-red-50/50' : '' }} flex items-center gap-1.5"><i class="ki-filled ki-file-down text-xs text-red-600"></i> {{ __('Pusat Dokumen & Unduhan') }}</a>
+                        <!-- Beranda -->
+                        <a href="{{ route('website.home') }}" class="px-3 py-2 rounded-lg hover:bg-slate-100 {{ request()->routeIs('website.home') ? 'text-red-600 font-bold bg-red-50/50' : '' }}">
+                            {{ __('Beranda') }}
+                        </a>
+
+                        <!-- Mobile Group 1: Tentang Kami -->
+                        <div>
+                            <button type="button" @click="mobileGroup = (mobileGroup === 'about' ? null : 'about')"
+                                class="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-100 text-left {{ $isAboutActive ? 'text-red-600 font-bold bg-red-50/50' : '' }}">
+                                <span>{{ __('Tentang Kami') }}</span>
+                                <svg class="w-4 h-4 transition-transform duration-200 text-slate-400" :class="{ 'rotate-180 text-red-600': mobileGroup === 'about' }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div x-show="mobileGroup === 'about'" x-cloak class="pl-4 pr-2 py-1 space-y-1 border-l-2 border-slate-200 ml-3 mt-1">
+                                <a href="{{ route('website.about') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 {{ request()->routeIs('website.about') ? 'text-red-600 font-bold' : 'text-slate-600' }}">{{ __('Profil Yayasan') }}</a>
+                                <a href="{{ route('website.officers.public') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 {{ request()->routeIs('website.officers.public') ? 'text-red-600 font-bold' : 'text-slate-600' }}">{{ __('Struktur Pengurus') }}</a>
+                                <a href="{{ route('website.collaborations.public') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 {{ request()->routeIs('website.collaborations*') ? 'text-red-600 font-bold' : 'text-slate-600' }}">{{ __('Mitra & Kolaborasi') }}</a>
+                                <a href="{{ route('website.visitations.public') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 {{ request()->routeIs('website.visitations*') ? 'text-red-600 font-bold' : 'text-slate-600' }}">{{ __('Visitasi Lapangan') }}</a>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Group 2: Program & Layanan -->
+                        <div>
+                            <button type="button" @click="mobileGroup = (mobileGroup === 'services' ? null : 'services')"
+                                class="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-100 text-left {{ $isServicesActive ? 'text-red-600 font-bold bg-red-50/50' : '' }}">
+                                <span>{{ __('Program & Layanan') }}</span>
+                                <svg class="w-4 h-4 transition-transform duration-200 text-slate-400" :class="{ 'rotate-180 text-red-600': mobileGroup === 'services' }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div x-show="mobileGroup === 'services'" x-cloak class="pl-4 pr-2 py-1 space-y-1 border-l-2 border-slate-200 ml-3 mt-1">
+                                <a href="{{ route('website.journals.index') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 {{ request()->routeIs('website.journals*') ? 'text-red-600 font-bold' : 'text-slate-600' }}">{{ __('Program & Jurnal') }}</a>
+                                <a href="{{ route('website.assistance.public') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 {{ request()->routeIs('website.assistance*') ? 'text-red-600 font-bold' : 'text-slate-600' }}">{{ __('Permohonan Bantuan') }}</a>
+                                <a href="{{ route('website.donation.public') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 text-red-600 font-bold">{{ __('Donasi & Rekening') }}</a>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Group 3: Publikasi -->
+                        <div>
+                            <button type="button" @click="mobileGroup = (mobileGroup === 'publications' ? null : 'publications')"
+                                class="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-100 text-left {{ $isPubActive ? 'text-red-600 font-bold bg-red-50/50' : '' }}">
+                                <span>{{ __('Publikasi') }}</span>
+                                <svg class="w-4 h-4 transition-transform duration-200 text-slate-400" :class="{ 'rotate-180 text-red-600': mobileGroup === 'publications' }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div x-show="mobileGroup === 'publications'" x-cloak class="pl-4 pr-2 py-1 space-y-1 border-l-2 border-slate-200 ml-3 mt-1">
+                                <a href="{{ route('website.issues.archive') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 {{ request()->routeIs('website.issues*') ? 'text-red-600 font-bold' : 'text-slate-600' }}">{{ __('Arsip Publikasi') }}</a>
+                                <a href="{{ route('website.articles.index') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 {{ request()->routeIs('website.articles*') ? 'text-red-600 font-bold' : 'text-slate-600' }}">{{ __('Cari Artikel') }}</a>
+                                <a href="{{ route('website.guidelines') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 {{ request()->routeIs('website.guidelines') ? 'text-red-600 font-bold' : 'text-slate-600' }}">{{ __('Panduan Penulis') }}</a>
+                                <a href="{{ route('website.announcements') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 {{ request()->routeIs('website.announcements') ? 'text-red-600 font-bold' : 'text-slate-600' }}">{{ __('Pengumuman Redaksi') }}</a>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Group 4: Informasi -->
+                        <div>
+                            <button type="button" @click="mobileGroup = (mobileGroup === 'info' ? null : 'info')"
+                                class="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-100 text-left {{ $isInfoActive ? 'text-red-600 font-bold bg-red-50/50' : '' }}">
+                                <span>{{ __('Informasi') }}</span>
+                                <svg class="w-4 h-4 transition-transform duration-200 text-slate-400" :class="{ 'rotate-180 text-red-600': mobileGroup === 'info' }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div x-show="mobileGroup === 'info'" x-cloak class="pl-4 pr-2 py-1 space-y-1 border-l-2 border-slate-200 ml-3 mt-1">
+                                <a href="{{ route('website.news.index') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 {{ request()->routeIs('website.news*') ? 'text-red-600 font-bold' : 'text-slate-600' }}">{{ __('Berita & Warta') }}</a>
+                                <a href="{{ route('website.documents.public') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 {{ request()->routeIs('website.documents*') ? 'text-red-600 font-bold' : 'text-slate-600' }}">{{ __('Pusat Dokumen') }}</a>
+                            </div>
+                        </div>
                     </nav>
                     <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row gap-2">
                         <a href="{{ route('submissions.create.step1') }}" class="w-full text-center px-4 py-2.5 rounded-xl bg-slate-900 text-white font-bold text-xs shadow transition flex items-center justify-center gap-1.5">
