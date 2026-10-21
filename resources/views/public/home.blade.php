@@ -637,12 +637,8 @@
                 $instRow2 = $isInstansiMoving ? $prepareTrack($iList->slice($iChunk)) : $iList->slice($iChunk);
             @endphp
 
-            <!-- 1. Mitra Platform Utama (Tepat 1 Baris Horizontal) -->
-            <div class="space-y-4 max-w-5xl lg:max-w-6xl mx-auto w-full pt-1 pb-1">
-                <div class="text-center mb-2">
-                    <span class="text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-widest">{{ __('1. Mitra Platform Utama') }}</span>
-                </div>
-
+            <!-- Mitra Platform Utama (Tepat 1 Baris Horizontal) -->
+            <div class="max-w-5xl lg:max-w-6xl mx-auto w-full pt-1 pb-1">
                 <div class="grid grid-cols-5 items-center justify-items-center gap-3 sm:gap-6 md:gap-8 lg:gap-10 w-full px-2">
                     @forelse($mainPartners as $partner)
                         <div class="flex items-center justify-center w-full transition-transform hover:scale-105 duration-200" title="{{ $partner->name }}">
@@ -665,15 +661,9 @@
                 </div>
             </div>
 
-            <!-- 2. Perguruan Tinggi & Riset Akademik (3 Baris Bergerak Mulus) -->
+            <!-- Perguruan Tinggi & Riset Akademik (3 Baris Bergerak Mulus) -->
             @if($uList->isNotEmpty())
-                <div class="w-full max-w-5xl mx-auto border-t border-slate-800/80 my-6 sm:my-8"></div>
-
                 <div class="space-y-3 max-w-6xl mx-auto">
-                    <div class="text-center mb-2">
-                        <span class="text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-widest">{{ __('2. Perguruan Tinggi & Riset Akademik') }}</span>
-                    </div>
-
                     <!-- Row 1: Bergerak ke Kiri -->
                     <div class="marquee-stream py-1.5 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
                         <div class="marquee-stream-track-l flex gap-4 sm:gap-5 md:gap-6 items-center" style="animation-duration: 48s;">
@@ -752,14 +742,9 @@
                 </div>
             @endif
 
-            <!-- 3. Perusahaan & Lembaga Riset (Maksimal 2 Baris, Bergerak jika > 10) -->
+            <!-- Perusahaan & Lembaga Riset (Maksimal 2 Baris, Bergerak jika > 10) -->
             @if($cList->isNotEmpty())
-                <div class="w-full max-w-5xl mx-auto border-t border-slate-800/80 my-6 sm:my-8"></div>
-
                 <div class="space-y-3 max-w-6xl mx-auto">
-                    <div class="text-center mb-2">
-                        <span class="text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-widest">{{ __('3. Perusahaan & Lembaga Riset') }}</span>
-                    </div>
 
                     @if($isCompanyMoving)
                         <!-- Row 1: Bergerak ke Kiri -->
@@ -825,14 +810,9 @@
                 </div>
             @endif
 
-            <!-- 4. Klinik & Rumah Sakit (Maksimal 2 Baris, Bergerak jika > 10) -->
+            <!-- Klinik & Rumah Sakit (Maksimal 2 Baris, Bergerak jika > 10) -->
             @if($hList->isNotEmpty())
-                <div class="w-full max-w-5xl mx-auto border-t border-slate-800/80 my-6 sm:my-8"></div>
-
                 <div class="space-y-3 max-w-6xl mx-auto">
-                    <div class="text-center mb-2">
-                        <span class="text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-widest">{{ __('4. Klinik & Rumah Sakit') }}</span>
-                    </div>
 
                     @if($isHospitalMoving)
                         <!-- Row 1: Bergerak ke Kiri -->
@@ -898,14 +878,9 @@
                 </div>
             @endif
 
-            <!-- 5. Instansi Pemerintah (Statis Terpusat karena 7 <= 10) -->
+            <!-- Instansi Pemerintah (Statis Terpusat karena 7 <= 10) -->
             @if($iList->isNotEmpty())
-                <div class="w-full max-w-5xl mx-auto border-t border-slate-800/80 my-6 sm:my-8"></div>
-
                 <div class="space-y-3 max-w-4xl mx-auto">
-                    <div class="text-center mb-2">
-                        <span class="text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-widest">{{ __('5. Instansi Pemerintah') }}</span>
-                    </div>
 
                     @if($isInstansiMoving)
                         <!-- Jika di masa depan > 10, bergerak -->
@@ -970,7 +945,6 @@
                 $extraPartners = ($supportingPartners ?? collect())->whereNotIn('id', $renderedIds);
             @endphp
             @if($extraPartners->isNotEmpty())
-                <div class="w-full max-w-5xl mx-auto border-t border-slate-800/80 my-6 sm:my-8"></div>
                 <div class="flex flex-wrap items-center justify-center gap-4 max-w-5xl mx-auto pt-2">
                     @foreach($extraPartners as $partner)
                         <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs text-slate-300" title="{{ $partner->name }}">
