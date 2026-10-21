@@ -13,7 +13,7 @@
             <!-- Content Centered -->
             <div class="max-w-4xl mx-auto px-6 relative z-10 text-center space-y-4 sm:space-y-6">
                 <!-- Title: 2 Baris Presisi Gambar 2 -->
-                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight mx-auto">
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black font-extrabold tracking-tight text-white leading-tight mx-auto">
                     @if(($settings['hero_title'] ?? 'Yayasan Satriabudi Dharma Setia') === 'Yayasan Satriabudi Dharma Setia')
                         <span class="block">Yayasan Satriabudi</span>
                         <span class="block">Dharma Setia</span>
@@ -137,21 +137,56 @@
             </a>
         </div>
 
-        <!-- 5 Kategori Cards (IGNITE, Pendidikan, EJA Kuliah, Kelola, DASH) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <!-- 5 Kategori Cards (IGNITE, Pendidikan, ISA Kuliah, Katalis, DASH) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 pt-6">
             @foreach($programs as $prog)
-                <div class="bg-slate-50/70 rounded-2xl p-6 border border-slate-200/80 hover:bg-white hover:shadow-xl transition duration-300 flex flex-col justify-between space-y-6">
-                    <div class="space-y-4">
-                        <div class="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center font-bold shadow-md">
-                            <i class="{{ $prog->icon ?? 'ki-filled ki-rocket' }} text-lg"></i>
-                        </div>
-                        <h3 class="text-xl font-black text-slate-900">{{ __($prog->title) }}</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed">{{ __($prog->description) }}</p>
+                <div class="relative bg-white rounded-2xl p-6 pt-9 border border-slate-200/80 shadow-xs hover:shadow-xl transition duration-300 flex flex-col justify-between space-y-6">
+                    <!-- Red Icon Badge protruding top-left -->
+                    <div class="absolute -top-5 left-6 w-11 h-11 rounded-xl bg-red-600 text-white flex items-center justify-center shadow-md shadow-red-600/30">
+                        @if($prog->icon === 'dna')
+                            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m8 8 8 8"/>
+                                <path d="m9 2 7 7"/>
+                                <path d="m15 15 7 7"/>
+                                <path d="m2 9 7 7"/>
+                                <path d="m15 2-7 7"/>
+                                <path d="M2 15c6.667-6 13.333 0 20-6"/>
+                                <path d="M2 9c6.667 6 13.333 0 20 6"/>
+                            </svg>
+                        @elseif($prog->icon === 'leaf')
+                            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                                <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                            </svg>
+                        @elseif($prog->icon === 'graduation-cap')
+                            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/>
+                                <path d="M22 10v6"/>
+                                <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>
+                            </svg>
+                        @elseif($prog->icon === 'cross')
+                            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"/>
+                            </svg>
+                        @elseif($prog->icon === 'globe')
+                            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                                <path d="M2 12h20"/>
+                            </svg>
+                        @else
+                            <i class="{{ $prog->icon }} text-lg"></i>
+                        @endif
                     </div>
-                    <div class="pt-2 border-t border-slate-200/60">
-                        <a href="{{ $prog->link_url ?? '/catalog-journals' }}" class="text-xs font-bold text-slate-900 hover:text-red-600 flex items-center justify-between transition">
-                            <span>{{ __('Selengkapnya') }}</span>
-                            <span>&nearr;</span>
+
+                    <div class="space-y-3">
+                        <h3 class="text-xl font-medium text-slate-900 tracking-tight">{{ __($prog->title) }}</h3>
+                        <p class="text-xs sm:text-[13px] text-slate-600 font-light leading-relaxed">{{ __($prog->description) }}</p>
+                    </div>
+
+                    <div class="pt-2">
+                        <a href="{{ $prog->link_url ?? '/catalog-journals' }}" class="text-xs font-normal text-slate-900 hover:text-red-600 transition inline-block">
+                            {{ __('Selengkapnya') }}
                         </a>
                     </div>
                 </div>
