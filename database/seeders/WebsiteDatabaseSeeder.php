@@ -42,8 +42,8 @@ class WebsiteDatabaseSeeder extends Seeder
             // Profile Section
             'profile_tag' => 'Profil',
             'profile_title' => 'Menciptakan generasi muda unggul melalui pendidikan bermutu, kesehatan prima, dan lingkungan hidup yang terpelihara.',
-            'profile_desc' => 'Melalui aliansi strategis dengan institusi nasional dan internasional, kami menghadirkan program berbasis bukti riset ilmiah yang transparan dan akuntabel.',
-            'profile_button_text' => 'Selengkapnya tentang kami',
+            'profile_desc' => 'Berkontribusi bagi kemajuan bangsa dengan membangun masa depan yang lebih cerah bagi generasi muda Indonesia melalui program pendidikan, kesehatan, dan lingkungan yang berdampak serta berkelanjutan.',
+            'profile_button_text' => 'Selengkapnya',
             'profile_box_1_title' => 'Pendidikan',
             'profile_box_1_desc' => 'Penguatan kapabilitas SDM riset dan beasiswa tingkat tinggi secara berkesinambungan.',
             'profile_box_2_title' => 'Kesehatan',

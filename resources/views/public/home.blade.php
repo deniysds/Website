@@ -35,7 +35,7 @@
                 <!-- Tombol Donasi Presisi Gambar 2 -->
                 <div class="pt-2 sm:pt-3">
                     <a href="{{ $settings['hero_button_url'] ?? route('website.donation.public') }}"
-                       class="inline-flex items-center justify-center px-8 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-xl shadow-red-600/40 transition duration-200"
+                       class="inline-flex items-center justify-center px-8 py-3 rounded-md bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-xl shadow-red-600/40 transition duration-200"
                        style="background-color: #dc2626;">
                         {{ __($settings['hero_button_text'] ?? 'Donasi') }} &nearr;
                     </a>
@@ -72,11 +72,11 @@
                     {{ __($settings['profile_title'] ?? 'Menciptakan generasi muda unggul melalui pendidikan bermutu, kesehatan prima, dan lingkungan hidup yang terpelihara.') }}
                 </h2>
                 <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-                    {{ __($settings['profile_desc'] ?? 'Melalui aliansi strategis dengan institusi nasional dan internasional, kami menghadirkan program berbasis bukti riset ilmiah yang transparan dan akuntabel.') }}
+                    {{ __($settings['profile_desc'] ?? 'Berkontribusi bagi kemajuan bangsa dengan membangun masa depan yang lebih cerah bagi generasi muda Indonesia melalui program pendidikan, kesehatan, dan lingkungan yang berdampak serta berkelanjutan.') }}
                 </p>
                 <div class="pt-2">
-                    <a href="{{ route('website.about') }}" class="inline-flex items-center text-sm font-bold text-red-600 hover:text-red-700 border-b-2 border-red-600 pb-1 transition">
-                        {{ __($settings['profile_button_text'] ?? 'Selengkapnya tentang kami') }} &rarr;
+                    <a href="{{ route('website.about') }}" class="inline-flex items-center justify-center px-6 py-2.5 rounded-xl border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-semibold text-sm transition shadow-2xs">
+                        {{ __($settings['profile_button_text'] ?? 'Selengkapnya') }} &nearr;
                     </a>
                 </div>
             </div>
