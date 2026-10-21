@@ -140,23 +140,26 @@
         <!-- 5 Kategori Cards (IGNITE, Pendidikan, ISA Kuliah, Katalis, DASH) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 pt-6">
             @foreach($programs as $prog)
-                <div class="relative bg-white rounded-2xl p-6 pt-9 border border-slate-200/80 shadow-xs hover:shadow-xl transition duration-300 flex flex-col justify-between space-y-6">
+                <div class="relative bg-white rounded-tl-4xl rounded-tr-xl rounded-bl-xl rounded-br-4xl p-6 pt-9 border border-slate-200/80 shadow-xs hover:shadow-xl transition duration-300 flex flex-col justify-between space-y-6">
                     <!-- Red Icon Badge protruding top-left -->
                     <div class="absolute -top-5 left-6 w-11 h-11 rounded-xl bg-red-600 text-white flex items-center justify-center shadow-md shadow-red-600/30">
                         @if($prog->icon === 'dna')
-                            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="m8 8 8 8"/>
-                                <path d="m9 2 7 7"/>
-                                <path d="m15 15 7 7"/>
-                                <path d="m2 9 7 7"/>
-                                <path d="m15 2-7 7"/>
-                                <path d="M2 15c6.667-6 13.333 0 20-6"/>
-                                <path d="M2 9c6.667 6 13.333 0 20 6"/>
+                            <!-- Logo IGNITE (DNA Double Helix Presisi Lampiran) -->
+                            <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3.5 16.3c1.5-1 3.5-1.5 5-4.5 1.5-3 1.5-5 4.5-6.5 1.5-.7 3.5-.5 4.5.5"/>
+                                <path d="M7.4 20.3c.8-1.8.9-3.3.9-4.6 2.7-.2 4.7-.7 5.7-1.7 1.2-1 1.5-2.5 1.8-5.5 1.7 0 3-.1 3.7-.7-.5-1-1.5-1.8-2.4-2"/>
+                                <path d="M5.0 15.9l2.0 2.3"/>
+                                <path d="M8.1 13.1l3.3 2.3"/>
+                                <path d="M10.0 10.0l3.3 3.3"/>
+                                <path d="M15.9 8.5l2.9-.1"/>
                             </svg>
-                        @elseif($prog->icon === 'leaf')
-                            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
-                                <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                        @elseif($prog->icon === 'leaf' || $prog->icon === 'feather')
+                            <!-- Logo Pendidikan (Feather / Pena Bulu Presisi Lampiran) -->
+                            <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6.5 16.2V10.8L12.5 4.8a4.2 4.2 0 0 1 6 6l-5.7 5.7H6.5z"/>
+                                <path d="M4.5 18.2L15.5 7.2"/>
+                                <path d="M9.5 13.2V7.8"/>
+                                <path d="M11.5 11.2H17.0"/>
                             </svg>
                         @elseif($prog->icon === 'graduation-cap')
                             <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -181,11 +184,11 @@
 
                     <div class="space-y-3">
                         <h3 class="text-xl font-medium text-slate-900 tracking-tight">{{ __($prog->title) }}</h3>
-                        <p class="text-xs sm:text-[13px] text-slate-600 font-light leading-relaxed">{{ __($prog->description) }}</p>
+                        <p class="text-base sm:text-[14px] text-slate-600 font-light leading-relaxed">{{ __($prog->description) }}</p>
                     </div>
 
                     <div class="pt-2">
-                        <a href="{{ $prog->link_url ?? '/catalog-journals' }}" class="text-xs font-normal text-slate-900 hover:text-red-600 transition inline-block">
+                        <a href="{{ $prog->link_url ?? '/catalog-journals' }}" class="text-base font-normal text-slate-900 hover:text-red-600 transition inline-block">
                             {{ __('Selengkapnya') }}
                         </a>
                     </div>
