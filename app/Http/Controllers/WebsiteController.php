@@ -18,6 +18,7 @@ use Modules\Website\Mail\DonationConfirmationMail;
 use Modules\Website\Models\WebsiteAssistanceRequest;
 use Modules\Website\Models\WebsiteDocument;
 use Modules\Website\Models\WebsiteDonation;
+use Modules\Website\Models\WebsiteEvent;
 use Modules\Website\Models\WebsiteNews;
 use Modules\Website\Models\WebsiteProgram;
 use Modules\Website\Models\WebsiteSetting;
@@ -53,6 +54,19 @@ class WebsiteController extends Controller
             ->take(3)
             ->get();
 
+        $featuredEvent = WebsiteEvent::where('is_published', true)
+            ->where('is_featured', true)
+            ->orderBy('order_no', 'asc')
+            ->latest('created_at')
+            ->first();
+
+        if (! $featuredEvent) {
+            $featuredEvent = WebsiteEvent::where('is_published', true)
+                ->orderBy('order_no', 'asc')
+                ->latest('created_at')
+                ->first();
+        }
+
         $mainPartners = \Modules\Website\Models\WebsitePartner::active()
             ->main()
             ->orderBy('order_no', 'asc')
@@ -63,7 +77,7 @@ class WebsiteController extends Controller
             ->orderBy('order_no', 'asc')
             ->get();
 
-        return view('website::public.home', compact('settings', 'programs', 'journals', 'latestIssues', 'news', 'mainPartners', 'supportingPartners'));
+        return view('website::public.home', compact('settings', 'programs', 'journals', 'latestIssues', 'news', 'featuredEvent', 'mainPartners', 'supportingPartners'));
     }
 
     /**
@@ -770,6 +784,90 @@ class WebsiteController extends Controller
         }
 
         return view('website::public.news-detail', compact('article', 'relatedArticles'));
+    }
+
+    /**
+     * Public page: List of events, symposiums, and activities (/kegiatan).
+     */
+    public function events(Request $request): View
+    {
+        $query = WebsiteEvent::where('is_published', true);
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('summary', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('partner_name', 'like', "%{$search}%")
+                  ->orWhere('sponsor_name', 'like', "%{$search}%")
+                  ->orWhere('location', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('year')) {
+            $query->where('year', $request->year);
+        }
+
+        $featuredEvent = null;
+        if (! $request->filled('search') && ! $request->filled('year')) {
+            $featuredEvent = (clone $query)->where('is_featured', true)->orderBy('order_no', 'asc')->latest('created_at')->first();
+            if (! $featuredEvent) {
+                $featuredEvent = (clone $query)->orderBy('order_no', 'asc')->latest('created_at')->first();
+            }
+        }
+
+        if ($featuredEvent) {
+            $query->where('id', '!=', $featuredEvent->id);
+        }
+
+        $events = $query->orderBy('order_no', 'asc')
+            ->latest('created_at')
+            ->paginate(9)
+            ->withQueryString();
+
+        $availableYears = WebsiteEvent::where('is_published', true)
+            ->whereNotNull('year')
+            ->where('year', '!=', '')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year')
+            ->toArray();
+
+        $activeYear = $request->year;
+        $searchQuery = $request->search;
+
+        return view('website::public.events', compact(
+            'events',
+            'featuredEvent',
+            'availableYears',
+            'activeYear',
+            'searchQuery'
+        ));
+    }
+
+    /**
+     * Public page: Event / Symposium detail (/kegiatan/{slug}).
+     */
+    public function eventDetail(string $slug): View
+    {
+        $event = WebsiteEvent::where('is_published', true)
+            ->where(function ($q) use ($slug) {
+                $q->where('slug', $slug);
+                if (is_numeric($slug)) {
+                    $q->orWhere('id', (int) $slug);
+                }
+            })
+            ->firstOrFail();
+
+        $relatedEvents = WebsiteEvent::where('is_published', true)
+            ->where('id', '!=', $event->id)
+            ->orderBy('order_no', 'asc')
+            ->latest('created_at')
+            ->take(3)
+            ->get();
+
+        return view('website::public.event-detail', compact('event', 'relatedEvents'));
     }
 
     /**

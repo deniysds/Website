@@ -30,6 +30,8 @@ Route::name('website.')->group(function () {
     Route::get('/indexing-info', [WebsiteController::class, 'indexingInfo'])->name('indexing');
     Route::get('/announcements', [WebsiteController::class, 'announcements'])->name('announcements');
     Route::get('/kolaborasi', [WebsiteController::class, 'collaborations'])->name('collaborations.public');
+    Route::get('/kegiatan', [WebsiteController::class, 'events'])->name('events.public');
+    Route::get('/kegiatan/{slug}', [WebsiteController::class, 'eventDetail'])->name('events.show');
     Route::get('/berita', [WebsiteController::class, 'news'])->name('news.index');
     Route::get('/berita/{slug}', [WebsiteController::class, 'newsDetail'])->name('news.show');
     Route::get('/visitasi', [WebsiteController::class, 'visitations'])->name('visitations.public');
@@ -58,6 +60,18 @@ Route::name('website.')->group(function () {
             Route::put('/{id}', [\Modules\Website\Http\Controllers\AdminArticleController::class, 'update'])->name('update');
             Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminArticleController::class, 'destroy'])->name('destroy');
             Route::patch('/{id}/toggle', [\Modules\Website\Http\Controllers\AdminArticleController::class, 'toggleStatus'])->name('toggle');
+        });
+
+        // Kegiatan & Agenda Simposium (Events Management)
+        Route::prefix('events')->name('events.admin.')->group(function () {
+            Route::get('/', [\Modules\Website\Http\Controllers\AdminEventController::class, 'index'])->name('index');
+            Route::get('/create', [\Modules\Website\Http\Controllers\AdminEventController::class, 'create'])->name('create');
+            Route::post('/', [\Modules\Website\Http\Controllers\AdminEventController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [\Modules\Website\Http\Controllers\AdminEventController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [\Modules\Website\Http\Controllers\AdminEventController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\Modules\Website\Http\Controllers\AdminEventController::class, 'destroy'])->name('destroy');
+            Route::patch('/{id}/toggle', [\Modules\Website\Http\Controllers\AdminEventController::class, 'toggleStatus'])->name('toggle');
+            Route::patch('/{id}/featured', [\Modules\Website\Http\Controllers\AdminEventController::class, 'toggleFeatured'])->name('featured');
         });
 
         // Officers Management (Dewan Pengurus & Struktur Organisasi)

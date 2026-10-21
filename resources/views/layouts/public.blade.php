@@ -203,7 +203,7 @@
 
                         <!-- Dropdown 4: Informasi -->
                         @php
-                            $isInfoActive = request()->routeIs('website.news*') || request()->routeIs('website.documents*');
+                            $isInfoActive = request()->routeIs('website.news*') || request()->routeIs('website.events*') || request()->routeIs('website.documents*');
                         @endphp
                         <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @click.outside="open = false">
                             <button type="button" @click="open = !open"
@@ -224,6 +224,15 @@
                                  x-cloak
                                  class="absolute left-0 top-full pt-1.5 z-50 w-64 origin-top-left">
                                 <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/70 border border-slate-100 p-2 space-y-1">
+                                    <a href="{{ route('website.events.public') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition {{ request()->routeIs('website.events*') ? 'bg-red-50 text-red-600 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-red-600' }}">
+                                        <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                                            <i class="ki-filled ki-calendar text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold leading-tight">{{ __('Kegiatan & Agenda') }}</div>
+                                            <div class="text-[10px] text-slate-400 font-normal">{{ __('Simposium, forum & agenda ilmiah') }}</div>
+                                        </div>
+                                    </a>
                                     <a href="{{ route('website.news.index') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition {{ request()->routeIs('website.news*') ? 'bg-red-50 text-red-600 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-red-600' }}">
                                         <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
                                             <i class="ki-filled ki-newspaper text-xs"></i>
@@ -365,6 +374,7 @@
                                 </svg>
                             </button>
                             <div x-show="mobileGroup === 'info'" x-cloak class="pl-4 pr-2 py-1 space-y-1 border-l-2 border-slate-200 ml-3 mt-1">
+                                <a href="{{ route('website.events.public') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 {{ request()->routeIs('website.events*') ? 'text-red-600 font-bold' : 'text-slate-600' }}">{{ __('Kegiatan & Agenda') }}</a>
                                 <a href="{{ route('website.news.index') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 {{ request()->routeIs('website.news*') ? 'text-red-600 font-bold' : 'text-slate-600' }}">{{ __('Berita & Warta') }}</a>
                                 <a href="{{ route('website.documents.public') }}" class="block px-3 py-1.5 rounded-md text-xs hover:bg-slate-50 {{ request()->routeIs('website.documents*') ? 'text-red-600 font-bold' : 'text-slate-600' }}">{{ __('Pusat Dokumen') }}</a>
                             </div>
@@ -425,6 +435,8 @@
                                         class="hover:text-white transition">{{ __('Katalog Jurnal Ilmiah') }}</a></li>
                                 <li><a href="{{ route('website.issues.archive') }}"
                                         class="hover:text-white transition">{{ __('Arsip Terbitan') }}</a></li>
+                                <li><a href="{{ route('website.events.public') }}"
+                                        class="hover:text-white transition">{{ __('Kegiatan & Simposium Ilmiah') }}</a></li>
                                 <li><a href="{{ route('website.news.index') }}"
                                         class="hover:text-white transition">{{ __('Berita & Warta Populer') }}</a></li>
                                 <li><a href="{{ route('website.documents.public') }}"

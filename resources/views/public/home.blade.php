@@ -420,90 +420,158 @@
         </div>
     </section>
 
-    <!-- 6. Section Proyek Terbaru / Simposium -->
-    <section class="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-xl min-w-0 max-w-full">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div class="space-y-4">
-                <span class="text-xs font-bold text-red-500 uppercase tracking-widest">{{ __($settings['project_tag'] ?? 'Proyek Terbaru') }}</span>
-                <h3 class="text-2xl sm:text-3xl font-extrabold text-white">
-                    {{ __($settings['project_title'] ?? 'GenAI and Genomics Symposium - Indonesia') }}
-                </h3>
-                <div class="space-y-2 text-xs sm:text-sm text-slate-300 font-medium pt-2">
-                    <p class="flex items-center gap-2"><i class="ki-filled ki-time text-red-500"></i> {{ $settings['project_time'] ?? '10.00 - 16.00 WIB' }}</p>
-                    <p class="flex items-center gap-2"><i class="ki-filled ki-calendar text-red-500"></i> {{ $settings['project_date'] ?? 'Kamis, 15 Mei 2026' }}</p>
-                    <p class="flex items-center gap-2"><i class="ki-filled ki-geolocation text-red-500"></i> {{ $settings['project_location'] ?? 'Jakarta, Indonesia' }}</p>
+    <!-- 6. Section Kegiatan Terbaru (Presisi Mockup) -->
+    <section class="bg-[#F5F5F5] rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs min-w-0 max-w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <!-- Kolom Kiri: Metadata & Judul Kegiatan -->
+            <div class="lg:col-span-7 space-y-6">
+                <div>
+                    <span class="text-xs font-bold text-red-600 uppercase tracking-widest">
+                        {{ $featuredEvent->tag ?? ($settings['project_tag'] ?? 'Kegiatan Terbaru') }}
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 leading-tight mt-2">
+                        @if(isset($featuredEvent) && $featuredEvent)
+                            <a href="{{ route('website.events.show', $featuredEvent->slug) }}" class="hover:text-red-600 transition">
+                                {{ $featuredEvent->title }}
+                            </a>
+                        @else
+                            {{ $settings['project_title'] ?? 'BioAI and Genomics Symposium - Indonesia' }}
+                        @endif
+                    </h2>
+                </div>
+
+                <!-- Tabel Baris Metadata Sesuai Mockup -->
+                <div class="space-y-3 pt-2 text-xs sm:text-sm">
+                    <div class="flex items-center justify-between sm:justify-start gap-4 border-b border-slate-200/80 pb-3">
+                        <span class="text-slate-500 font-medium w-44">{{ __('Tahun Pelaksanaan') }}</span>
+                        <span class="font-bold text-slate-900">: {{ $featuredEvent->year ?? ($settings['project_year'] ?? '2026') }}</span>
+                    </div>
+                    <div class="flex items-center justify-between sm:justify-start gap-4 border-b border-slate-200/80 pb-3">
+                        <span class="text-slate-500 font-medium w-44">{{ __('Mitra') }}</span>
+                        <span class="font-bold text-slate-900">: {{ $featuredEvent->partner_name ?? ($settings['project_partner'] ?? 'Ultima Genomic') }}</span>
+                    </div>
+                    <div class="flex items-center justify-between sm:justify-start gap-4 pb-1">
+                        <span class="text-slate-500 font-medium w-44">{{ __('Sponsor') }}</span>
+                        <span class="font-bold text-slate-900">: {{ $featuredEvent->sponsor_name ?? ($settings['project_sponsor'] ?? 'Panin Bank') }}</span>
+                    </div>
+                </div>
+
+                @if(isset($featuredEvent) && $featuredEvent->summary)
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        {{ $featuredEvent->summary }}
+                    </p>
+                @endif
+
+                <!-- Aksi Kegiatan -->
+                <div class="pt-2 flex flex-wrap items-center gap-3">
+                    @if(isset($featuredEvent) && $featuredEvent)
+                        <a href="{{ route('website.events.show', $featuredEvent->slug) }}" class="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-sm transition inline-flex items-center gap-2">
+                            <span>{{ __('Lihat Detail Kegiatan') }}</span>
+                            <i class="ki-filled ki-arrow-right text-xs"></i>
+                        </a>
+                    @else
+                        <a href="{{ route('website.events.public') }}" class="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-sm transition inline-flex items-center gap-2">
+                            <span>{{ __('Lihat Detail Kegiatan') }}</span>
+                            <i class="ki-filled ki-arrow-right text-xs"></i>
+                        </a>
+                    @endif
+                    <a href="{{ route('website.events.public') }}" class="px-5 py-3 rounded-xl border border-slate-300 hover:border-red-600 text-slate-700 hover:text-red-600 font-semibold text-xs bg-white transition inline-flex items-center gap-1.5">
+                        <span>{{ __('Semua Kegiatan') }}</span> &rarr;
+                    </a>
                 </div>
             </div>
 
-            <div class="w-full">
-                <div class="w-full rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-red-950/60 border border-slate-700/80 p-6 sm:p-8 shadow-2xl relative overflow-hidden group">
-                    <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-red-600/10 rounded-full blur-3xl group-hover:bg-red-600/20 transition duration-700"></div>
+            <!-- Kolom Kanan: Media Card / Banner Box Sesuai Mockup -->
+            <div class="lg:col-span-5 w-full">
+                <div class="w-full rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-red-950 border border-slate-700/80 p-6 sm:p-8 shadow-xl relative overflow-hidden group min-h-[300px] flex flex-col justify-between">
+                    @if(isset($featuredEvent) && $featuredEvent->banner_url)
+                        <img src="{{ $featuredEvent->banner_url }}" alt="{{ $featuredEvent->title }}" class="absolute inset-0 w-full h-full object-cover rounded-2xl opacity-75 group-hover:scale-105 transition duration-500" />
+                    @endif
+                    <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-red-600/20 rounded-full blur-3xl group-hover:bg-red-600/30 transition duration-700"></div>
                     <div class="relative z-10 space-y-4">
                         <div class="flex items-center justify-between">
                             <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-red-600 text-white shadow-xs">
-                                {{ __('Riset & Inovasi 2026') }}
+                                {{ $featuredEvent->year ?? '2026' }}
                             </span>
-                            <span class="text-xs font-mono text-slate-400">YSDS Genomic Hub</span>
+                            <span class="text-xs font-mono text-slate-300">YSDS Genomic Hub</span>
                         </div>
                         <h4 class="text-xl sm:text-2xl font-black text-white tracking-tight leading-snug">
-                            {{ __('Akselerasi GenAI untuk Riset Presisi & Layanan Kesehatan Indonesia') }}
+                            {{ $featuredEvent->title ?? 'BioAI and Genomics Symposium - Indonesia' }}
                         </h4>
-                        <p class="text-xs text-slate-300 leading-relaxed">
-                            {{ __('Menghubungkan lebih dari 150+ peneliti, institusi laboratorium, dan praktisi genomik nasional dalam forum ilmiah terstandarisasi.') }}
+                        <p class="text-xs text-slate-200 leading-relaxed line-clamp-3">
+                            {{ $featuredEvent->summary ?? __('Menghubungkan lebih dari 150+ peneliti, institusi laboratorium, dan praktisi genomik nasional dalam forum ilmiah terstandarisasi.') }}
                         </p>
-                        <div class="pt-2 flex flex-wrap items-center gap-3">
-                            <a href="{{ route('website.contact') }}" class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-md transition inline-flex items-center gap-1.5">
-                                <i class="ki-filled ki-calendar text-xs"></i> {{ __('Registrasi Partisipan') }} &rarr;
-                            </a>
-                            <a href="{{ route('website.announcements') }}" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-semibold text-xs transition">
-                                {{ __('Unduh Kerangka Acuan') }}
-                            </a>
-                        </div>
+                    </div>
+                    <div class="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-300">
+                        <span class="flex items-center gap-1"><i class="ki-filled ki-calendar text-red-400"></i> {{ $featuredEvent->event_date ?? 'Kamis, 15 Mei 2026' }}</span>
+                        <span class="flex items-center gap-1"><i class="ki-filled ki-geolocation text-red-400"></i> {{ $featuredEvent->location ?? 'Jakarta' }}</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 7. Section Berita Terbaru -->
+    <!-- 7. Section Berita Terbaru (Presisi Mockup) -->
     <section class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8 min-w-0 max-w-full">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div class="space-y-2">
                 <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Berita Terbaru') }}</span>
-                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">{{ __('Temukan informasi dan kegiatan terbaru dari kami.') }}</h2>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">{{ __('Temukan informasi, kegiatan, dan pembaruan terbaru dari kami.') }}</h2>
             </div>
-            <a href="{{ route('website.news.index') }}" class="px-5 py-2.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold text-xs transition inline-flex items-center gap-1 self-start sm:self-auto">
-                {{ __('Lihat Semua Berita') }} &rarr;
+            <a href="{{ route('website.news.index') }}" class="px-5 py-2.5 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold text-xs transition inline-flex items-center gap-1.5 self-start sm:self-auto shrink-0">
+                <span>{{ __('Artikel Lainnya') }}</span>
+                <span class="text-sm">↗</span>
             </a>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             @forelse($news as $item)
-                <div class="bg-slate-50/70 rounded-2xl border border-slate-200/80 hover:bg-white hover:shadow-xl transition duration-300 overflow-hidden flex flex-col justify-between">
-                    <div class="w-full h-40 bg-gradient-to-tr from-slate-900 via-slate-800 to-red-950 p-5 flex flex-col justify-between relative overflow-hidden text-white border-b border-slate-200/60">
+                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-xl transition duration-300 overflow-hidden flex flex-col justify-between group">
+                    <!-- Foto Berita Atas dengan sudut membulat -->
+                    <div class="w-full h-48 sm:h-52 bg-gradient-to-tr from-slate-900 via-slate-800 to-red-950 relative overflow-hidden text-white border-b border-slate-100">
                         @if($item->image_url)
-                            <img src="{{ $item->image_url }}" alt="{{ $item->title }}" class="absolute inset-0 w-full h-full object-cover opacity-60" />
+                            <img src="{{ $item->image_url }}" alt="{{ $item->title }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500 rounded-t-2xl" />
+                        @else
+                            <div class="absolute inset-0 flex items-center justify-center bg-slate-900/60 p-6 text-center">
+                                <span class="text-xs font-mono text-slate-300">{{ $item->category }}</span>
+                            </div>
                         @endif
-                        <div class="flex items-center justify-between relative z-10">
-                            <span class="text-[10px] font-black uppercase tracking-widest text-red-400 bg-red-950/80 px-2.5 py-0.5 rounded-full border border-red-800/60">{{ $item->category }}</span>
-                            <i class="ki-filled ki-document text-slate-400 text-lg"></i>
+                        <div class="absolute top-3 left-3 z-10">
+                            <span class="text-[10px] font-black uppercase tracking-wider text-red-100 bg-red-600/90 backdrop-blur-xs px-2.5 py-0.5 rounded-full">
+                                {{ $item->category }}
+                            </span>
                         </div>
-                        <div class="relative z-10">
-                            <span class="text-[11px] font-mono text-slate-300 block">{{ __('Warta Riset Yayasan') }}</span>
-                        </div>
-                        <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-red-600/20 rounded-full blur-xl"></div>
                     </div>
+
+                    <!-- Isi Kartu Berita -->
                     <div class="p-6 space-y-3 grow">
-                        <span class="text-[10px] font-bold uppercase text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-100">{{ $item->category }}</span>
-                        <h4 class="font-bold text-slate-900 text-base leading-snug hover:text-red-600 transition">
+                        <!-- Tanggal dengan icon kalender sesuai mockup -->
+                        <div class="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+                            <i class="ki-filled ki-calendar text-red-500 text-xs"></i>
+                            <span>{{ $item->published_at ? $item->published_at->format('d F Y') : '-' }}</span>
+                        </div>
+
+                        <h4 class="font-bold text-slate-900 text-base leading-snug group-hover:text-red-600 transition line-clamp-2">
                             <a href="{{ route('website.news.show', $item->slug ?: $item->id) }}">{{ $item->title }}</a>
                         </h4>
-                        <p class="text-xs text-slate-600 leading-relaxed line-clamp-3">{{ $item->summary }}</p>
+
+                        <p class="text-xs text-slate-500 leading-relaxed line-clamp-2">{{ $item->summary }}</p>
                     </div>
-                    <div class="p-6 pt-0 flex items-center justify-between text-xs text-slate-500 border-t border-slate-200/60 mt-2">
-                        <span>{{ $item->published_at ? $item->published_at->format('d M Y') : '-' }}</span>
+
+                    <!-- Garis Pemisah Tipis -->
+                    <hr class="border-slate-100 mx-6">
+
+                    <!-- Footer Kartu: Penulis & Selengkapnya -->
+                    <div class="p-6 pt-3 flex items-center justify-between text-xs text-slate-600">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-[10px] font-bold">
+                                {{ strtoupper(substr($item->author_name ?: 'Y', 0, 1)) }}
+                            </div>
+                            <span class="font-medium text-slate-700 truncate max-w-[130px]">{{ $item->author_name ?: 'Tim Redaksi YSDS' }}</span>
+                        </div>
                         <a href="{{ route('website.news.show', $item->slug ?: $item->id) }}" class="font-bold text-slate-900 hover:text-red-600 flex items-center gap-1">
-                            <span>{{ __('Selengkapnya') }}</span> &rarr;
+                            <span>{{ __('Selengkapnya') }}</span>
+                            <span class="text-sm">&rarr;</span>
                         </a>
                     </div>
                 </div>

@@ -140,6 +140,32 @@ class WebsiteDatabaseSeeder extends Seeder
             WebsiteProgram::updateOrCreate(['title' => $prog['title']], $prog);
         }
 
+        // Default Events / Kegiatan
+        $defaultEvents = [
+            [
+                'title' => 'BioAI and Genomics Symposium - Indonesia',
+                'slug' => 'bioai-and-genomics-symposium-indonesia',
+                'tag' => 'Kegiatan Terbaru',
+                'year' => '2026',
+                'partner_name' => 'Ultima Genomic',
+                'sponsor_name' => 'Panin Bank',
+                'banner_image' => null,
+                'summary' => 'Menghubungkan lebih dari 150+ peneliti, institusi laboratorium, dan praktisi genomik nasional dalam forum ilmiah terstandarisasi untuk akselerasi riset presisi.',
+                'description' => 'Simposium Nasional BioAI and Genomics Indonesia 2026 merupakan wadah strategis kolaborasi lintas institusi antara akademisi, praktisi medis, dan industri teknologi biologi molekuler. Forum ini membahas pemanfaatan kecerdasan buatan (GenAI) dalam analisis sekuensing genomik skala besar, penemuan biomarker penyakit tropis, dan pengembangan terapi terarah di Indonesia.',
+                'event_date' => 'Kamis, 15 Mei 2026',
+                'event_time' => '10.00 - 16.00 WIB',
+                'location' => 'Jakarta Convention Center (JCC) & Virtual Hybrid',
+                'registration_url' => '/contact',
+                'is_featured' => true,
+                'is_published' => true,
+                'order_no' => 1,
+            ],
+        ];
+
+        foreach ($defaultEvents as $evt) {
+            \Modules\Website\Models\WebsiteEvent::updateOrCreate(['slug' => $evt['slug']], $evt);
+        }
+
         // Default News matching design mock
         $newsItems = [
             [

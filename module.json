@@ -34,6 +34,17 @@
                         ]
                     },
                     {
+                        "title": "Kegiatan & Acara",
+                        "path": "website.events.admin.index",
+                        "classes": "",
+                        "attributes": [],
+                        "permission": "",
+                        "roles": [
+                            "administrator",
+                            "admin"
+                        ]
+                    },
+                    {
                         "title": "Manajemen Pengurus",
                         "path": "website.officers.index",
                         "classes": "",
