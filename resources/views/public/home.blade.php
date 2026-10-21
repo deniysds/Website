@@ -2,16 +2,16 @@
 
 @section('public_content')
     <!-- 1. Hero Section Banner Presisi (Sesuai Desain Gambar 2) -->
-    <div class="relative min-w-0 max-w-full pb-10 sm:pb-16">
+    <div class="relative min-w-0 max-w-full pb-8 sm:pb-16">
         <!-- Hero Dark Card -->
-        <section class="relative bg-[#070102] text-white rounded-3xl sm:rounded-[36px] overflow-hidden pt-16 sm:pt-24 lg:pt-28 pb-24 sm:pb-32 lg:pb-36 shadow-2xl border border-red-950/30 min-w-0 max-w-full min-h-[460px] sm:min-h-[520px] flex flex-col justify-center"
+        <section class="relative bg-[#070102] text-white rounded-none sm:rounded-[36px] overflow-hidden pt-12 sm:pt-24 lg:pt-28 pb-16 sm:pb-32 lg:pb-36 shadow-2xl border-b sm:border border-red-950/30 min-w-0 max-w-full min-h-[420px] sm:min-h-[520px] flex flex-col justify-center"
                  style="background-color: #070102;">
             <!-- Dynamic Background Asset Sesuai Gambar 2 (Gelombang & Halftone Merah) -->
             <div class="absolute inset-0 z-0 bg-cover bg-center pointer-events-none"
                  style="background-image: url('{{ asset('assets/media/banners/hero-banner-ysds.png') }}'); background-color: #070102; background-size: cover; background-position: center;"></div>
 
             <!-- Content Centered -->
-            <div class="max-w-4xl mx-auto px-6 relative z-10 text-center space-y-4 sm:space-y-6">
+            <div class="max-w-4xl mx-auto px-5 sm:px-6 relative z-10 text-center space-y-4 sm:space-y-6">
                 <!-- Title: 2 Baris Presisi Gambar 2 -->
                 <h1 class="text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white leading-tight mx-auto">
                     @if(($settings['hero_title'] ?? 'Yayasan Satriabudi Dharma Setia') === 'Yayasan Satriabudi Dharma Setia')
@@ -44,27 +44,27 @@
         </section>
 
         <!-- Floating Red Stat Counter Overlay Presisi Desain Gambar 2 -->
-        <div class="relative -mt-14 sm:-mt-16 z-20 max-w-4xl 2xl:max-w-5xl mx-auto px-4 sm:px-6">
-            <div class="rounded-2xl sm:rounded-3xl p-5 sm:py-6 sm:px-8 shadow-2xl border border-red-500/40 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-0 text-center divide-y sm:divide-y-0 sm:divide-x divide-white/30"
+        <div class="relative -mt-8 sm:-mt-16 z-20 max-w-4xl 2xl:max-w-5xl mx-auto px-3 sm:px-6">
+            <div class="rounded-xl sm:rounded-3xl p-3.5 sm:py-6 sm:px-8 shadow-2xl border border-red-500/40 grid grid-cols-3 gap-0 text-center divide-x divide-white/25"
                  style="background: linear-gradient(135deg, #ba0a0a 0%, #ba0a0a 100%); background-color: #ba0a0a;">
-                <div class="pt-2 sm:pt-0 sm:px-4 flex flex-col items-center justify-center">
-                    <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_1_number'] ?? '150+' }}</div>
-                    <div class="text-xs sm:text-sm font-semibold text-white mt-1">{{ __($settings['stat_1_label'] ?? 'Kerjasama Sukses') }}</div>
+                <div class="px-1 sm:px-4 flex flex-col items-center justify-center">
+                    <div class="text-xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_1_number'] ?? '150+' }}</div>
+                    <div class="text-[10px] sm:text-sm font-semibold text-white/95 mt-0.5 sm:mt-1 leading-tight">{{ __($settings['stat_1_label'] ?? 'Kerjasama Sukses') }}</div>
                 </div>
-                <div class="pt-4 sm:pt-0 sm:px-4 flex flex-col items-center justify-center">
-                    <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_2_number'] ?? '125 T' }}</div>
-                    <div class="text-xs sm:text-sm font-semibold text-white mt-1">{{ __($settings['stat_2_label'] ?? 'Dana Terkumpul') }}</div>
+                <div class="px-1 sm:px-4 flex flex-col items-center justify-center">
+                    <div class="text-xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_2_number'] ?? '125 T' }}</div>
+                    <div class="text-[10px] sm:text-sm font-semibold text-white/95 mt-0.5 sm:mt-1 leading-tight">{{ __($settings['stat_2_label'] ?? 'Dana Terkumpul') }}</div>
                 </div>
-                <div class="pt-4 sm:pt-0 sm:px-4 flex flex-col items-center justify-center">
-                    <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_3_number'] ?? '79+' }}</div>
-                    <div class="text-xs sm:text-sm font-semibold text-white mt-1">{{ __($settings['stat_3_label'] ?? 'Mitra Jejaring') }}</div>
+                <div class="px-1 sm:px-4 flex flex-col items-center justify-center">
+                    <div class="text-xl sm:text-4xl font-black text-white tracking-tight">{{ $settings['stat_3_number'] ?? '79+' }}</div>
+                    <div class="text-[10px] sm:text-sm font-semibold text-white/95 mt-0.5 sm:mt-1 leading-tight">{{ __($settings['stat_3_label'] ?? 'Mitra Jejaring') }}</div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- 2. Section Profil (Menciptakan generasi muda unggul...) -->
-    <section id="profil" class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8 min-w-0 max-w-full">
+    <section id="profil" class="bg-white rounded-none sm:rounded-3xl p-5 sm:p-12 border-y sm:border border-slate-200/80 shadow-xs space-y-6 sm:space-y-8 min-w-0 max-w-full">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             <div class="space-y-6">
                 <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __($settings['profile_tag'] ?? 'Profil') }}</span>
@@ -82,10 +82,10 @@
             </div>
 
             <!-- 3 Box Sisi Kanan (Pendidikan, Kesehatan, Lingkungan) -->
-            <div class="space-y-4">
-                <div class="p-6 sm:p-7 rounded-2xl bg-[#F5F5F5] border border-gray-200/80 hover:bg-white hover:border-red-200 hover:shadow-md transition duration-200 flex items-center gap-5 sm:gap-6">
+            <div class="space-y-3 sm:space-y-4">
+                <div class="p-4 sm:p-7 rounded-xl sm:rounded-2xl bg-[#F5F5F5] border border-gray-200/80 hover:bg-white hover:border-red-200 hover:shadow-md transition duration-200 flex items-center gap-4 sm:gap-6">
                     <div class="shrink-0 flex items-center justify-center text-red-600">
-                        <svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-8 h-8 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/>
                             <path d="M22 10v6"/>
                             <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>
@@ -97,9 +97,9 @@
                     </div>
                 </div>
 
-                <div class="p-6 sm:p-7 rounded-2xl bg-[#F5F5F5] border border-gray-200/80 hover:bg-white hover:border-red-200 hover:shadow-md transition duration-200 flex items-center gap-5 sm:gap-6">
+                <div class="p-4 sm:p-7 rounded-xl sm:rounded-2xl bg-[#F5F5F5] border border-gray-200/80 hover:bg-white hover:border-red-200 hover:shadow-md transition duration-200 flex items-center gap-4 sm:gap-6">
                     <div class="shrink-0 flex items-center justify-center text-red-600">
-                        <svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-8 h-8 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"/>
                         </svg>
                     </div>
@@ -109,9 +109,9 @@
                     </div>
                 </div>
 
-                <div class="p-6 sm:p-7 rounded-2xl bg-[#F5F5F5] border border-gray-200/80 hover:bg-white hover:border-red-200 hover:shadow-md transition duration-200 flex items-center gap-5 sm:gap-6">
+                <div class="p-4 sm:p-7 rounded-xl sm:rounded-2xl bg-[#F5F5F5] border border-gray-200/80 hover:bg-white hover:border-red-200 hover:shadow-md transition duration-200 flex items-center gap-4 sm:gap-6">
                     <div class="shrink-0 flex items-center justify-center text-red-600">
-                        <svg class="w-10 h-10 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="w-8 h-8 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
                             <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
                         </svg>
@@ -126,7 +126,7 @@
     </section>
 
     <!-- 3. Section Program (Kami Membangun Program untuk Dampak Nyata - 5 Kategori Cards) -->
-    <section class="bg-[#F5F5F5] rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs space-y-8 min-w-0 max-w-full">
+    <section class="bg-[#F5F5F5] rounded-none sm:rounded-3xl p-5 sm:p-12 border-y sm:border border-slate-200/80 shadow-xs space-y-6 sm:space-y-8 min-w-0 max-w-full">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div class="space-y-2">
                 <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Program') }}</span>
@@ -140,7 +140,7 @@
         <!-- 5 Kategori Cards (IGNITE, Pendidikan, ISA Kuliah, Katalis, DASH) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 pt-6">
             @foreach($programs as $prog)
-                <div class="relative bg-white rounded-tl-4xl rounded-tr-xl rounded-bl-xl rounded-br-4xl p-6 pt-9 border border-slate-200/80 shadow-xs hover:shadow-xl transition duration-300 flex flex-col justify-between space-y-6">
+                <div class="relative bg-white rounded-tl-3xl rounded-tr-lg rounded-bl-lg rounded-br-3xl sm:rounded-tl-4xl sm:rounded-tr-xl sm:rounded-bl-xl sm:rounded-br-4xl p-5 pt-8 sm:p-6 sm:pt-9 border border-slate-200/80 shadow-xs hover:shadow-xl transition duration-300 flex flex-col justify-between space-y-6">
                     <!-- Red Icon Badge protruding top-left -->
                     <div class="absolute -top-5 left-6 w-11 h-11 rounded-xl bg-red-600 text-white flex items-center justify-center shadow-md shadow-red-600/30">
                         @if($prog->icon === 'dna')
@@ -193,7 +193,7 @@
     </section>
 
     <!-- 4. Section Metode / Alur Kerja (Pendekatan Terarah - Presisi Mockup Baru) -->
-    <section class="relative rounded-3xl p-8 sm:p-12 lg:p-14 text-white overflow-hidden shadow-2xl min-w-0 max-w-full bg-[#050102]"
+    <section class="relative rounded-none sm:rounded-3xl p-5 sm:p-12 lg:p-14 text-white overflow-hidden shadow-2xl min-w-0 max-w-full bg-[#050102]"
              style="background-image: url('{{ asset('assets/media/banners/workflow-bg-ysds.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch relative z-10">
             <!-- Left Column: Title at Top, Description at Bottom -->
@@ -257,7 +257,7 @@
     </section>
 
     <!-- 5. Section Publikasi Jurnal Terbaru (Carousel Sesuai Lampiran Kedua) -->
-    <section class="bg-white py-10 px-4 sm:px-8 space-y-8 min-w-0 max-w-full overflow-hidden"
+    <section class="bg-white rounded-none sm:rounded-3xl border-y sm:border border-slate-200/80 py-8 sm:py-10 px-4 sm:px-8 space-y-6 sm:space-y-8 min-w-0 max-w-full overflow-hidden"
              x-data="{
                 active: 0,
                 total: {{ count($journals) > 0 ? count($journals) : 1 }},
@@ -386,7 +386,7 @@
     </section>
 
     <!-- 6. Section Kegiatan Terbaru (Presisi Mockup) -->
-    <section class="bg-[#F5F5F5] rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-xs min-w-0 max-w-full">
+    <section class="bg-[#F5F5F5] rounded-none sm:rounded-3xl p-5 sm:p-12 border-y sm:border border-slate-200/80 shadow-xs min-w-0 max-w-full">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <!-- Kolom Kiri: Metadata & Judul Kegiatan -->
             <div class="lg:col-span-7 space-y-6">
@@ -477,7 +477,7 @@
     </section>
 
     <!-- 7. Section Berita Terbaru (Background Putih Tanpa Border & Tanpa Rounded Sesuai Instruksi) -->
-    <section class="bg-white p-6 sm:p-12 space-y-8 min-w-0 max-w-full">
+    <section class="bg-white p-5 sm:p-12 border-b sm:border-b-0 border-slate-200/80 space-y-6 sm:space-y-8 min-w-0 max-w-full">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div class="space-y-2">
                 <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Berita Terbaru') }}</span>
@@ -551,7 +551,7 @@
     <!-- Blok Bawah Terpadu: Mitra Kami, Kolaborasi & Kontak (Tanpa Rounded & Tanpa Border Sesuai Lampiran) -->
     <div class="space-y-0 overflow-hidden">
         <!-- 8. Section Mitra Kami (Flat Tanpa Rounded & Tanpa Border Sesuai Lampiran) -->
-        <section class="bg-black text-white px-4 py-10 sm:px-8 sm:py-14 space-y-6 sm:space-y-8 overflow-hidden relative min-w-0 max-w-full">
+        <section class="bg-black text-white px-3 py-8 sm:px-8 sm:py-14 space-y-6 sm:space-y-8 overflow-hidden relative min-w-0 max-w-full">
             <style>
                 @keyframes marquee-scroll-left {
                     0% { transform: translateX(0%); }
@@ -985,7 +985,7 @@
         </section>
 
         <!-- 9. Section Kolaborasi (Presisi Mockup Gambar Lampiran: Background Putih Tanpa Border & Tanpa Rounded) -->
-        <section class="bg-white py-16 px-6 sm:px-12 text-center space-y-6 min-w-0 max-w-full">
+        <section class="bg-white py-10 sm:py-16 px-4 sm:px-12 text-center space-y-6 min-w-0 max-w-full border-b sm:border-b-0 border-slate-100">
             <div class="space-y-3 max-w-4xl mx-auto">
                 <span class="text-xs font-bold text-red-600 uppercase tracking-widest">{{ __('Kolaborasi') }}</span>
                 <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
@@ -1010,7 +1010,7 @@
         </section>
 
         <!-- 10. Section Butuh Informasi Lebih Lanjut? (Flat Edge Menyesuaikan Alur) -->
-        <section class="overflow-hidden bg-gradient-to-r from-red-950 via-red-800 to-red-600 text-white p-8 sm:p-14 min-w-0 max-w-full">
+        <section class="overflow-hidden bg-gradient-to-r from-red-950 via-red-800 to-red-600 text-white p-5 sm:p-14 min-w-0 max-w-full">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 <!-- Kolom Kiri: Headline & Deskripsi -->
                 <div class="space-y-6">
@@ -1034,7 +1034,7 @@
 
                 <!-- Kolom Kanan: Card Formulir Putih Modern -->
                 <div class="w-full">
-                    <div class="bg-white rounded-3xl p-6 sm:p-8 text-slate-900 shadow-2xl border border-white/80">
+                    <div class="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 text-slate-900 shadow-2xl border border-white/80">
                         <form action="{{ route('website.contact.submit') }}" method="POST" class="space-y-4">
                             @csrf
                             {{-- Honeypot bot protection field --}}

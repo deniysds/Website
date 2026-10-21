@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="min-h-screen flex flex-col font-sans min-w-0 max-w-full overflow-x-hidden">
-        <div class="w-full max-w-[1440px] 2xl:max-w-[1560px] mx-auto flex flex-col grow min-w-0 px-3 sm:px-4 lg:px-6 2xl:px-8">
+        <div class="w-full max-w-[1440px] 2xl:max-w-[1560px] mx-auto flex flex-col grow min-w-0 px-0 sm:px-4 lg:px-6 2xl:px-8">
 
-            <!-- Header Navbar Presisi Desain Responsive -->
+            <!-- Header Navbar Presisi Desain Responsive (Full-width di Mobile, Floating Card di Desktop) -->
             <header x-data="{ mobileMenuOpen: false }"
-                class="bg-white rounded-2xl shadow-xs mb-6 px-3 sm:px-5 py-3 sm:py-3.5 sticky top-4 z-50 border border-slate-200/80 transition-all">
+                class="bg-white rounded-none sm:rounded-2xl shadow-xs mb-0 sm:mb-6 px-4 sm:px-5 py-3 sm:py-3.5 sticky top-0 sm:top-4 z-50 border-b sm:border border-slate-200/80 transition-all">
                 <div class="flex items-center justify-between gap-2.5 2xl:gap-4">
                     <!-- Logo IGNITE Resmi -->
                     <a href="{{ route('website.home') }}" class="flex items-center group shrink-0" title="IGNITE - Indonesia Genomic Network for Innovation, Technology, and Education">
@@ -392,13 +392,13 @@
             </header>
 
             <!-- Main Content Container Centered -->
-            <main class="grow space-y-6 min-w-0 max-w-full">
+            <main class="grow space-y-0 sm:space-y-6 min-w-0 max-w-full">
                 @yield('public_content')
             </main>
 
             <!-- Footer -->
-            <footer class="bg-slate-950 text-slate-300 border border-slate-800 overflow-hidden">
-                <div class="px-6 sm:px-8 py-10">
+            <footer class="bg-slate-950 text-slate-300 border-t sm:border border-slate-800 overflow-hidden rounded-none sm:rounded-3xl mt-0 sm:mt-6">
+                <div class="px-5 sm:px-8 py-8 sm:py-10">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         <div class="space-y-4">
                             <div class="flex items-center gap-3">
