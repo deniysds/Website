@@ -1,5 +1,42 @@
 @extends('website::layouts.public')
 
+@push('styles')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <style>
+        .leaflet-container {
+            font-family: inherit;
+            background-color: #0b1329 !important;
+            outline: none;
+        }
+        .custom-pulse-marker {
+            background: transparent !important;
+            border: none !important;
+        }
+        .ysds-map-tooltip {
+            background-color: #0f172a !important;
+            border: 1px solid #334155 !important;
+            color: #ffffff !important;
+            border-radius: 8px !important;
+            font-family: inherit !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+            padding: 6px 10px !important;
+        }
+        .ysds-map-tooltip::before {
+            border-top-color: #0f172a !important;
+        }
+        .leaflet-popup-content-wrapper {
+            background-color: #0f172a !important;
+            color: #ffffff !important;
+            border-radius: 12px !important;
+            border: 1px solid #334155 !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
+        }
+        .leaflet-popup-tip {
+            background-color: #0f172a !important;
+        }
+    </style>
+@endpush
+
 @section('public_content')
     <!-- Banner Header Halaman Kolaborasi -->
     <div class="relative overflow-hidden rounded-3xl bg-slate-900 border border-slate-800 p-8 sm:p-12 mb-8 shadow-xl">
@@ -34,138 +71,7 @@
     </div>
 
     <!-- Peta Interaktif Sebaran Bantuan Alkes Indonesia (Impact Map) -->
-    <div x-data="{
-        selectedRegion: 'all',
-        activePin: null,
-        pins: [
-            {
-                id: 'maumere',
-                name: 'RSUD Dr. T.C. Hillers Maumere',
-                region: 'nusa_tenggara',
-                province: 'Nusa Tenggara Timur (Kab. Sikka)',
-                alats: '1 Unit Real-Time PCR 96-Well, 1 Unit Biosafety Cabinet Class II, Reagen Deteksi Molekuler',
-                date: '18 Oktober 2023',
-                type: 'RSUD Kabupaten 3T',
-                status: 'Laboratorium Molekuler Mandiri Beroperasi',
-                link: '{{ route('website.visitations.show', 'visitasi-penyerahan-mesin-pcr-rsud-tc-hillers-maumere') }}',
-                linkText: 'Buka Dokumentasi Visitasi & Pelatihan',
-                x: 61.5,
-                y: 77.5
-            },
-            {
-                id: 'ruteng',
-                name: 'RSUD Dr. Ben Mboi Ruteng',
-                region: 'nusa_tenggara',
-                province: 'Nusa Tenggara Timur (Kab. Manggarai)',
-                alats: 'Thermal Cycler Gradient, Ruang PCR Tekanan Negatif, Reagensia Deteksi Penyakit Tropis',
-                date: '05 November 2023',
-                type: 'RSUD Dataran Tinggi Flores',
-                status: 'Kesiapsiagaan Deteksi Dini Penyakit Menular',
-                link: '{{ route('website.visitations.show', 'supervisi-fasilitas-diagnostik-rsud-ben-mboi-ruteng') }}',
-                linkText: 'Buka Laporan Supervisi Lab',
-                x: 58.0,
-                y: 77.2
-            },
-            {
-                id: 'labuan_bajo',
-                name: 'RSUD Komodo Labuan Bajo',
-                region: 'nusa_tenggara',
-                province: 'Nusa Tenggara Timur (Manggarai Barat)',
-                alats: 'Instrumen Ekstraksi Otomatis DNA/RNA, Real-Time PCR Multi-Channel Modern',
-                date: '22 Mei 2024',
-                type: 'RSUD Destinasi Wisata Super Prioritas',
-                status: 'Standar Diagnostik Internasional',
-                link: '{{ route('website.visitations.show', 'visitasi-kesiapan-lab-genomik-rsud-komodo-labuan-bajo') }}',
-                linkText: 'Buka Dokumentasi Kesiapan Lab',
-                x: 55.0,
-                y: 76.5
-            },
-            {
-                id: 'sabu',
-                name: 'Dinas Kesehatan & Labkesda Sabu Raijua',
-                region: 'nusa_tenggara',
-                province: 'Nusa Tenggara Timur (Pulau Sabu)',
-                alats: 'Freezer Rantai Dingin Spesimen Medis, Digitalisasi Sekolah POP Savu Smart Island',
-                date: '14 Februari 2024',
-                type: 'Kepulauan Terluar 3T',
-                status: 'Program Savu Smart Island & Cold Chain Medis',
-                link: '{{ route('website.visitations.show', 'visitasi-program-savu-smart-island-sabu-raijua') }}',
-                linkText: 'Buka Laporan Program Savu Smart Island',
-                x: 59.8,
-                y: 83.2
-            },
-            {
-                id: 'alor',
-                name: 'RSUD Kalabahi Alor',
-                region: 'nusa_tenggara',
-                province: 'Nusa Tenggara Timur (Kepulauan Alor)',
-                alats: 'Ultra-Low Freezer -86°C Biobank, High-Speed Refrigerated Centrifuge, Micropipette Set',
-                date: '30 Agustus 2024',
-                type: 'RSUD Wilayah Kepulauan Perbatasan',
-                status: 'Diagnostik Akurat Tanpa Rujukan ke Kupang',
-                link: '{{ route('website.visitations.show', 'visitasi-penyerahan-alat-supervisi-rsud-kalabahi-alor') }}',
-                linkText: 'Buka Dokumentasi Visitasi Alor',
-                x: 67.5,
-                y: 76.2
-            },
-            {
-                id: 'sardjito',
-                name: 'RSUP Dr. Sardjito Yogyakarta',
-                region: 'jawa',
-                province: 'D.I. Yogyakarta (Sleman)',
-                alats: 'Real-Time PCR System (2 Unit), BSC Class II Type A2 (2 Unit), Ultra-Low Freezer 728 Liter',
-                date: '15 Agustus 2024',
-                type: 'Rumah Sakit Rujukan Nasional',
-                status: 'Hibah Berita Acara Serah Terima (BAST) Resmi',
-                link: '#',
-                linkText: 'Lihat Detail Item Kolaborasi BAST',
-                x: 34.0,
-                y: 76.8
-            },
-            {
-                id: 'fkui',
-                name: 'Lab Mikrobiologi FKUI / RSCM Salemba',
-                region: 'jawa',
-                province: 'DKI Jakarta (Salemba)',
-                alats: 'Next-Generation Sequencing Library Prep Automation, Thermal Cycler (3 Unit), Fluorometer Qubit 4',
-                date: '20 November 2024',
-                type: 'Pusat Riset Genomik & RS Pendidikan',
-                status: 'Riset Translasi Long-Read PacBio & ONT',
-                link: '{{ route('website.visitations.show', 'kunjungan-kemitraan-riset-genomik-lab-mikrobiologi-fkui') }}',
-                linkText: 'Buka Laporan Kemitraan Akademik',
-                x: 23.5,
-                y: 70.5
-            },
-            {
-                id: 'rshs',
-                name: 'RSUP Dr. Hasan Sadikin Bandung',
-                region: 'jawa',
-                province: 'Jawa Barat (Bandung)',
-                alats: 'Automated Extraction System 32-Channel, Microvolume Spectrophotometer NanoDrop, Medical Refrigerator',
-                date: '10 Februari 2025',
-                type: 'Rumah Sakit Rujukan Jawa Barat',
-                status: 'Laboratorium Sentral Diagnostik Cepat',
-                link: '#',
-                linkText: 'Lihat Detail Item Kolaborasi BAST',
-                x: 26.5,
-                y: 73.5
-            },
-            {
-                id: 'halmahera',
-                name: 'Rumah Baca & Pendidikan Halmahera',
-                region: 'maluku_papua',
-                province: 'Maluku Utara (Halmahera)',
-                alats: 'Penyediaan Sarana Literasi Anak, Perpustakaan Mini, Modul Sains & Nutrisi Generasi Muda',
-                date: '2024 - Berkelanjutan',
-                type: 'Pendidikan Vokasi & Literasi Anak',
-                status: 'Dukungan Program Berkelanjutan YSDS',
-                link: '{{ route('website.donation.public') }}',
-                linkText: 'Dukung Program via Donasi Resmi',
-                x: 77.0,
-                y: 45.0
-            }
-        ]
-    }" class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 mb-8 shadow-2xl text-white relative overflow-hidden">
+    <div x-data="impactMapComponent()" class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 mb-8 shadow-2xl text-white relative overflow-hidden">
         
         <!-- Header Peta -->
         <div class="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
@@ -177,32 +83,32 @@
                     {{ __('Jangkauan Dukungan Laboratorium di Pelosok Negeri') }}
                 </h2>
                 <p class="text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
-                    {{ __('Klik pada titik-titik lokasi di bawah untuk melihat fasilitas kesehatan, jenis instrumen medis/PCR yang diserahterimakan, serta dokumentasi visitasi lapangan yayasan.') }}
+                    {{ __('Klik pada titik-titik lokasi di peta untuk melihat fasilitas kesehatan, jenis instrumen medis/PCR yang diserahterimakan, serta dokumentasi visitasi lapangan yayasan.') }}
                 </p>
             </div>
 
             <!-- Region Filter Pills -->
             <div class="flex flex-wrap gap-2 shrink-0">
                 <button type="button" 
-                        @click="selectedRegion = 'all'" 
+                        @click="filterRegion('all')" 
                         :class="selectedRegion === 'all' ? 'bg-red-600 text-white shadow-lg shadow-red-600/30' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'"
                         class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all">
                     {{ __('Semua Titik (9)') }}
                 </button>
                 <button type="button" 
-                        @click="selectedRegion = 'nusa_tenggara'" 
+                        @click="filterRegion('nusa_tenggara')" 
                         :class="selectedRegion === 'nusa_tenggara' ? 'bg-red-600 text-white shadow-lg shadow-red-600/30' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'"
                         class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span> {{ __('Nusa Tenggara & Flores (Fokus 3T)') }}
                 </button>
                 <button type="button" 
-                        @click="selectedRegion = 'jawa'" 
+                        @click="filterRegion('jawa')" 
                         :class="selectedRegion === 'jawa' ? 'bg-red-600 text-white shadow-lg shadow-red-600/30' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'"
                         class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all">
                     {{ __('Jawa & Pusat Rujukan') }}
                 </button>
                 <button type="button" 
-                        @click="selectedRegion = 'maluku_papua'" 
+                        @click="filterRegion('maluku_papua')" 
                         :class="selectedRegion === 'maluku_papua' ? 'bg-red-600 text-white shadow-lg shadow-red-600/30' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'"
                         class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all">
                     {{ __('Maluku & Halmahera') }}
@@ -210,71 +116,34 @@
             </div>
         </div>
 
-        <!-- Interactive Map Canvas Container -->
-        <div class="relative bg-slate-950/70 rounded-2xl border border-slate-800/80 p-4 sm:p-6 mb-6 overflow-hidden">
-            <div class="relative w-full aspect-[11/5] min-h-[300px] sm:min-h-[380px]">
-                
-                <!-- SVG Silhouettes Kepulauan Indonesia -->
-                <svg class="w-full h-full text-slate-800 select-none pointer-events-none drop-shadow-md" viewBox="0 0 1100 480" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Pulau Sumatera -->
-                    <path d="M 50 110 Q 110 90 170 140 Q 230 190 280 280 Q 290 320 270 330 Q 240 310 180 240 Q 110 180 50 110 Z" class="fill-slate-800/90 hover:fill-slate-700 transition" />
-                    <path d="M 120 70 Q 150 60 170 80 Q 150 95 120 70 Z" class="fill-slate-800/80" />
-                    
-                    <!-- Pulau Jawa & Madura -->
-                    <path d="M 230 350 Q 320 350 400 360 Q 480 375 490 390 Q 430 400 350 395 Q 260 390 230 370 Z" class="fill-slate-800/90" />
-                    <path d="M 440 345 Q 480 340 495 355 Q 465 365 440 345 Z" class="fill-slate-800/80" /> <!-- Madura -->
+        <!-- Interactive Google Maps Container -->
+        <div class="relative bg-slate-950 rounded-2xl border border-slate-800 p-2 sm:p-2.5 mb-6 overflow-hidden shadow-2xl">
+            <!-- Leaflet Canvas -->
+            <div id="ysds-impact-map" class="w-full h-[380px] sm:h-[460px] lg:h-[500px] rounded-xl overflow-hidden relative z-0"></div>
 
-                    <!-- Kepulauan Bali & Nusa Tenggara (Lombok, Sumbawa, Flores, Sumba, Sabu, Timor, Alor) -->
-                    <path d="M 505 385 Q 520 380 525 395 Q 510 400 505 385 Z" class="fill-slate-800/90" /> <!-- Bali -->
-                    <path d="M 535 385 Q 550 380 555 395 Q 540 400 535 385 Z" class="fill-slate-800/90" /> <!-- Lombok -->
-                    <path d="M 565 380 Q 600 375 605 395 Q 575 405 565 380 Z" class="fill-slate-800/90" /> <!-- Sumbawa -->
-                    <path d="M 610 380 Q 675 375 680 395 Q 630 405 610 380 Z" class="fill-slate-800/90" /> <!-- Flores -->
-                    <path d="M 600 415 Q 640 415 645 435 Q 610 440 600 415 Z" class="fill-slate-800/80" /> <!-- Sumba -->
-                    <path d="M 645 435 Q 660 430 665 445 Q 650 450 645 435 Z" class="fill-slate-800/80" /> <!-- Sabu Raijua -->
-                    <path d="M 690 378 Q 720 375 725 390 Q 700 395 690 378 Z" class="fill-slate-800/80" /> <!-- Alor -->
-                    <path d="M 690 415 Q 745 395 760 415 Q 720 440 690 415 Z" class="fill-slate-800/90" /> <!-- Timor -->
-
-                    <!-- Pulau Kalimantan -->
-                    <path d="M 330 140 Q 420 110 480 150 Q 510 210 500 280 Q 430 300 370 285 Q 320 230 330 140 Z" class="fill-slate-800/90" />
-
-                    <!-- Pulau Sulawesi -->
-                    <path d="M 580 160 Q 640 150 670 170 Q 630 200 610 220 Q 640 250 660 300 Q 630 310 605 270 Q 575 320 560 330 Q 570 280 580 230 Q 545 220 540 200 Q 570 200 580 160 Z" class="fill-slate-800/90" />
-
-                    <!-- Kepulauan Maluku & Halmahera -->
-                    <path d="M 740 160 Q 770 150 780 180 Q 760 210 740 160 Z" class="fill-slate-800/80" /> <!-- Halmahera -->
-                    <path d="M 720 250 Q 750 240 760 270 Q 730 285 720 250 Z" class="fill-slate-800/80" /> <!-- Seram / Ambon -->
-
-                    <!-- Pulau Papua -->
-                    <path d="M 810 230 Q 860 200 900 230 Q 980 240 1020 310 Q 990 380 920 370 Q 860 350 810 230 Z" class="fill-slate-800/90" />
-                </svg>
-
-                <!-- Dynamic Clickable Markers / Pins -->
-                <template x-for="pin in pins" :key="pin.id">
-                    <div x-show="selectedRegion === 'all' || selectedRegion === pin.region"
-                         class="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer z-20 transition-all duration-300"
-                         :style="`left: ${pin.x}%; top: ${pin.y}%;`"
-                         @click="activePin = pin"
-                         @mouseenter="activePin = pin">
-                        
-                        <!-- Pulse Ring Effect -->
-                        <div class="relative flex items-center justify-center">
-                            <span class="absolute w-7 h-7 rounded-full bg-red-500/40 animate-ping"
-                                  :class="activePin?.id === pin.id ? 'w-10 h-10 bg-red-400/60' : ''"></span>
-                            
-                            <!-- Central Icon Pin -->
-                            <div class="relative w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center shadow-lg transition-transform duration-200"
-                                 :class="activePin?.id === pin.id ? 'bg-red-500 text-white scale-125 ring-4 ring-white/30' : 'bg-red-600 text-white hover:scale-110'">
-                                <i class="ki-filled ki-geolocation text-[11px] sm:text-xs"></i>
-                            </div>
-
-                            <!-- Small Label Tooltip on Pin -->
-                            <div class="hidden sm:block absolute top-7 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-0.5 rounded-md bg-slate-900/90 border border-slate-700/80 text-[10px] font-bold tracking-tight text-white shadow-md pointer-events-none transition-opacity"
-                                 :class="activePin?.id === pin.id ? 'opacity-100 z-30' : 'opacity-80'">
-                                <span x-text="pin.name.split(' ')[0] + ' ' + (pin.name.split(' ')[1] || '')"></span>
-                            </div>
-                        </div>
-                    </div>
-                </template>
+            <!-- Floating Map Type & Reset Controls -->
+            <div class="absolute top-4 right-4 z-10 flex items-center gap-1 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 p-1.5 rounded-xl shadow-2xl">
+                <button type="button"
+                        @click="setMapType('roadmap')"
+                        :class="activeMapType === 'roadmap' ? 'bg-red-600 text-white font-bold' : 'text-slate-300 hover:text-white hover:bg-slate-800'"
+                        class="px-2.5 py-1 rounded-lg text-[11px] transition flex items-center gap-1.5 cursor-pointer">
+                    <i class="ki-filled ki-map text-xs"></i>
+                    <span>{{ __('Google Peta') }}</span>
+                </button>
+                <button type="button"
+                        @click="setMapType('satellite')"
+                        :class="activeMapType === 'satellite' ? 'bg-red-600 text-white font-bold' : 'text-slate-300 hover:text-white hover:bg-slate-800'"
+                        class="px-2.5 py-1 rounded-lg text-[11px] transition flex items-center gap-1.5 cursor-pointer">
+                    <i class="ki-filled ki-picture text-xs"></i>
+                    <span>{{ __('Google Satelit') }}</span>
+                </button>
+                <div class="h-4 w-px bg-slate-700 mx-0.5"></div>
+                <button type="button"
+                        @click="resetView()"
+                        title="{{ __('Reset Tampilan Seluruh Indonesia') }}"
+                        class="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition cursor-pointer">
+                    <i class="ki-filled ki-arrows-circle text-xs"></i>
+                </button>
             </div>
         </div>
 
@@ -561,3 +430,306 @@
 
     </div>
 @endsection
+
+@push('scripts')
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        function impactMapComponent() {
+            return {
+                selectedRegion: 'all',
+                activePin: null,
+                activeMapType: 'roadmap',
+                map: null,
+                markers: {},
+                tileLayers: {},
+                pins: [
+                    {
+                        id: 'maumere',
+                        name: 'RSUD Dr. T.C. Hillers Maumere',
+                        region: 'nusa_tenggara',
+                        province: 'Nusa Tenggara Timur (Kab. Sikka)',
+                        alats: '1 Unit Real-Time PCR 96-Well, 1 Unit Biosafety Cabinet Class II, Reagen Deteksi Molekuler',
+                        date: '18 Oktober 2023',
+                        type: 'RSUD Kabupaten 3T',
+                        status: 'Laboratorium Molekuler Mandiri Beroperasi',
+                        link: '{{ route('website.visitations.show', 'visitasi-penyerahan-mesin-pcr-rsud-tc-hillers-maumere') }}',
+                        linkText: 'Buka Dokumentasi Visitasi & Pelatihan',
+                        lat: -8.6253,
+                        lng: 122.2155
+                    },
+                    {
+                        id: 'ruteng',
+                        name: 'RSUD Dr. Ben Mboi Ruteng',
+                        region: 'nusa_tenggara',
+                        province: 'Nusa Tenggara Timur (Kab. Manggarai)',
+                        alats: 'Thermal Cycler Gradient, Ruang PCR Tekanan Negatif, Reagensia Deteksi Penyakit Tropis',
+                        date: '05 November 2023',
+                        type: 'RSUD Dataran Tinggi Flores',
+                        status: 'Kesiapsiagaan Deteksi Dini Penyakit Menular',
+                        link: '{{ route('website.visitations.show', 'supervisi-fasilitas-diagnostik-rsud-ben-mboi-ruteng') }}',
+                        linkText: 'Buka Laporan Supervisi Lab',
+                        lat: -8.6133,
+                        lng: 120.4639
+                    },
+                    {
+                        id: 'labuan_bajo',
+                        name: 'RSUD Komodo Labuan Bajo',
+                        region: 'nusa_tenggara',
+                        province: 'Nusa Tenggara Timur (Manggarai Barat)',
+                        alats: 'Instrumen Ekstraksi Otomatis DNA/RNA, Real-Time PCR Multi-Channel Modern',
+                        date: '22 Mei 2024',
+                        type: 'RSUD Destinasi Wisata Super Prioritas',
+                        status: 'Standar Diagnostik Internasional',
+                        link: '{{ route('website.visitations.show', 'visitasi-kesiapan-lab-genomik-rsud-komodo-labuan-bajo') }}',
+                        linkText: 'Buka Dokumentasi Kesiapan Lab',
+                        lat: -8.5134,
+                        lng: 119.8974
+                    },
+                    {
+                        id: 'sabu',
+                        name: 'Dinas Kesehatan & Labkesda Sabu Raijua',
+                        region: 'nusa_tenggara',
+                        province: 'Nusa Tenggara Timur (Pulau Sabu)',
+                        alats: 'Freezer Rantai Dingin Spesimen Medis, Digitalisasi Sekolah POP Savu Smart Island',
+                        date: '14 Februari 2024',
+                        type: 'Kepulauan Terluar 3T',
+                        status: 'Program Savu Smart Island & Cold Chain Medis',
+                        link: '{{ route('website.visitations.show', 'visitasi-program-savu-smart-island-sabu-raijua') }}',
+                        linkText: 'Buka Laporan Program Savu Smart Island',
+                        lat: -10.4950,
+                        lng: 121.8410
+                    },
+                    {
+                        id: 'alor',
+                        name: 'RSUD Kalabahi Alor',
+                        region: 'nusa_tenggara',
+                        province: 'Nusa Tenggara Timur (Kepulauan Alor)',
+                        alats: 'Ultra-Low Freezer -86°C Biobank, High-Speed Refrigerated Centrifuge, Micropipette Set',
+                        date: '30 Agustus 2024',
+                        type: 'RSUD Wilayah Kepulauan Perbatasan',
+                        status: 'Diagnostik Akurat Tanpa Rujukan ke Kupang',
+                        link: '{{ route('website.visitations.show', 'visitasi-penyerahan-alat-supervisi-rsud-kalabahi-alor') }}',
+                        linkText: 'Buka Dokumentasi Visitasi Alor',
+                        lat: -8.2192,
+                        lng: 124.5165
+                    },
+                    {
+                        id: 'sardjito',
+                        name: 'RSUP Dr. Sardjito Yogyakarta',
+                        region: 'jawa',
+                        province: 'D.I. Yogyakarta (Sleman)',
+                        alats: 'Real-Time PCR System (2 Unit), BSC Class II Type A2 (2 Unit), Ultra-Low Freezer 728 Liter',
+                        date: '15 Agustus 2024',
+                        type: 'Rumah Sakit Rujukan Nasional',
+                        status: 'Hibah Berita Acara Serah Terima (BAST) Resmi',
+                        link: '#',
+                        linkText: 'Lihat Detail Item Kolaborasi BAST',
+                        lat: -7.7686,
+                        lng: 110.3736
+                    },
+                    {
+                        id: 'fkui',
+                        name: 'Lab Mikrobiologi FKUI / RSCM Salemba',
+                        region: 'jawa',
+                        province: 'DKI Jakarta (Salemba)',
+                        alats: 'Next-Generation Sequencing Library Prep Automation, Thermal Cycler (3 Unit), Fluorometer Qubit 4',
+                        date: '20 November 2024',
+                        type: 'Pusat Riset Genomik & RS Pendidikan',
+                        status: 'Riset Translasi Long-Read PacBio & ONT',
+                        link: '{{ route('website.visitations.show', 'kunjungan-kemitraan-riset-genomik-lab-mikrobiologi-fkui') }}',
+                        linkText: 'Buka Laporan Kemitraan Akademik',
+                        lat: -6.1963,
+                        lng: 106.8480
+                    },
+                    {
+                        id: 'rshs',
+                        name: 'RSUP Dr. Hasan Sadikin Bandung',
+                        region: 'jawa',
+                        province: 'Jawa Barat (Bandung)',
+                        alats: 'Automated Extraction System 32-Channel, Microvolume Spectrophotometer NanoDrop, Medical Refrigerator',
+                        date: '10 Februari 2025',
+                        type: 'Rumah Sakit Rujukan Jawa Barat',
+                        status: 'Laboratorium Sentral Diagnostik Cepat',
+                        link: '#',
+                        linkText: 'Lihat Detail Item Kolaborasi BAST',
+                        lat: -6.8956,
+                        lng: 107.5985
+                    },
+                    {
+                        id: 'halmahera',
+                        name: 'Rumah Baca & Pendidikan Halmahera',
+                        region: 'maluku_papua',
+                        province: 'Maluku Utara (Halmahera)',
+                        alats: 'Penyediaan Sarana Literasi Anak, Perpustakaan Mini, Modul Sains & Nutrisi Generasi Muda',
+                        date: '2024 - Berkelanjutan',
+                        type: 'Pendidikan Vokasi & Literasi Anak',
+                        status: 'Dukungan Program Berkelanjutan YSDS',
+                        link: '{{ route('website.donation.public') }}',
+                        linkText: 'Dukung Program via Donasi Resmi',
+                        lat: 1.7283,
+                        lng: 128.0094
+                    }
+                ],
+
+                init() {
+                    this.$nextTick(() => {
+                        const checkLeaflet = () => {
+                            if (typeof L !== 'undefined') {
+                                this.initMap();
+                            } else {
+                                setTimeout(checkLeaflet, 80);
+                            }
+                        };
+                        checkLeaflet();
+                    });
+                },
+
+                initMap() {
+                    const mapEl = document.getElementById('ysds-impact-map');
+                    if (!mapEl || this.map) return;
+
+                    // Inisialisasi Leaflet
+                    this.map = L.map('ysds-impact-map', {
+                        center: [-2.5, 118.0],
+                        zoom: 5,
+                        minZoom: 4,
+                        maxZoom: 18,
+                        zoomControl: false,
+                        scrollWheelZoom: false
+                    });
+
+                    // Aktifkan scroll wheel zoom saat peta difokuskan / diklik
+                    this.map.on('focus', () => {
+                        this.map.scrollWheelZoom.enable();
+                    });
+
+                    // Zoom control di pojok kanan bawah
+                    L.control.zoom({ position: 'bottomright' }).addTo(this.map);
+
+                    // Tile Layer Google Maps (Roadmap & Hybrid/Satellite)
+                    this.tileLayers.roadmap = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+                        maxZoom: 20,
+                        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+                        attribution: '&copy; <a href="https://maps.google.com" target="_blank" rel="noopener">Google Maps</a>'
+                    });
+
+                    this.tileLayers.satellite = L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+                        maxZoom: 20,
+                        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+                        attribution: '&copy; <a href="https://maps.google.com" target="_blank" rel="noopener">Google Maps</a>'
+                    });
+
+                    // Default ke Roadmap
+                    this.tileLayers.roadmap.addTo(this.map);
+
+                    // Buat Marker untuk setiap fasilitas
+                    this.pins.forEach(pin => {
+                        const icon = L.divIcon({
+                            className: 'custom-pulse-marker',
+                            html: `
+                                <div class="relative flex items-center justify-center -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
+                                    <span class="absolute w-8 h-8 rounded-full bg-red-500/50 animate-ping pointer-events-none"></span>
+                                    <div class="relative w-7 h-7 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl ring-2 ring-white/90 group-hover:scale-125 transition-transform duration-200">
+                                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            `,
+                            iconSize: [28, 28],
+                            iconAnchor: [14, 14]
+                        });
+
+                        const marker = L.marker([pin.lat, pin.lng], { icon: icon }).addTo(this.map);
+
+                        marker.bindTooltip(`
+                            <div class="font-bold text-white text-xs">${pin.name}</div>
+                            <div class="text-[10px] text-slate-400">${pin.province}</div>
+                        `, {
+                            direction: 'top',
+                            offset: [0, -14],
+                            className: 'ysds-map-tooltip'
+                        });
+
+                        marker.on('click', () => {
+                            this.selectPin(pin);
+                        });
+
+                        this.markers[pin.id] = marker;
+                    });
+
+                    // Auto-fit ke seluruh titik
+                    this.fitAllMarkers();
+                },
+
+                fitAllMarkers() {
+                    if (!this.map) return;
+                    const allCoords = this.pins.map(p => [p.lat, p.lng]);
+                    this.map.fitBounds(L.latLngBounds(allCoords), {
+                        padding: [50, 50],
+                        maxZoom: 6
+                    });
+                },
+
+                setMapType(type) {
+                    if (this.activeMapType === type || !this.map) return;
+                    this.map.removeLayer(this.tileLayers[this.activeMapType]);
+                    this.tileLayers[type].addTo(this.map);
+                    this.activeMapType = type;
+                },
+
+                selectPin(pin) {
+                    this.activePin = pin;
+                    if (this.map) {
+                        this.map.flyTo([pin.lat, pin.lng], 13, {
+                            duration: 1.2
+                        });
+                    }
+                },
+
+                filterRegion(region) {
+                    this.selectedRegion = region;
+                    if (!this.map) return;
+
+                    this.pins.forEach(pin => {
+                        const marker = this.markers[pin.id];
+                        if (!marker) return;
+                        const matches = this.selectedRegion === 'all' || this.selectedRegion === pin.region;
+                        if (matches) {
+                            if (!this.map.hasLayer(marker)) {
+                                this.map.addLayer(marker);
+                            }
+                        } else {
+                            if (this.map.hasLayer(marker)) {
+                                this.map.removeLayer(marker);
+                            }
+                        }
+                    });
+
+                    if (region === 'all') {
+                        this.fitAllMarkers();
+                    } else {
+                        const filtered = this.pins.filter(p => p.region === region);
+                        if (filtered.length === 1) {
+                            this.map.flyTo([filtered[0].lat, filtered[0].lng], 8, {
+                                duration: 1.2
+                            });
+                        } else if (filtered.length > 1) {
+                            const coords = filtered.map(p => [p.lat, p.lng]);
+                            this.map.flyToBounds(L.latLngBounds(coords), {
+                                padding: [50, 50],
+                                duration: 1.2,
+                                maxZoom: 8
+                            });
+                        }
+                    }
+                },
+
+                resetView() {
+                    this.activePin = null;
+                    this.filterRegion('all');
+                }
+            };
+        }
+    </script>
+@endpush
