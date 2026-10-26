@@ -69,9 +69,13 @@
                                 <label class="text-xs font-bold text-gray-800 uppercase tracking-wider">Slug URL</label>
                                 <div class="flex items-center gap-1">
                                     <span class="text-xs text-gray-400 font-mono bg-gray-50 px-3 py-2.5 rounded-l-lg border border-r-0 border-gray-200">/berita/</span>
-                                    <input type="text" name="slug" id="article_slug" value="{{ old('slug', $article->slug) }}" class="kt-input w-full text-xs font-mono rounded-l-none" />
+                                    <input type="text" name="slug" id="article_slug" value="{{ old('slug', $article->slug) }}" data-manual="true" class="kt-input w-full text-xs font-mono rounded-none" />
+                                    <button type="button" id="btn_generate_slug" title="Generate ulang slug otomatis dari judul" class="px-3 py-2.5 bg-gray-50 hover:bg-gray-100 border border-l-0 border-gray-200 rounded-r-lg text-gray-500 hover:text-red-600 transition text-xs font-semibold flex items-center gap-1 shrink-0">
+                                        <i class="ki-filled ki-arrows-circle text-xs"></i>
+                                        <span class="hidden sm:inline">Sinkron Judul</span>
+                                    </button>
                                 </div>
-                                <span class="text-[10px] text-gray-400">Harus unik dan ramah SEO. Mengubah slug dapat mempengaruhi tautan yang telah dibagikan.</span>
+                                <span class="text-[10px] text-gray-400">Harus unik dan ramah SEO. Mengubah slug dapat mempengaruhi tautan yang telah dibagikan. Klik <strong>Sinkron Judul</strong> untuk memperbarui slug dari judul artikel.</span>
                             </div>
 
                             <div class="space-y-1.5">
@@ -288,7 +292,49 @@
                     }
                 });
             }
+
+            // Setup Realtime Slug Generation
+            const titleInput = document.getElementById('article_title');
+            const slugInput = document.getElementById('article_slug');
+            const syncBtn = document.getElementById('btn_generate_slug');
+
+            if (titleInput && slugInput) {
+                // Auto generate on typing or pasting title
+                titleInput.addEventListener('input', function () {
+                    if (!slugInput.dataset.manual) {
+                        slugInput.value = slugify(this.value);
+                    }
+                });
+
+                // Detect manual edits on slug
+                slugInput.addEventListener('input', function () {
+                    if (this.value.trim() === '') {
+                        delete slugInput.dataset.manual;
+                    } else {
+                        slugInput.dataset.manual = 'true';
+                    }
+                });
+
+                // Manual re-sync button
+                if (syncBtn) {
+                    syncBtn.addEventListener('click', function () {
+                        delete slugInput.dataset.manual;
+                        slugInput.value = slugify(titleInput.value);
+                        slugInput.focus();
+                    });
+                }
+            }
         });
+
+        function slugify(text) {
+            return (text || '').toString().toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^\w\s-]/g, '')
+                .trim()
+                .replace(/[\s_-]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
 
         function previewArticleImage(input) {
             const box = document.getElementById('image_preview_box');
