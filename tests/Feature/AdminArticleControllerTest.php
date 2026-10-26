@@ -230,4 +230,25 @@ class AdminArticleControllerTest extends TestCase
 
         $this->assertEquals(1, $article->fresh()->views_count);
     }
+
+    public function test_public_news_detail_renders_rich_html_content(): void
+    {
+        $article = WebsiteNews::create([
+            'title'        => 'Panduan Riset Molekuler YSDS',
+            'slug'         => 'panduan-riset-molekuler-ysds',
+            'category'     => 'Riset Populer',
+            'author_name'  => 'Tim Redaksi YSDS',
+            'summary'      => 'Ringkasan panduan riset molekuler.',
+            'content'      => '<p>Paragraf pembuka riset.</p><h3>Metodologi</h3><ul><li>Sekuensing DNA</li><li>Analisis Bioinformatika</li></ul>',
+            'is_published' => true,
+            'published_at' => '2026-09-25',
+        ]);
+
+        $response = $this->get(route('website.news.show', $article->slug));
+
+        $response->assertStatus(200);
+        $response->assertSee('<p>Paragraf pembuka riset.</p>', false);
+        $response->assertSee('<h3>Metodologi</h3>', false);
+        $response->assertSee('<li>Sekuensing DNA</li>', false);
+    }
 }

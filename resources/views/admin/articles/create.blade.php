@@ -33,7 +33,7 @@
             </div>
         @endif
 
-        <form action="{{ route('website.articles.admin.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('website.articles.admin.store') }}" method="POST" enctype="multipart/form-data" id="article_form">
             @csrf
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Kolom Kiri: Konten Utama (2 Kolom) -->
@@ -60,8 +60,11 @@
                         </div>
 
                         <div class="space-y-1.5">
-                            <label class="text-xs font-bold text-gray-800 uppercase tracking-wider">Isi Lengkap Artikel <span class="text-red-600">*</span></label>
-                            <textarea name="content" id="article_content" rows="18" placeholder="Tuliskan isi artikel lengkap di sini. Anda dapat menggunakan format paragraf yang rapi..." class="kt-input w-full text-xs font-normal leading-relaxed font-sans" required>{{ old('content') }}</textarea>
+                            <div class="flex items-center justify-between">
+                                <label class="text-xs font-bold text-gray-800 uppercase tracking-wider">Isi Lengkap Artikel <span class="text-red-600">*</span></label>
+                                <span class="text-[11px] text-gray-400 font-medium">Gunakan toolbar editor di bawah untuk memformat teks</span>
+                            </div>
+                            <textarea name="content" id="article_content" rows="18" placeholder="Tuliskan isi artikel lengkap di sini. Anda dapat menggunakan format paragraf yang rapi..." class="kt-input w-full text-xs font-normal leading-relaxed font-sans">{{ old('content') }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -158,8 +161,68 @@
             </div>
         </form>
     </div>
+@endsection
 
+@push('styles')
+    <style>
+        .tox-tinymce {
+            border-radius: 0.75rem !important;
+            border-color: #e2e8f0 !important;
+            overflow: hidden !important;
+        }
+        .tox .tox-toolbar-overlord, .tox .tox-toolbar__primary {
+            background-color: #f8fafc !important;
+        }
+    </style>
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('assets/vendors/tinymce/tinymce.min.js') }}"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof tinymce !== 'undefined') {
+                tinymce.init({
+                    selector: '#article_content',
+                    base_url: "{{ asset('assets/vendors/tinymce') }}",
+                    license_key: 'gpl',
+                    height: 540,
+                    menubar: 'edit view insert format table tools',
+                    plugins: [
+                        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                        'insertdatetime', 'media', 'table', 'wordcount'
+                    ],
+                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image table | removeformat code fullscreen',
+                    branding: false,
+                    promotion: false,
+                    image_advtab: true,
+                    image_title: true,
+                    content_style: 'body { font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; line-height: 1.7; color: #1e293b; padding: 14px; } p { margin-bottom: 1rem; } img { max-width: 100%; height: auto; border-radius: 8px; } table { width: 100%; border-collapse: collapse; } th, td { border: 1px solid #cbd5e1; padding: 8px; }',
+                    setup: function (editor) {
+                        editor.on('change keyup', function () {
+                            editor.save();
+                        });
+                    }
+                });
+            }
+
+            const articleForm = document.getElementById('article_form');
+            if (articleForm) {
+                articleForm.addEventListener('submit', function (e) {
+                    if (typeof tinymce !== 'undefined' && tinymce.get('article_content')) {
+                        tinymce.triggerSave();
+                        const content = document.getElementById('article_content').value.trim();
+                        if (!content) {
+                            e.preventDefault();
+                            alert('Isi lengkap artikel wajib diisi.');
+                            tinymce.get('article_content').focus();
+                            return false;
+                        }
+                    }
+                });
+            }
+        });
+
         function updateSlugPreview(title) {
             const slugInput = document.getElementById('article_slug');
             if (slugInput && !slugInput.dataset.manual) {
@@ -186,4 +249,4 @@
             }
         }
     </script>
-@endsection
+@endpush

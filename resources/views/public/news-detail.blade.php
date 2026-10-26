@@ -72,8 +72,14 @@
         @endif
 
         <!-- Article Content -->
-        <article class="prose max-w-none text-slate-800 text-sm sm:text-base leading-relaxed space-y-5 whitespace-pre-line text-justify">
-            {!! nl2br(e($article->content)) !!}
+        <article class="prose prose-red max-w-none text-slate-800 text-sm sm:text-base leading-relaxed text-justify prose-img:rounded-2xl prose-img:shadow-md prose-headings:font-bold prose-headings:text-slate-900 prose-a:text-red-600 hover:prose-a:text-red-700">
+            @if(strip_tags($article->content) !== $article->content)
+                {!! $article->content !!}
+            @else
+                <div class="space-y-5 whitespace-pre-line">
+                    {!! nl2br(e($article->content)) !!}
+                </div>
+            @endif
         </article>
 
         <!-- Tags -->
