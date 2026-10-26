@@ -36,7 +36,9 @@ class AdminArticleController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('title_en', 'like', "%{$search}%")
                   ->orWhere('summary', 'like', "%{$search}%")
+                  ->orWhere('summary_en', 'like', "%{$search}%")
                   ->orWhere('author_name', 'like', "%{$search}%")
                   ->orWhere('tags', 'like', "%{$search}%");
             });
@@ -98,11 +100,14 @@ class AdminArticleController extends Controller
     {
         $validated = $request->validate([
             'title'        => 'required|string|max:255',
+            'title_en'     => 'nullable|string|max:255',
             'slug'         => 'nullable|string|max:255|unique:website_news,slug',
             'category'     => 'required|string|max:100',
             'author_name'  => 'nullable|string|max:255',
             'summary'      => 'nullable|string|max:1000',
+            'summary_en'   => 'nullable|string|max:1000',
             'content'      => 'required|string',
+            'content_en'   => 'nullable|string',
             'tags'         => 'nullable|string|max:255',
             'image'        => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:3072',
             'published_at' => 'nullable|date',
@@ -121,11 +126,14 @@ class AdminArticleController extends Controller
 
         $article = WebsiteNews::create([
             'title'        => $validated['title'],
+            'title_en'     => $validated['title_en'] ?? null,
             'slug'         => $slug,
             'category'     => $validated['category'],
             'author_name'  => $validated['author_name'] ?: 'Tim Redaksi YSDS',
             'summary'      => $validated['summary'] ?? null,
+            'summary_en'   => $validated['summary_en'] ?? null,
             'content'      => $validated['content'],
+            'content_en'   => $validated['content_en'] ?? null,
             'tags'         => $validated['tags'] ?? null,
             'image'        => $imagePath,
             'published_at' => $validated['published_at'] ?? now()->toDateString(),
@@ -158,11 +166,14 @@ class AdminArticleController extends Controller
 
         $validated = $request->validate([
             'title'        => 'required|string|max:255',
+            'title_en'     => 'nullable|string|max:255',
             'slug'         => 'nullable|string|max:255|unique:website_news,slug,' . $id,
             'category'     => 'required|string|max:100',
             'author_name'  => 'nullable|string|max:255',
             'summary'      => 'nullable|string|max:1000',
+            'summary_en'   => 'nullable|string|max:1000',
             'content'      => 'required|string',
+            'content_en'   => 'nullable|string',
             'tags'         => 'nullable|string|max:255',
             'image'        => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:3072',
             'published_at' => 'nullable|date',
@@ -184,11 +195,14 @@ class AdminArticleController extends Controller
 
         $article->update([
             'title'        => $validated['title'],
+            'title_en'     => $validated['title_en'] ?? null,
             'slug'         => $slug,
             'category'     => $validated['category'],
             'author_name'  => $validated['author_name'] ?: 'Tim Redaksi YSDS',
             'summary'      => $validated['summary'] ?? null,
+            'summary_en'   => $validated['summary_en'] ?? null,
             'content'      => $validated['content'],
+            'content_en'   => $validated['content_en'] ?? null,
             'tags'         => $validated['tags'] ?? null,
             'image'        => $imagePath,
             'published_at' => $validated['published_at'] ?? $article->published_at,

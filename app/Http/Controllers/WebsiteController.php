@@ -340,7 +340,9 @@ class WebsiteController extends Controller
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('title_en', 'like', '%' . $search . '%')
                   ->orWhere('abstract', 'like', '%' . $search . '%')
+                  ->orWhere('abstract_en', 'like', '%' . $search . '%')
                   ->orWhere('doi', 'like', '%' . $search . '%')
                   ->orWhereHas('submission.authors', function ($authorQ) use ($search) {
                       $authorQ->where('name', 'like', '%' . $search . '%')
@@ -734,8 +736,11 @@ class WebsiteController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('title_en', 'like', "%{$search}%")
                   ->orWhere('summary', 'like', "%{$search}%")
+                  ->orWhere('summary_en', 'like', "%{$search}%")
                   ->orWhere('content', 'like', "%{$search}%")
+                  ->orWhere('content_en', 'like', "%{$search}%")
                   ->orWhere('author_name', 'like', "%{$search}%")
                   ->orWhere('tags', 'like', "%{$search}%");
             });

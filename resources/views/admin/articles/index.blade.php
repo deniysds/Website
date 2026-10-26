@@ -156,6 +156,11 @@
                                                     Sorotan
                                                 </span>
                                             @endif
+                                            @if($article->has_english_translation)
+                                                <span class="ml-1 px-1.5 py-0.5 rounded text-[9px] font-extrabold bg-blue-50 text-blue-700 border border-blue-200" title="Tersedia versi Bahasa Inggris">
+                                                    EN
+                                                </span>
+                                            @endif
                                         </div>
                                         @if($article->summary)
                                             <p class="text-gray-500 text-xs mt-1 line-clamp-1 max-w-lg">{{ $article->summary }}</p>

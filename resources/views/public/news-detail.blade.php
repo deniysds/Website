@@ -41,7 +41,7 @@
             </div>
 
             <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-tight tracking-tight">
-                {{ $article->title }}
+                {{ $article->title_localized }}
             </h1>
 
             <div class="flex items-center gap-3 pt-2 text-xs text-slate-600">
@@ -56,10 +56,10 @@
         </header>
 
         <!-- Summary / Lead Box -->
-        @if($article->summary)
+        @if($article->summary_localized)
             <div class="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-red-50/70 via-slate-50 to-white border-l-4 border-red-600 shadow-xs">
                 <p class="text-sm sm:text-base text-slate-700 leading-relaxed font-medium italic">
-                    "{{ $article->summary }}"
+                    "{{ $article->summary_localized }}"
                 </p>
             </div>
         @endif
@@ -67,17 +67,18 @@
         <!-- Cover Image -->
         @if($article->image_url)
             <div class="rounded-3xl overflow-hidden shadow-lg border border-slate-200/80 bg-slate-900">
-                <img src="{{ $article->image_url }}" alt="{{ $article->title }}" class="w-full max-h-[500px] object-cover" />
+                <img src="{{ $article->image_url }}" alt="{{ $article->title_localized }}" class="w-full max-h-[500px] object-cover" />
             </div>
         @endif
 
         <!-- Article Content -->
         <article class="prose prose-red max-w-none text-slate-800 text-sm sm:text-base leading-relaxed text-justify prose-img:rounded-2xl prose-img:shadow-md prose-headings:font-bold prose-headings:text-slate-900 prose-a:text-red-600 hover:prose-a:text-red-700">
-            @if(strip_tags($article->content) !== $article->content)
-                {!! $article->content !!}
+            @php $currentContent = $article->content_localized; @endphp
+            @if(strip_tags($currentContent) !== $currentContent)
+                {!! $currentContent !!}
             @else
                 <div class="space-y-5 whitespace-pre-line">
-                    {!! nl2br(e($article->content)) !!}
+                    {!! nl2br(e($currentContent)) !!}
                 </div>
             @endif
         </article>

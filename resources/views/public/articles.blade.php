@@ -144,7 +144,7 @@
 
                             <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 hover:text-red-600 transition leading-snug">
                                 <a href="{{ route('website.articles.show', $article->slug) }}">
-                                    {{ $article->title }}
+                                    {{ $article->title_localized }}
                                 </a>
                             </h2>
 
@@ -159,16 +159,17 @@
                             </div>
 
                             <!-- Abstract Preview -->
-                            @if($article->abstract)
+                            @if($article->abstract_localized)
                                 <p class="text-xs sm:text-sm text-slate-600 line-clamp-2 leading-relaxed">
-                                    {{ $article->abstract }}
+                                    {{ $article->abstract_localized }}
                                 </p>
                             @endif
 
                             <!-- Keywords -->
-                            @if(!empty($article->keywords) && is_array($article->keywords))
+                            @php $currentKeywords = $article->keywords_localized; @endphp
+                            @if(!empty($currentKeywords) && is_array($currentKeywords))
                                 <div class="flex flex-wrap gap-1.5 pt-1">
-                                    @foreach(array_slice($article->keywords, 0, 4) as $kw)
+                                    @foreach(array_slice($currentKeywords, 0, 4) as $kw)
                                         <span class="px-2 py-0.5 rounded text-[10px] bg-slate-100 text-slate-600 font-medium">
                                             #{{ trim($kw) }}
                                         </span>

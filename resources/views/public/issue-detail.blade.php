@@ -42,10 +42,10 @@
                             </div>
                             <h4 class="text-lg font-bold text-slate-900 hover:text-red-600 transition">
                                 <a href="{{ route('website.articles.show', $submission->slug) }}" class="hover:underline">
-                                    {{ $submission->title }}
+                                    {{ $submission->title_localized }}
                                 </a>
                             </h4>
-                            <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">{{ $submission->abstract }}</p>
+                            <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">{{ $submission->abstract_localized }}</p>
                             <p class="text-xs text-slate-500 font-medium pt-1">
                                 {{ __('Penulis:') }} {{ $submission->authors->pluck('name')->implode(', ') ?: ($submission->author?->name ?? __('Penulis')) }}
                             </p>

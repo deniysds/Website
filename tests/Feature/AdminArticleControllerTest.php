@@ -251,4 +251,36 @@ class AdminArticleControllerTest extends TestCase
         $response->assertSee('<h3>Metodologi</h3>', false);
         $response->assertSee('<li>Sekuensing DNA</li>', false);
     }
+
+    public function test_bilingual_article_renders_english_when_locale_is_en(): void
+    {
+        $article = WebsiteNews::create([
+            'title'        => 'Inisiatif Riset Molekuler YSDS',
+            'title_en'     => 'YSDS Molecular Research Initiative',
+            'slug'         => 'inisiatif-riset-molekuler-ysds',
+            'category'     => 'Riset Populer',
+            'author_name'  => 'Tim Redaksi YSDS',
+            'summary'      => 'Ringkasan naskah dalam bahasa Indonesia.',
+            'summary_en'   => 'Executive summary of manuscript in English.',
+            'content'      => '<p>Isi lengkap bahasa Indonesia.</p>',
+            'content_en'   => '<p>Full content in English language.</p>',
+            'is_published' => true,
+            'published_at' => '2026-09-26',
+        ]);
+
+        // Default locale ID
+        app()->setLocale('id');
+        $responseId = $this->get(route('website.news.show', $article->slug));
+        $responseId->assertStatus(200);
+        $responseId->assertSee('Inisiatif Riset Molekuler YSDS');
+        $responseId->assertSee('Isi lengkap bahasa Indonesia.');
+
+        // Switch locale to EN
+        session(['locale' => 'en']);
+        $responseEn = $this->withSession(['locale' => 'en'])->get(route('website.news.show', $article->slug));
+        $responseEn->assertStatus(200);
+        $responseEn->assertSee('YSDS Molecular Research Initiative');
+        $responseEn->assertSee('Executive summary of manuscript in English.');
+        $responseEn->assertSee('Full content in English language.');
+    }
 }

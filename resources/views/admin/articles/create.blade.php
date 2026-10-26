@@ -37,34 +37,80 @@
             @csrf
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Kolom Kiri: Konten Utama (2 Kolom) -->
-                <div class="lg:col-span-2 space-y-6">
+                <div class="lg:col-span-2 space-y-6" x-data="{ activeLangTab: 'id' }">
                     <div class="kt-card p-6 space-y-5 shadow-xs">
-                        <div class="space-y-1.5">
-                            <label class="text-xs font-bold text-gray-800 uppercase tracking-wider">Judul Artikel <span class="text-red-600">*</span></label>
-                            <input type="text" name="title" id="article_title" value="{{ old('title') }}" placeholder="Masukkan judul artikel yang menarik..." class="kt-input w-full text-sm font-semibold" required onkeyup="updateSlugPreview(this.value)" />
-                        </div>
-
-                        <div class="space-y-1.5">
-                            <label class="text-xs font-bold text-gray-800 uppercase tracking-wider">Slug URL (Opsional / Otomatis)</label>
-                            <div class="flex items-center gap-1">
-                                <span class="text-xs text-gray-400 font-mono bg-gray-50 px-3 py-2.5 rounded-l-lg border border-r-0 border-gray-200">/berita/</span>
-                                <input type="text" name="slug" id="article_slug" value="{{ old('slug') }}" placeholder="slug-artikel-otomatis" class="kt-input w-full text-xs font-mono rounded-l-none" />
+                        <!-- Tab Bahasa Selector -->
+                        <div class="flex items-center justify-between border-b border-gray-150 pb-3">
+                            <div class="flex items-center gap-2">
+                                <button type="button" @click="activeLangTab = 'id'" :class="activeLangTab === 'id' ? 'bg-red-600 text-white font-bold shadow-xs' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 font-semibold'" class="px-3.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5">
+                                    <span>🇮🇩</span> Bahasa Indonesia <span class="text-[10px] opacity-80">(Utama *)</span>
+                                </button>
+                                <button type="button" @click="activeLangTab = 'en'" :class="activeLangTab === 'en' ? 'bg-red-600 text-white font-bold shadow-xs' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 font-semibold'" class="px-3.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5">
+                                    <span>🇬🇧</span> English Version <span class="text-[10px] opacity-80">(Bilingual)</span>
+                                </button>
                             </div>
-                            <span class="text-[10px] text-gray-400">Dibiarkan kosong untuk menggunakan slug yang otomatis dibuat dari judul artikel.</span>
+                            <span class="text-[11px] text-gray-400 hidden sm:inline">Pilih tab bahasa untuk mengisi naskah</span>
                         </div>
 
-                        <div class="space-y-1.5">
-                            <label class="text-xs font-bold text-gray-800 uppercase tracking-wider">Ringkasan Singkat / Lead Paragraph</label>
-                            <textarea name="summary" rows="3" placeholder="Tuliskan 1-2 paragraf ringkasan penting untuk ditampilkan pada kartu katalog dan cuplikan media sosial..." class="kt-input w-full text-xs leading-relaxed">{{ old('summary') }}</textarea>
-                            <span class="text-[10px] text-gray-400">Maksimal 1000 karakter.</span>
-                        </div>
-
-                        <div class="space-y-1.5">
-                            <div class="flex items-center justify-between">
-                                <label class="text-xs font-bold text-gray-800 uppercase tracking-wider">Isi Lengkap Artikel <span class="text-red-600">*</span></label>
-                                <span class="text-[11px] text-gray-400 font-medium">Gunakan toolbar editor di bawah untuk memformat teks</span>
+                        <!-- Konten Tab Bahasa Indonesia -->
+                        <div x-show="activeLangTab === 'id'" class="space-y-5">
+                            <div class="space-y-1.5">
+                                <label class="text-xs font-bold text-gray-800 uppercase tracking-wider">Judul Artikel (ID) <span class="text-red-600">*</span></label>
+                                <input type="text" name="title" id="article_title" value="{{ old('title') }}" placeholder="Masukkan judul artikel dalam Bahasa Indonesia..." class="kt-input w-full text-sm font-semibold" required onkeyup="updateSlugPreview(this.value)" />
                             </div>
-                            <textarea name="content" id="article_content" rows="18" placeholder="Tuliskan isi artikel lengkap di sini. Anda dapat menggunakan format paragraf yang rapi..." class="kt-input w-full text-xs font-normal leading-relaxed font-sans">{{ old('content') }}</textarea>
+
+                            <div class="space-y-1.5">
+                                <label class="text-xs font-bold text-gray-800 uppercase tracking-wider">Slug URL (Opsional / Otomatis)</label>
+                                <div class="flex items-center gap-1">
+                                    <span class="text-xs text-gray-400 font-mono bg-gray-50 px-3 py-2.5 rounded-l-lg border border-r-0 border-gray-200">/berita/</span>
+                                    <input type="text" name="slug" id="article_slug" value="{{ old('slug') }}" placeholder="slug-artikel-otomatis" class="kt-input w-full text-xs font-mono rounded-l-none" />
+                                </div>
+                                <span class="text-[10px] text-gray-400">Dibiarkan kosong untuk menggunakan slug yang otomatis dibuat dari judul artikel.</span>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label class="text-xs font-bold text-gray-800 uppercase tracking-wider">Ringkasan Singkat / Lead Paragraph (ID)</label>
+                                <textarea name="summary" rows="3" placeholder="Tuliskan 1-2 paragraf ringkasan penting untuk ditampilkan pada kartu katalog dan cuplikan media sosial..." class="kt-input w-full text-xs leading-relaxed">{{ old('summary') }}</textarea>
+                                <span class="text-[10px] text-gray-400">Maksimal 1000 karakter.</span>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <div class="flex items-center justify-between">
+                                    <label class="text-xs font-bold text-gray-800 uppercase tracking-wider">Isi Lengkap Artikel (ID) <span class="text-red-600">*</span></label>
+                                    <span class="text-[11px] text-gray-400 font-medium">Gunakan toolbar editor di bawah untuk memformat teks</span>
+                                </div>
+                                <textarea name="content" id="article_content" rows="18" placeholder="Tuliskan isi artikel lengkap di sini. Anda dapat menggunakan format paragraf yang rapi..." class="kt-input w-full text-xs font-normal leading-relaxed font-sans">{{ old('content') }}</textarea>
+                            </div>
+                        </div>
+
+                        <!-- Konten Tab English -->
+                        <div x-show="activeLangTab === 'en'" style="display: none;" class="space-y-5">
+                            <div class="p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 text-xs flex items-start gap-2.5">
+                                <i class="ki-filled ki-information text-base text-blue-600 shrink-0 mt-0.5"></i>
+                                <div>
+                                    <span class="font-bold block">Versi Bahasa Inggris (Bilingual)</span>
+                                    <span>Opsional tapi sangat disarankan. Ketika pengunjung memilih bahasa <strong>English (EN)</strong> pada situs, naskah di bawah ini yang akan otomatis disajikan.</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label class="text-xs font-bold text-gray-800 uppercase tracking-wider">Article Title (EN)</label>
+                                <input type="text" name="title_en" id="article_title_en" value="{{ old('title_en') }}" placeholder="Enter English article title..." class="kt-input w-full text-sm font-semibold" />
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <label class="text-xs font-bold text-gray-800 uppercase tracking-wider">Summary / Lead Paragraph (EN)</label>
+                                <textarea name="summary_en" rows="3" placeholder="Write a 1-2 paragraph executive summary in English for catalog cards and social snippets..." class="kt-input w-full text-xs leading-relaxed">{{ old('summary_en') }}</textarea>
+                                <span class="text-[10px] text-gray-400">Maximum 1000 characters.</span>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <div class="flex items-center justify-between">
+                                    <label class="text-xs font-bold text-gray-800 uppercase tracking-wider">Full Article Content (EN)</label>
+                                    <span class="text-[11px] text-gray-400 font-medium">Format English text using the editor toolbar below</span>
+                                </div>
+                                <textarea name="content_en" id="article_content_en" rows="18" placeholder="Write full article content in English..." class="kt-input w-full text-xs font-normal leading-relaxed font-sans">{{ old('content_en') }}</textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -182,7 +228,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             if (typeof tinymce !== 'undefined') {
                 tinymce.init({
-                    selector: '#article_content',
+                    selector: '#article_content, #article_content_en',
                     base_url: "{{ asset('assets/vendors/tinymce') }}",
                     license_key: 'gpl',
                     height: 540,

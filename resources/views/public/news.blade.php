@@ -89,12 +89,12 @@
                         </div>
                         <h2 class="text-2xl sm:text-3xl font-black leading-snug hover:text-red-400 transition">
                             <a href="{{ route('website.news.show', $featuredArticle->slug) }}">
-                                {{ $featuredArticle->title }}
+                                {{ $featuredArticle->title_localized }}
                             </a>
                         </h2>
-                        @if($featuredArticle->summary)
+                        @if($featuredArticle->summary_localized)
                             <p class="text-xs sm:text-sm text-slate-300 leading-relaxed line-clamp-3">
-                                {{ $featuredArticle->summary }}
+                                {{ $featuredArticle->summary_localized }}
                             </p>
                         @endif
                         <div class="flex flex-wrap items-center gap-4 text-xs text-slate-400 pt-2 border-t border-slate-800/80">
@@ -168,12 +168,12 @@
                                 </div>
                                 <h3 class="font-bold text-slate-900 text-base leading-snug group-hover:text-red-600 transition">
                                     <a href="{{ route('website.news.show', $item->slug) }}">
-                                        {{ $item->title }}
+                                        {{ $item->title_localized }}
                                     </a>
                                 </h3>
-                                @if($item->summary)
+                                @if($item->summary_localized)
                                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3">
-                                        {{ $item->summary }}
+                                        {{ $item->summary_localized }}
                                     </p>
                                 @endif
                             </div>

@@ -13,9 +13,12 @@ class WebsiteNews extends Model
 
     protected $fillable = [
         'title',
+        'title_en',
         'slug',
         'summary',
+        'summary_en',
         'content',
+        'content_en',
         'image',
         'category',
         'author_name',
@@ -79,13 +82,56 @@ class WebsiteNews extends Model
     }
 
     /**
+     * Localized title according to active application locale.
+     */
+    public function getTitleLocalizedAttribute(): string
+    {
+        return (app()->getLocale() === 'en' && !empty($this->title_en))
+            ? $this->title_en
+            : (string) $this->title;
+    }
+
+    /**
+     * Localized summary according to active application locale.
+     */
+    public function getSummaryLocalizedAttribute(): ?string
+    {
+        return (app()->getLocale() === 'en' && !empty($this->summary_en))
+            ? $this->summary_en
+            : $this->summary;
+    }
+
+    /**
+     * Localized full content according to active application locale.
+     */
+    public function getContentLocalizedAttribute(): string
+    {
+        return (app()->getLocale() === 'en' && !empty($this->content_en))
+            ? $this->content_en
+            : (string) $this->content;
+    }
+
+    /**
+     * Whether this article has an English translation.
+     */
+    public function getHasEnglishTranslationAttribute(): bool
+    {
+        return !empty($this->title_en) || !empty($this->content_en);
+    }
+
+    /**
      * Estimated reading time in minutes.
      */
     public function getReadingTimeAttribute(): string
     {
-        $wordCount = str_word_count(strip_tags((string) $this->content) . ' ' . strip_tags((string) $this->summary));
+        $content = $this->content_localized;
+        $summary = $this->summary_localized;
+        $wordCount = str_word_count(strip_tags((string) $content) . ' ' . strip_tags((string) $summary));
         $minutes = max(1, (int) ceil($wordCount / 200));
-        return "{$minutes} menit baca";
+
+        return app()->getLocale() === 'en'
+            ? "{$minutes} min read"
+            : "{$minutes} menit baca";
     }
 
     /**

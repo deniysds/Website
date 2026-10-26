@@ -517,10 +517,10 @@
                         </div>
 
                         <h4 class="font-bold text-slate-900 text-base leading-snug group-hover:text-red-600 transition line-clamp-2">
-                            <a href="{{ route('website.news.show', $item->slug ?: $item->id) }}">{{ $item->title }}</a>
+                            <a href="{{ route('website.news.show', $item->slug ?: $item->id) }}">{{ $item->title_localized }}</a>
                         </h4>
 
-                        <p class="text-xs text-slate-500 leading-relaxed line-clamp-2 font-light sm:font-normal">{{ $item->summary }}</p>
+                        <p class="text-xs text-slate-500 leading-relaxed line-clamp-2 font-light sm:font-normal">{{ $item->summary_localized }}</p>
                     </div>
 
                     <!-- Garis Pemisah Tipis -->

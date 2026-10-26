@@ -2,7 +2,7 @@
 
 @push('meta')
     <!-- Google Scholar & Academic Metadata -->
-    <meta name="citation_title" content="{{ $article->title }}" />
+    <meta name="citation_title" content="{{ $article->title_localized }}" />
     @foreach($authors as $author)
         <meta name="citation_author" content="{{ $author->name }}" />
         @if($author->affiliation)
@@ -34,12 +34,12 @@
     <meta name="citation_abstract_html_url" content="{{ route('website.articles.show', $article->slug) }}" />
 
     <!-- Dublin Core Metadata -->
-    <meta name="DC.Title" content="{{ $article->title }}" />
+    <meta name="DC.Title" content="{{ $article->title_localized }}" />
     @foreach($authors as $author)
         <meta name="DC.Creator" content="{{ $author->name }}" />
     @endforeach
     <meta name="DC.Date" content="{{ $article->published_at ? $article->published_at->format('Y-m-d') : date('Y-m-d') }}" />
-    <meta name="DC.Description" content="{{ $article->abstract }}" />
+    <meta name="DC.Description" content="{{ $article->abstract_localized }}" />
     <meta name="DC.Source" content="{{ $journal->name }}" />
     @if($article->doi)
         <meta name="DC.Identifier" content="doi:{{ $article->doi }}" />
@@ -66,7 +66,7 @@
                 <i class="ki-filled ki-document"></i> {{ __('Naskah Terbit / Published Article') }}
             </span>
             <h1 class="text-2xl sm:text-3xl font-extrabold text-white leading-tight mt-1 max-w-5xl">
-                {{ $article->title }}
+                {{ $article->title_localized }}
             </h1>
 
             <!-- Authors list -->
@@ -115,26 +115,81 @@
                 <!-- Left 2 Cols: Abstract, Keywords, Citation -->
                 <div class="lg:col-span-2 space-y-8">
                     
-                    <!-- Abstract Card -->
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-4">
-                        <h2 class="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
-                            <i class="ki-filled ki-text-align-left text-red-600"></i> {{ __('Abstrak / Abstract') }}
-                        </h2>
-                        <div class="text-slate-700 text-sm leading-relaxed whitespace-pre-line text-justify">
-                            {{ $article->abstract ?: __('Abstrak tidak tersedia untuk naskah ini.') }}
+                    <!-- Abstract Card with Bilingual Tab Support -->
+                    @php
+                        $hasEnAbstract = !empty($article->abstract_en);
+                        $hasIdAbstract = !empty($article->abstract);
+                        $defaultTab = (app()->getLocale() === 'en' && $hasEnAbstract) ? 'en' : 'id';
+                    @endphp
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-4" x-data="{ activeAbstractTab: '{{ $defaultTab }}' }">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3 flex-wrap gap-2">
+                            <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                                <i class="ki-filled ki-text-align-left text-red-600"></i> {{ __('Abstrak / Abstract') }}
+                            </h2>
+                            @if($hasEnAbstract && $hasIdAbstract)
+                                <div class="flex items-center gap-1 text-xs">
+                                    <button type="button" @click="activeAbstractTab = 'id'" :class="activeAbstractTab === 'id' ? 'bg-red-600 text-white font-bold shadow-2xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'" class="px-2.5 py-1 rounded-md transition flex items-center gap-1">
+                                        <span>🇮🇩</span> Indonesia
+                                    </button>
+                                    <button type="button" @click="activeAbstractTab = 'en'" :class="activeAbstractTab === 'en' ? 'bg-red-600 text-white font-bold shadow-2xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'" class="px-2.5 py-1 rounded-md transition flex items-center gap-1">
+                                        <span>🇬🇧</span> English
+                                    </button>
+                                </div>
+                            @endif
                         </div>
 
-                        <!-- Keywords -->
-                        @if(!empty($article->keywords) && is_array($article->keywords))
-                            <div class="pt-4 border-t border-slate-100">
-                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">{{ __('Kata Kunci / Keywords:') }}</span>
-                                <div class="flex flex-wrap gap-2">
-                                    @foreach($article->keywords as $keyword)
-                                        <span class="px-2.5 py-1 rounded-lg text-xs bg-slate-100 text-slate-700 font-medium border border-slate-200">
-                                            #{{ trim($keyword) }}
-                                        </span>
-                                    @endforeach
+                        <!-- ID Abstract -->
+                        <div x-show="activeAbstractTab === 'id'" class="space-y-4">
+                            <div class="text-slate-700 text-sm leading-relaxed whitespace-pre-line text-justify">
+                                {{ $article->abstract ?: __('Abstrak tidak tersedia untuk naskah ini.') }}
+                            </div>
+
+                            <!-- Keywords ID -->
+                            @if(!empty($article->keywords) && is_array($article->keywords))
+                                <div class="pt-4 border-t border-slate-100">
+                                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">{{ __('Kata Kunci / Keywords:') }}</span>
+                                    <div class="flex flex-wrap gap-2">
+                                        @foreach($article->keywords as $keyword)
+                                            <span class="px-2.5 py-1 rounded-lg text-xs bg-slate-100 text-slate-700 font-medium border border-slate-200">
+                                                #{{ trim($keyword) }}
+                                            </span>
+                                        @endforeach
+                                    </div>
                                 </div>
+                            @endif
+                        </div>
+
+                        <!-- EN Abstract -->
+                        @if($hasEnAbstract)
+                            <div x-show="activeAbstractTab === 'en'" style="display: none;" class="space-y-4">
+                                <div class="text-slate-700 text-sm leading-relaxed whitespace-pre-line text-justify">
+                                    {{ $article->abstract_en }}
+                                </div>
+
+                                <!-- Keywords EN -->
+                                @if(!empty($article->keywords_en) && is_array($article->keywords_en))
+                                    <div class="pt-4 border-t border-slate-100">
+                                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">Keywords (English):</span>
+                                        <div class="flex flex-wrap gap-2">
+                                            @foreach($article->keywords_en as $keyword)
+                                                <span class="px-2.5 py-1 rounded-lg text-xs bg-blue-50 text-blue-700 font-medium border border-blue-200">
+                                                    #{{ trim($keyword) }}
+                                                </span>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @elseif(!empty($article->keywords) && is_array($article->keywords))
+                                    <div class="pt-4 border-t border-slate-100">
+                                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">Keywords:</span>
+                                        <div class="flex flex-wrap gap-2">
+                                            @foreach($article->keywords as $keyword)
+                                                <span class="px-2.5 py-1 rounded-lg text-xs bg-slate-100 text-slate-700 font-medium border border-slate-200">
+                                                    #{{ trim($keyword) }}
+                                                </span>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         @endif
                     </div>
@@ -154,17 +209,17 @@
 
                         <!-- APA Format -->
                         <div x-show="format === 'apa'" class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 font-mono leading-relaxed" id="cite-apa">
-                            {{ $authors->pluck('name')->implode(', ') ?: 'Ignite Author' }} ({{ $issue->publication_year }}). {{ $article->title }}. <em>{{ $journal->name }}</em>, {{ $issue->volume }}({{ $issue->number }}), {{ $article->pages ?: '1-10' }}.
+                            {{ $authors->pluck('name')->implode(', ') ?: 'Ignite Author' }} ({{ $issue->publication_year }}). {{ $article->title_localized }}. <em>{{ $journal->name }}</em>, {{ $issue->volume }}({{ $issue->number }}), {{ $article->pages ?: '1-10' }}.
                         </div>
 
                         <!-- IEEE Format -->
                         <div x-show="format === 'ieee'" class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 font-mono leading-relaxed" id="cite-ieee" style="display: none;">
-                            {{ $authors->pluck('name')->implode(', ') ?: 'Ignite Author' }}, "{{ $article->title }}," <em>{{ $journal->short_name ?: $journal->name }}</em>, vol. {{ $issue->volume }}, no. {{ $issue->number }}, pp. {{ $article->pages ?: '1-10' }}, {{ $issue->publication_year }}.
+                            {{ $authors->pluck('name')->implode(', ') ?: 'Ignite Author' }}, "{{ $article->title_localized }}," <em>{{ $journal->short_name ?: $journal->name }}</em>, vol. {{ $issue->volume }}, no. {{ $issue->number }}, pp. {{ $article->pages ?: '1-10' }}, {{ $issue->publication_year }}.
                         </div>
 
                         <!-- Harvard Format -->
                         <div x-show="format === 'harvard'" class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 font-mono leading-relaxed" id="cite-harvard" style="display: none;">
-                            {{ $authors->pluck('name')->implode(', ') ?: 'Ignite Author' }}, {{ $issue->publication_year }}. {{ $article->title }}. {{ $journal->name }}, {{ $issue->volume }}({{ $issue->number }}), pp.{{ $article->pages ?: '1-10' }}.
+                            {{ $authors->pluck('name')->implode(', ') ?: 'Ignite Author' }}, {{ $issue->publication_year }}. {{ $article->title_localized }}. {{ $journal->name }}, {{ $issue->volume }}({{ $issue->number }}), pp.{{ $article->pages ?: '1-10' }}.
                         </div>
 
                         <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
