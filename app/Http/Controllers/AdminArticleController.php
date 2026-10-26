@@ -129,8 +129,8 @@ class AdminArticleController extends Controller
             'tags'         => $validated['tags'] ?? null,
             'image'        => $imagePath,
             'published_at' => $validated['published_at'] ?? now()->toDateString(),
-            'is_published' => $request->boolean('is_published', true),
-            'is_featured'  => $request->boolean('is_featured', false),
+            'is_published' => $request->boolean('is_published'),
+            'is_featured'  => $request->boolean('is_featured'),
             'views_count'  => 0,
         ]);
 
@@ -192,8 +192,8 @@ class AdminArticleController extends Controller
             'tags'         => $validated['tags'] ?? null,
             'image'        => $imagePath,
             'published_at' => $validated['published_at'] ?? $article->published_at,
-            'is_published' => $request->boolean('is_published', true),
-            'is_featured'  => $request->boolean('is_featured', false),
+            'is_published' => $request->boolean('is_published'),
+            'is_featured'  => $request->boolean('is_featured'),
         ]);
 
         return redirect()->route('website.articles.admin.index')

@@ -68,7 +68,7 @@ class AdminPartnerController extends Controller
             'category'    => $validated['category'] ?? ($validated['type'] === 'main' ? 'platform' : 'universitas'),
             'website_url' => $validated['website_url'] ?? null,
             'order_no'    => $validated['order_no'] ?? 0,
-            'is_active'   => $request->boolean('is_active', true),
+            'is_active'   => $request->boolean('is_active'),
             'logo_path'   => $logoPath,
         ]);
 
@@ -107,7 +107,7 @@ class AdminPartnerController extends Controller
             'category'    => $validated['category'] ?? $partner->category,
             'website_url' => $validated['website_url'] ?? null,
             'order_no'    => $validated['order_no'] ?? 0,
-            'is_active'   => $request->boolean('is_active', true),
+            'is_active'   => $request->boolean('is_active'),
             'logo_path'   => $logoPath,
         ]);
 

@@ -92,7 +92,7 @@ class AdminCollaborationController extends Controller
             'pic_name'         => $validated['pic_name'] ?? null,
             'description'      => $validated['description'] ?? null,
             'order_no'         => $validated['order_no'] ?? 0,
-            'is_active'        => $request->boolean('is_active', true),
+            'is_active'        => $request->boolean('is_active'),
             'institution_logo' => $logoPath,
         ]);
 
@@ -147,7 +147,7 @@ class AdminCollaborationController extends Controller
             'pic_name'         => $validated['pic_name'] ?? null,
             'description'      => $validated['description'] ?? null,
             'order_no'         => $validated['order_no'] ?? 0,
-            'is_active'        => $request->boolean('is_active', true),
+            'is_active'        => $request->boolean('is_active'),
             'institution_logo' => $logoPath,
         ]);
 

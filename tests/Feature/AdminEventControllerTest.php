@@ -146,6 +146,44 @@ class AdminEventControllerTest extends TestCase
         ]);
     }
 
+    public function test_authenticated_user_can_unpublish_event_via_form(): void
+    {
+        $event = WebsiteEvent::create([
+            'title'        => 'Simposium Sedang Aktif',
+            'year'         => '2026',
+            'is_published' => true,
+            'is_featured'  => true,
+        ]);
+
+        // Simulasikan submit form ketika checkbox tidak dicentang (mengirim 0 atau diabaikan browser)
+        $response = $this->actingAs($this->user)->put(route('website.events.admin.update', $event->id), [
+            'title'        => 'Simposium Sedang Aktif',
+            'year'         => '2026',
+            'is_published' => '0',
+            'is_featured'  => '0',
+        ]);
+
+        $response->assertRedirect(route('website.events.admin.index'));
+        $this->assertDatabaseHas('website_events', [
+            'id'           => $event->id,
+            'is_published' => false,
+            'is_featured'  => false,
+        ]);
+
+        // Uji juga ketika checkbox sama sekali tidak dikirim oleh browser (unchecked standard HTML)
+        $event->update(['is_published' => true]);
+        $response2 = $this->actingAs($this->user)->put(route('website.events.admin.update', $event->id), [
+            'title' => 'Simposium Sedang Aktif',
+            'year'  => '2026',
+        ]);
+
+        $response2->assertRedirect(route('website.events.admin.index'));
+        $this->assertDatabaseHas('website_events', [
+            'id'           => $event->id,
+            'is_published' => false,
+        ]);
+    }
+
     public function test_authenticated_user_can_toggle_published_and_featured_status(): void
     {
         $event = WebsiteEvent::create([

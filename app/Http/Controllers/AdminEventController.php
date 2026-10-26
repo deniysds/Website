@@ -132,8 +132,8 @@ class AdminEventController extends Controller
             'location'         => $validated['location'] ?? null,
             'registration_url' => $validated['registration_url'] ?? null,
             'order_no'         => $validated['order_no'] ?? 1,
-            'is_featured'      => $request->boolean('is_featured', false),
-            'is_published'     => $request->boolean('is_published', true),
+            'is_featured'      => $request->boolean('is_featured'),
+            'is_published'     => $request->boolean('is_published'),
         ]);
 
         return redirect()->route('website.events.admin.index')
@@ -202,8 +202,8 @@ class AdminEventController extends Controller
             'location'         => $validated['location'] ?? null,
             'registration_url' => $validated['registration_url'] ?? null,
             'order_no'         => $validated['order_no'] ?? $event->order_no,
-            'is_featured'      => $request->boolean('is_featured', false),
-            'is_published'     => $request->boolean('is_published', true),
+            'is_featured'      => $request->boolean('is_featured'),
+            'is_published'     => $request->boolean('is_published'),
         ]);
 
         return redirect()->route('website.events.admin.index')

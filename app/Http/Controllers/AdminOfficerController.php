@@ -94,7 +94,7 @@ class AdminOfficerController extends Controller
             'email'           => $validated['email'] ?? null,
             'linkedin_url'    => $validated['linkedin_url'] ?? null,
             'order_no'        => $validated['order_no'] ?? 0,
-            'is_active'       => $request->boolean('is_active', true),
+            'is_active'       => $request->boolean('is_active'),
             'photo_path'      => $photoPath,
         ]);
 
@@ -145,7 +145,7 @@ class AdminOfficerController extends Controller
             'email'           => $validated['email'] ?? null,
             'linkedin_url'    => $validated['linkedin_url'] ?? null,
             'order_no'        => $validated['order_no'] ?? 0,
-            'is_active'       => $request->boolean('is_active', true),
+            'is_active'       => $request->boolean('is_active'),
             'photo_path'      => $photoPath,
         ]);
 

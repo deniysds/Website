@@ -96,7 +96,7 @@ class AdminDocumentController extends Controller
             'file_extension' => $fileExtension,
             'published_year' => $validated['published_year'] ?? date('Y'),
             'order_no'       => $validated['order_no'] ?? 0,
-            'is_active'      => $request->boolean('is_active', true),
+            'is_active'      => $request->boolean('is_active'),
         ]);
 
         return redirect()->route('website.documents.admin.index')

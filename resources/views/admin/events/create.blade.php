@@ -103,6 +103,7 @@
 
                         <div class="space-y-4">
                             <label class="flex items-start gap-3 cursor-pointer">
+                                <input type="hidden" name="is_published" value="0" />
                                 <input type="checkbox" name="is_published" value="1" class="rounded border-gray-300 text-red-600 focus:ring-red-500 mt-1" {{ old('is_published', true) ? 'checked' : '' }} />
                                 <div>
                                     <div class="text-xs font-bold text-gray-900">Publikasikan ke Website</div>
@@ -111,6 +112,7 @@
                             </label>
 
                             <label class="flex items-start gap-3 cursor-pointer">
+                                <input type="hidden" name="is_featured" value="0" />
                                 <input type="checkbox" name="is_featured" value="1" class="rounded border-gray-300 text-red-600 focus:ring-red-500 mt-1" {{ old('is_featured', false) ? 'checked' : '' }} />
                                 <div>
                                     <div class="text-xs font-bold text-gray-900">Sorotan Beranda (Featured)</div>
